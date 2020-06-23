@@ -10,6 +10,11 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  String name;
+  String email;
+  String phone;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +37,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             TextField(
               onChanged: (value) {
-                //Do something with the user input.
+                name = value;
               },
               decoration: kTextFieldDecoration.copyWith(
                 hintText: 'Nome completo',
@@ -44,7 +49,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             TextField(
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
-                  //Do something with the user input.
+                  email = value;
                 },
                 decoration: kTextFieldDecoration),
             SizedBox(
@@ -53,7 +58,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             TextField(
               keyboardType: TextInputType.phone,
               onChanged: (value) {
-                //Do something with the user input.
+                phone = value;
               },
               decoration: kTextFieldDecoration.copyWith(
                 hintText: '(xx) xxxxx-xxxx',
@@ -65,7 +70,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             TextField(
               keyboardType: TextInputType.visiblePassword,
               onChanged: (value) {
-                //Do something with the user input.
+                password = value;
               },
               decoration: kTextFieldDecoration.copyWith(
                 hintText: 'Senha',
@@ -78,7 +83,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               color: Colors.blueAccent,
               text: 'Cadastrar',
               // TODO: implementar POST method!
-              onPressed: null,
+              onPressed: () {
+                print(
+                    "Name: $name. Email: $email. Phone: $phone. Pwd: $password.");
+              },
             ),
           ],
         ),
