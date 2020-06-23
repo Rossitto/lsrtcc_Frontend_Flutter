@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
+import 'package:lsrtcc_flutter/model/user.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -87,7 +89,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 print(
                     "Name: $name. Email: $email. Phone: $phone. Pwd: $password.");
                 // TODO: create a user with this information
-                // String json = jsonEncode(user);
+                User currentUser = User();
+                currentUser.setName(name);
+                currentUser.setEmail(email);
+                currentUser.setPhone(phone);
+                currentUser.setPassword(password);
+                // var json = currentUser.toJson();
+                String json = jsonEncode(currentUser);
+                print(json);
               },
             ),
           ],

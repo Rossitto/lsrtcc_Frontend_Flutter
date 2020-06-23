@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class User {
+  // TODO: precisa mesmo do campo ID aqui?
   int _id;
   String _name;
   String _email;
@@ -8,11 +9,9 @@ class User {
   String _password;
 
   // User(
-  //     {id = this._id,
-  //     name = this._name,
-  //     @required email = this._email,
-  //     phone = this._phone,
-  //     password = this._password});
+  //     this._id, this._name, @required this._email, this._phone, this._password);
+
+  User();
 
   void setName(name) {
     this._name = name;
@@ -47,11 +46,17 @@ class User {
   }
 
   User.fromJson(Map<String, dynamic> json)
-      : _name = json['name'],
-        _email = json['email'];
+      : _id = json['id'],
+        _name = json['name'],
+        _email = json['email'],
+        _phone = json['phone'],
+        _password = json['password'];
 
   Map<String, dynamic> toJson() => {
+        'id': _id,
         'name': _name,
         'email': _email,
+        'phone': _phone,
+        'password': _password
       };
 }
