@@ -86,6 +86,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               onPressed: () {
                 print(
                     "Name: $name. Email: $email. Phone: $phone. Pwd: $password.");
+                // TODO: create a user with this information
+                // String json = jsonEncode(user);
               },
             ),
           ],

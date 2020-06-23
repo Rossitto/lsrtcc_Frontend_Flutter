@@ -7,8 +7,12 @@ class User {
   String _phone;
   String _password;
 
-  User(
-      this._id, this._name, @required this._email, this._phone, this._password);
+  // User(
+  //     {id = this._id,
+  //     name = this._name,
+  //     @required email = this._email,
+  //     phone = this._phone,
+  //     password = this._password});
 
   void setName(name) {
     this._name = name;
@@ -41,4 +45,13 @@ class User {
   String getPassword() {
     return _password;
   }
+
+  User.fromJson(Map<String, dynamic> json)
+      : _name = json['name'],
+        _email = json['email'];
+
+  Map<String, dynamic> toJson() => {
+        'name': _name,
+        'email': _email,
+      };
 }
