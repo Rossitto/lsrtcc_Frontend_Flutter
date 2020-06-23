@@ -23,7 +23,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Hero(
               tag: 'logo',
               child: Container(
-                height: 200.0,
+                height: 100.0,
                 child: Image.asset('images/logo.png'),
               ),
             ),
@@ -34,17 +34,41 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               onChanged: (value) {
                 //Do something with the user input.
               },
-              decoration: kTextFieldDecoration,
+              decoration: kTextFieldDecoration.copyWith(
+                hintText: 'Nome completo',
+              ),
             ),
             SizedBox(
               height: 8.0,
             ),
             TextField(
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (value) {
+                  //Do something with the user input.
+                },
+                decoration: kTextFieldDecoration),
+            SizedBox(
+              height: 8.0,
+            ),
+            TextField(
+              keyboardType: TextInputType.phone,
               onChanged: (value) {
                 //Do something with the user input.
               },
               decoration: kTextFieldDecoration.copyWith(
-                hintText: 'Enter your password',
+                hintText: '(xx) xxxxx-xxxx',
+              ),
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+            TextField(
+              keyboardType: TextInputType.visiblePassword,
+              onChanged: (value) {
+                //Do something with the user input.
+              },
+              decoration: kTextFieldDecoration.copyWith(
+                hintText: 'Senha',
               ),
             ),
             SizedBox(
@@ -52,7 +76,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             RoundedButton(
               color: Colors.blueAccent,
-              text: 'Register',
+              text: 'Cadastrar',
+              // TODO: implementar POST method!
               onPressed: null,
             ),
           ],
