@@ -1,50 +1,37 @@
 import 'package:flutter/material.dart';
 
 class User {
-  // TODO: precisa mesmo do campo ID aqui?
-  int _id;
+  final int _id;
   String _name;
   String _email;
   String _phone;
   String _password;
 
-  // User(
-  //     this._id, this._name, @required this._email, this._phone, this._password);
+  set name(name) => _name;
+  set email(email) => _email;
+  set phone(phone) => _phone;
+  set password(password) => _password;
 
-  User();
+  get name => _name;
+  get email => _email;
+  get phone => _phone;
+  get password => _password;
 
-  void setName(name) {
-    this._name = name;
-  }
+  User(
+      {id,
+      @required name,
+      @required email,
+      @required phone,
+      @required password})
+      : _id = id,
+        _name = name,
+        _email = email,
+        _phone = phone,
+        _password = password;
 
-  void setEmail(email) {
-    this._email = email;
-  }
+  // User();
 
-  void setPhone(phone) {
-    this._phone = phone;
-  }
-
-  void setPassword(password) {
-    this._password = password;
-  }
-
-  String getName() {
-    return _name;
-  }
-
-  String getEmail() {
-    return _email;
-  }
-
-  String getPhone() {
-    return _phone;
-  }
-
-  String getPassword() {
-    return _password;
-  }
-
+// TODO conferir futuramente se precisa desses 2 métodos sobre json:
   User.fromJson(Map<String, dynamic> json)
       : _id = json['id'],
         _name = json['name'],

@@ -39,7 +39,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             TextField(
               onChanged: (value) {
-                name = value;
+                name = value.trim();
               },
               decoration: kTextFieldDecoration.copyWith(
                 hintText: 'Nome completo',
@@ -51,7 +51,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             TextField(
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
-                  email = value;
+                  email = value.trim();
                 },
                 decoration: kTextFieldDecoration),
             SizedBox(
@@ -60,7 +60,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             TextField(
               keyboardType: TextInputType.phone,
               onChanged: (value) {
-                phone = value;
+                phone = value.trim();
               },
               decoration: kTextFieldDecoration.copyWith(
                 hintText: '(xx) xxxxx-xxxx',
@@ -72,7 +72,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             TextField(
               keyboardType: TextInputType.visiblePassword,
               onChanged: (value) {
-                password = value;
+                password = value.trim();
               },
               decoration: kTextFieldDecoration.copyWith(
                 hintText: 'Senha',
@@ -89,13 +89,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 print(
                     "Name: $name. Email: $email. Phone: $phone. Pwd: $password.");
                 // TODO: create a user with this information
-                User currentUser = User();
-                currentUser.setName(name);
-                currentUser.setEmail(email);
-                currentUser.setPhone(phone);
-                currentUser.setPassword(password);
-                // var json = currentUser.toJson();
+                // User currentUser = User();
+                User currentUser = User(
+                    id: null,
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    password: password);
+                // currentUser.setName(name);
+                // currentUser.setEmail(email);
+                // currentUser.setPhone(phone);
+                // currentUser.setPassword(password);
+                print(currentUser.name);
                 String json = jsonEncode(currentUser);
+                // var json = currentUser.toJson();
                 print(json);
               },
             ),
