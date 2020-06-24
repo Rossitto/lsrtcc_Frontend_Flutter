@@ -46,17 +46,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               },
               decoration: kTextFieldDecoration.copyWith(
                 labelText: 'Nome completo',
+                prefixIcon: Icon(
+                  Icons.person,
+                  color: Colors.blueGrey,
+                ),
               ),
             ),
             SizedBox(
               height: 8.0,
             ),
             TextField(
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {
-                  email = value.trim();
-                },
-                decoration: kTextFieldDecoration),
+              keyboardType: TextInputType.emailAddress,
+              onChanged: (value) {
+                email = value.trim();
+              },
+              decoration: kTextFieldDecoration.copyWith(
+                prefixIcon: Icon(
+                  Icons.email,
+                  color: Colors.blueGrey,
+                ),
+              ),
+            ),
             SizedBox(
               height: 8.0,
             ),
@@ -67,6 +77,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               },
               decoration: kTextFieldDecoration.copyWith(
                 labelText: 'Celular',
+                prefixIcon: Icon(
+                  Icons.phone,
+                  color: Colors.blueGrey,
+                ),
               ),
             ),
             SizedBox(

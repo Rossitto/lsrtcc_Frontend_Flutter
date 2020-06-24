@@ -80,7 +80,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 }),
             RoundedButton(
                 color: Colors.lightBlueAccent,
-                text: 'Register',
+                text: 'Cadastrar',
                 onPressed: () {
                   Navigator.pushNamed(context, RegistrationScreen.id);
                 }),
