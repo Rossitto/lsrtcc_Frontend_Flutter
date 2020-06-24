@@ -16,18 +16,17 @@ class Backend {
     );
   }
 
-// TODO: post User method
-  Future<bool> postData() async {
-    http.Response response = await http.post(url);
+// TODO:  se não usar, excluir esse método abaixo!
+  // static Future<bool> validatePostUser(jsonUser) async {
+  //   http.Response response = await postUser(jsonUser);
 
-// TODO: retorna true e false mesmo???
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      print(response.statusCode);
-      return false;
-    }
-  }
+  //   if (response.statusCode == 201) {
+  //     return true;
+  //   } else {
+  //     print(response.statusCode);
+  //     return false;
+  //   }
+  // }
 
 // TODO: get method
   Future getData() async {

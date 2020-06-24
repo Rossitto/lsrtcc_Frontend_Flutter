@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
 import 'package:lsrtcc_flutter/services/backend.dart';
+import 'package:emojis/emojis.dart'; // to use Emoji collection
+import 'package:emojis/emoji.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -14,6 +16,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool _showPassword = false;
+  var sadEmoji = Emojis.cryingFace;
 
   String name;
   String email;
@@ -115,7 +118,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             RoundedButton(
               color: Colors.blueAccent,
               text: 'Cadastrar',
-              onPressed: () {
+              onPressed: () async {
                 print(
                     "Name: $name. Email: $email. Phone: $phone. Pwd: $password.");
                 User currentUser = User(
@@ -124,11 +127,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     email: email,
                     phone: phone,
                     password: password);
-                print(currentUser.name);
                 String jsonUser = jsonEncode(currentUser);
-                // var json = currentUser.toJson();
                 print(jsonUser);
-                Backend.postUser(jsonUser);
+                var response = await Backend.postUser(jsonUser);
+                var responseBody = jsonDecode(response.body);
+                var msg = utf8.decode(responseBody['title'].runes.toList());
+                if (response.statusCode == 201) {
+                  print('Usuário cadastrado! ' +
+                      'Status Code: ${response.statusCode}');
+                } else {
+                  print(response.statusCode);
+                  print(msg);
+                  setState(() {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text('Ops... Algo deu errado. $sadEmoji'),
+                        content: Text(msg),
+                        elevation: 24.0,
+                      ),
+                      barrierDismissible: true,
+                    );
+                  });
+                }
+                ;
               },
             ),
           ],

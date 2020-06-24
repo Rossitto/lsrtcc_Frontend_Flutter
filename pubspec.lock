@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.3"
+  emojis:
+    dependency: "direct main"
+    description:
+      name: emojis
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.1"
   equatable:
     dependency: transitive
     description:
