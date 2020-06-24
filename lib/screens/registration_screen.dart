@@ -3,6 +3,7 @@ import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
+import 'package:lsrtcc_flutter/services/backend_api.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -12,6 +13,8 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  bool _showPassword = false;
+
   String name;
   String email;
   String phone;
@@ -42,7 +45,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 name = value.trim();
               },
               decoration: kTextFieldDecoration.copyWith(
-                hintText: 'Nome completo',
+                labelText: 'Nome completo',
               ),
             ),
             SizedBox(
@@ -63,20 +66,34 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 phone = value.trim();
               },
               decoration: kTextFieldDecoration.copyWith(
-                hintText: '(xx) xxxxx-xxxx',
+                labelText: 'Celular',
               ),
             ),
             SizedBox(
               height: 8.0,
             ),
             TextField(
+              obscureText: !this._showPassword,
               keyboardType: TextInputType.visiblePassword,
               onChanged: (value) {
                 password = value.trim();
               },
               decoration: kTextFieldDecoration.copyWith(
-                hintText: 'Senha',
-              ),
+                  labelText: 'Senha',
+                  prefixIcon: Icon(
+                    Icons.security,
+                    color: Colors.blueGrey,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      color:
+                          this._showPassword ? Colors.blueAccent : Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() => this._showPassword = !this._showPassword);
+                    },
+                  )),
             ),
             SizedBox(
               height: 24.0,
@@ -84,26 +101,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             RoundedButton(
               color: Colors.blueAccent,
               text: 'Cadastrar',
-              // TODO: implementar POST method!
               onPressed: () {
                 print(
                     "Name: $name. Email: $email. Phone: $phone. Pwd: $password.");
-                // TODO: create a user with this information
-                // User currentUser = User();
                 User currentUser = User(
                     id: null,
                     name: name,
                     email: email,
                     phone: phone,
                     password: password);
-                // currentUser.setName(name);
-                // currentUser.setEmail(email);
-                // currentUser.setPhone(phone);
-                // currentUser.setPassword(password);
                 print(currentUser.name);
-                String json = jsonEncode(currentUser);
+                String jsonUser = jsonEncode(currentUser);
                 // var json = currentUser.toJson();
-                print(json);
+                print(jsonUser);
+                NetworkHelper.postUser(jsonUser);
               },
             ),
           ],

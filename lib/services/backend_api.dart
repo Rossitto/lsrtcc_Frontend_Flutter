@@ -6,11 +6,20 @@ class NetworkHelper {
 
   String url;
 
+  static Future<http.Response> postUser(String jsonUser) {
+    return http.post(
+      'http://localhost:8080/users',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonUser,
+    );
+  }
+
 // TODO: post User method
   Future<bool> postData() async {
     http.Response response = await http.post(url);
 
-// TODO: conferir status de sucesso do post method
 // TODO: retorna true e false mesmo???
     if (response.statusCode == 201) {
       return true;
