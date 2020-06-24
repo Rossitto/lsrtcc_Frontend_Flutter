@@ -3,7 +3,7 @@ import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
-import 'package:lsrtcc_flutter/services/backend_api.dart';
+import 'package:lsrtcc_flutter/services/backend.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -128,7 +128,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 String jsonUser = jsonEncode(currentUser);
                 // var json = currentUser.toJson();
                 print(jsonUser);
-                NetworkHelper.postUser(jsonUser);
+                Backend.postUser(jsonUser);
               },
             ),
           ],
