@@ -32,7 +32,7 @@ class User {
 
   // User();
 
-// TODO conferir futuramente se precisa desses 2 métodos sobre json:
+// Sem esses métodos, não é possível transformar um objeto dessa classe em um arquivo JSON!
   User.fromJson(Map<String, dynamic> json)
       : _id = json['id'],
         _name = json['name'],

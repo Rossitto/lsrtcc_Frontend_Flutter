@@ -49,4 +49,27 @@ class Band {
         _feeBrl = feeBrl,
         _membersNum = membersNum,
         _style = style;
+
+  Band.fromJson(Map<String, dynamic> json)
+      : _id = json['id'],
+        _name = json['name'],
+        _email = json['email'],
+        _phone = json['phone'],
+        _password = json['password'],
+        _cnpj = json['cnpj'],
+        _feeBrl = json['fee_brl'],
+        _membersNum = json['members_num'],
+        _style = json['style'];
+
+  Map<String, dynamic> toJson() => {
+        'id': _id,
+        'name': _name,
+        'email': _email,
+        'phone': _phone,
+        'password': _password,
+        'cnpj': _cnpj,
+        'fee_brl': _feeBrl,
+        'members_num': _membersNum,
+        'style': _style
+      };
 }

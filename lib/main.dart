@@ -8,9 +8,9 @@ import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/welcome_screen.dart';
 
-void main() => runApp(FlashChat());
+void main() => runApp(LsrTcc());
 
-class FlashChat extends StatelessWidget {
+class LsrTcc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

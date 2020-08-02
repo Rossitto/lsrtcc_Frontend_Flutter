@@ -38,7 +38,6 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              // TODO: check if logo with HERO is working
               Hero(
                 tag: 'logo',
                 child: Container(
@@ -83,7 +82,9 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
               TextField(
                 keyboardType: TextInputType.phone,
                 onChanged: (value) {
-                  phone = value.trim();
+                  if (value.isNotEmpty && isNumeric(value)) {
+                    phone = value.trim();
+                  }
                 },
                 decoration: kTextFieldDecoration.copyWith(
                   labelText: 'Celular do principal contato',
@@ -99,7 +100,9 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
               TextField(
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  cnpj = value.trim();
+                  if (value.isNotEmpty && isNumeric(value)) {
+                    cnpj = value.trim();
+                  }
                 },
                 decoration: kTextFieldDecoration.copyWith(
                   labelText: 'CNPJ (se tiver)',
@@ -115,8 +118,9 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
               TextField(
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  // TODO: check if double.parse is working
-                  feeBrl = value.trim();
+                  if (value.isNotEmpty && isNumeric(value)) {
+                    feeBrl = value.trim();
+                  }
                   // print(feeBrl.runtimeType);
                 },
                 decoration: kTextFieldDecoration.copyWith(
@@ -133,7 +137,9 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
               TextField(
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  membersNum = value.trim();
+                  if (value.isNotEmpty && isNumeric(value)) {
+                    membersNum = value.trim();
+                  }
                 },
                 decoration: kTextFieldDecoration.copyWith(
                   labelText: 'Número de membros',
@@ -164,7 +170,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
               TextField(
                 obscureText: !this._showPassword,
                 keyboardType:
-                    TextInputType.visiblePassword, // maybe this is unecessary
+                    TextInputType.visiblePassword, // maybe this is unnecessary
                 onChanged: (value) {
                   password = value.trim();
                 },
@@ -194,8 +200,8 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                 color: Colors.blueAccent,
                 text: 'Cadastrar Banda',
                 onPressed: () async {
-                  print(
-                      "Name: $name. Email: $email. Phone: $phone. Pwd: $password. CNPJ: $cnpj. Cachê: $feeBrl. Membros: $membersNum. Estilo: $style.");
+                  // print(
+                  // "Name: $name. Email: $email. Phone: $phone. Pwd: $password. CNPJ: $cnpj. Cachê: $feeBrl. Membros: $membersNum. Estilo: $style.");
                   Band currentBand = Band(
                     id: null,
                     name: name,
@@ -207,6 +213,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                     membersNum: membersNum,
                     style: style,
                   );
+                  print(currentBand);
                   String jsonBand = jsonEncode(currentBand);
                   var response = await Backend.postBand(jsonBand);
                   String responseBody = response.body;

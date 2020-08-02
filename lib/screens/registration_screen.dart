@@ -76,7 +76,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               TextField(
                 keyboardType: TextInputType.phone,
                 onChanged: (value) {
-                  phone = value.trim();
+                  if (value.isNotEmpty && isNumeric(value)) {
+                    phone = value.trim();
+                  }
                 },
                 decoration: kTextFieldDecoration.copyWith(
                   labelText: 'Celular',

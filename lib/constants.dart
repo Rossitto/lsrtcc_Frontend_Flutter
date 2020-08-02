@@ -34,3 +34,10 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+RegExp numeric = RegExp(r'^-?[0-9]+$');
+
+// check if the string contains only numbers
+bool isNumeric(String str) {
+  return numeric.hasMatch(str);
+}
