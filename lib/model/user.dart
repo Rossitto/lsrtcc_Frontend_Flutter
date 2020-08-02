@@ -12,6 +12,7 @@ class User {
   set phone(phone) => _phone;
   set password(password) => _password;
 
+  get id => _id;
   get name => _name;
   get email => _email;
   get phone => _phone;

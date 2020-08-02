@@ -5,7 +5,6 @@ import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
 import 'package:lsrtcc_flutter/services/backend.dart';
 import 'package:emojis/emojis.dart'; // to use Emoji collection
-import 'package:emojis/emoji.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -150,7 +149,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     );
                   });
                 }
-                ;
               },
             ),
           ],
