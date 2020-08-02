@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Band {
-  final int _id;
+  final int _id; //TODO: check if id will be int or String
   String _name;
   String _cnpj;
-  double _feeBrl;
-  int _membersNum;
+  String _feeBrl;
+  String _membersNum;
   String _style;
   String _phone;
   String _email;

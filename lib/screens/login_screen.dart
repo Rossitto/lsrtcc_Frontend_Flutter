@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
+import 'package:lsrtcc_flutter/services/backend.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -52,7 +55,14 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RoundedButton(
               color: Colors.lightBlueAccent,
-              onPressed: null,
+              onPressed: () async {
+                var response =
+                    await Backend.getData('http://localhost:8080/users');
+                var responseBody = jsonDecode(response.body);
+                // var msg = utf8.decode(responseBody['title'].runes.toList());
+                print("$responseBody + \n");
+                // print("$msg + \n");
+              },
               text: 'Log In',
             ),
           ],

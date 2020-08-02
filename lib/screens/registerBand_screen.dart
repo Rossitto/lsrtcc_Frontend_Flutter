@@ -2,41 +2,47 @@ import 'dart:convert';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
-import 'package:lsrtcc_flutter/model/user.dart';
+import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/services/backend.dart';
 import 'package:emojis/emojis.dart'; // to use Emoji collection
 
-class RegistrationScreen extends StatefulWidget {
-  static const String id = 'registration_screen';
+class RegisterBandScreen extends StatefulWidget {
+  static const String id = 'registerBand_screen';
 
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _RegisterBandScreenState createState() => _RegisterBandScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _RegisterBandScreenState extends State<RegisterBandScreen> {
   bool _showPassword = false;
   var sadEmoji = Emojis.cryingFace;
 
+  // tudo String senão não rola fazer o trim(). Converter após o trim().
   String name;
   String email;
   String phone;
   String password;
+  String cnpj;
+  String feeBrl;
+  String membersNum;
+  String style;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
+        padding: EdgeInsets.fromLTRB(24, 80, 24, 24),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              // TODO: check if logo with HERO is working
               Hero(
                 tag: 'logo',
                 child: Container(
-                  height: 100.0,
+                  height: 150.0,
                   child: Image.asset('images/logo.png'),
                 ),
               ),
@@ -48,9 +54,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   name = value.trim();
                 },
                 decoration: kTextFieldDecoration.copyWith(
-                  labelText: 'Nome completo',
+                  labelText: 'Nome da banda',
                   prefixIcon: Icon(
-                    Icons.person,
+                    Icons.library_music,
                     color: Colors.blueGrey,
                   ),
                 ),
@@ -64,6 +70,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   email = value.trim();
                 },
                 decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'Email da banda (não use pessoal)',
                   prefixIcon: Icon(
                     Icons.email,
                     color: Colors.blueGrey,
@@ -79,7 +86,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   phone = value.trim();
                 },
                 decoration: kTextFieldDecoration.copyWith(
-                  labelText: 'Celular',
+                  labelText: 'Celular do principal contato',
                   prefixIcon: Icon(
                     Icons.phone,
                     color: Colors.blueGrey,
@@ -90,8 +97,74 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 8.0,
               ),
               TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  cnpj = value.trim();
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'CNPJ (se tiver)',
+                  prefixIcon: Icon(
+                    Icons.business_center,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  // TODO: check if double.parse is working
+                  feeBrl = value.trim();
+                  // print(feeBrl.runtimeType);
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'Cachê R\$',
+                  prefixIcon: Icon(
+                    Icons.attach_money,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  membersNum = value.trim();
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'Número de membros',
+                  prefixIcon: Icon(
+                    Icons.people,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                onChanged: (value) {
+                  style = value.trim();
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'Estilo musical que melhor define',
+                  prefixIcon: Icon(
+                    Icons.queue_music,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
                 obscureText: !this._showPassword,
-                keyboardType: TextInputType.visiblePassword,
+                keyboardType:
+                    TextInputType.visiblePassword, // maybe this is unecessary
                 onChanged: (value) {
                   password = value.trim();
                 },
@@ -119,22 +192,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               RoundedButton(
                 color: Colors.blueAccent,
-                text: 'Cadastrar',
+                text: 'Cadastrar Banda',
                 onPressed: () async {
                   print(
-                      "Name: $name. Email: $email. Phone: $phone. Pwd: $password.");
-                  User currentUser = User(
-                      id: null,
-                      name: name,
-                      email: email,
-                      phone: phone,
-                      password: password);
-                  String jsonUser = jsonEncode(currentUser);
-                  var response = await Backend.postUser(jsonUser);
+                      "Name: $name. Email: $email. Phone: $phone. Pwd: $password. CNPJ: $cnpj. Cachê: $feeBrl. Membros: $membersNum. Estilo: $style.");
+                  Band currentBand = Band(
+                    id: null,
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    password: password,
+                    cnpj: cnpj,
+                    feeBrl: feeBrl,
+                    membersNum: membersNum,
+                    style: style,
+                  );
+                  String jsonBand = jsonEncode(currentBand);
+                  var response = await Backend.postBand(jsonBand);
                   String responseBody = response.body;
                   var responseTitle = jsonDecode(responseBody)['title'];
                   if (response.statusCode == 201) {
-                    print('Usuário cadastrado! ' +
+                    print('Banda cadastrada! ' +
                         'Status Code: ${response.statusCode}');
                   } else {
                     print('ERRO! ' + 'Status Code: ${response.statusCode}');

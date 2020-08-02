@@ -2,9 +2,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Backend {
-  Backend(this.url);
-
-  String url;
+  // String url;
+  // Backend(this.url);
 
   static Future<http.Response> postUser(String jsonUser) {
     return http.post(
@@ -14,6 +13,22 @@ class Backend {
       },
       body: jsonUser,
     );
+  }
+
+  static Future<http.Response> postBand(String jsonBand) {
+    return http.post(
+      'http://localhost:8080/bands',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Accept': 'application/json; charset=UTF-8'
+      },
+      body: jsonBand,
+    );
+  }
+
+// TODO: get method
+  static Future<http.Response> getData(url) {
+    return http.get(url);
   }
 
 // TODO:  se não usar, excluir esse método abaixo!
@@ -28,16 +43,4 @@ class Backend {
   //   }
   // }
 
-// TODO: get method
-  Future getData() async {
-    http.Response response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      String data = response.body;
-
-      return jsonDecode(data);
-    } else {
-      print(response.statusCode);
-    }
-  }
 }

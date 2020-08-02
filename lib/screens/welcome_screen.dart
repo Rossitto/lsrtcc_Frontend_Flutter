@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -52,14 +53,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Hero(
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: 60.0,
+                    height: 100.0,
                   ),
                 ),
+                SizedBox(width: 8.0),
                 TypewriterAnimatedTextKit(
                   text: ['LSR_TCC'],
                   textStyle: TextStyle(
@@ -80,9 +83,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 }),
             RoundedButton(
                 color: Colors.lightBlueAccent,
-                text: 'Cadastrar',
+                text: 'Cadastrar Usuário',
                 onPressed: () {
                   Navigator.pushNamed(context, RegistrationScreen.id);
+                }),
+            RoundedButton(
+                color: Colors.lightBlueAccent,
+                text: 'Cadastrar Banda',
+                onPressed: () {
+                  Navigator.pushNamed(context, RegisterBandScreen.id);
                 }),
           ],
         ),
