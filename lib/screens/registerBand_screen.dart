@@ -217,7 +217,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                   String jsonBand = jsonEncode(currentBand);
                   var response = await Backend.postBand(jsonBand);
                   String responseBody = response.body;
-                  var responseTitle = jsonDecode(responseBody)['title'];
+                  var responseTitle = jsonDecode(responseBody)['title'] ?? "";
                   if (response.statusCode == 201) {
                     print('Banda cadastrada! ' +
                         'Status Code: ${response.statusCode}');

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
+import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/screens/login_screen.dart';
 import 'package:lsrtcc_flutter/screens/registration_screen.dart';
@@ -21,6 +22,7 @@ class LsrTcc extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         RegisterBandScreen.id: (context) => RegisterBandScreen(),
+        RegisterPubScreen.id: (context) => RegisterPubScreen(),
       },
     );
   }

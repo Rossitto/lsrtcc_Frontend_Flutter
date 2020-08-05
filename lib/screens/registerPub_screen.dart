@@ -2,25 +2,32 @@ import 'dart:convert';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
-import 'package:lsrtcc_flutter/model/user.dart';
+import 'package:lsrtcc_flutter/model/pub.dart';
 import 'package:lsrtcc_flutter/services/backend.dart';
 import 'package:emojis/emojis.dart'; // to use Emoji collection
 
-class RegistrationScreen extends StatefulWidget {
-  static const String id = 'registration_screen';
+class RegisterPubScreen extends StatefulWidget {
+  static const String id = 'registerPub_screen';
 
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _RegisterPubScreenState createState() => _RegisterPubScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _RegisterPubScreenState extends State<RegisterPubScreen> {
   bool _showPassword = false;
   var sadEmoji = Emojis.cryingFace;
 
+  // tudo String senão não rola fazer o trim().
   String name;
   String email;
   String phone;
   String password;
+  String cnpj;
+  String address;
+  String addressNum;
+  String addressCep;
+  String city;
+  String state;
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +55,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   name = value.trim();
                 },
                 decoration: kTextFieldDecoration.copyWith(
-                  labelText: 'Nome completo',
+                  labelText: 'Nome do Pub',
                   prefixIcon: Icon(
-                    Icons.person,
+                    Icons.store_mall_directory,
                     color: Colors.blueGrey,
                   ),
                 ),
@@ -64,6 +71,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   email = value.trim();
                 },
                 decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'Email (não use pessoal)',
                   prefixIcon: Icon(
                     Icons.email,
                     color: Colors.blueGrey,
@@ -81,7 +89,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   }
                 },
                 decoration: kTextFieldDecoration.copyWith(
-                  labelText: 'Celular',
+                  labelText: 'Celular do principal contato',
                   prefixIcon: Icon(
                     Icons.phone,
                     color: Colors.blueGrey,
@@ -92,8 +100,108 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 8.0,
               ),
               TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  if (value.isNotEmpty && isNumeric(value)) {
+                    cnpj = value.trim();
+                  }
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'CNPJ',
+                  prefixIcon: Icon(
+                    Icons.business_center,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                onChanged: (value) {
+                  city = value.trim();
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'Cidade',
+                  prefixIcon: Icon(
+                    Icons.location_city,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                onChanged: (value) {
+                  state = value.trim();
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'Estado (2 letras)',
+                  prefixIcon: Icon(
+                    Icons.location_city,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  if (value.isNotEmpty && isNumeric(value)) {
+                    addressCep = value.trim();
+                  }
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'CEP',
+                  prefixIcon: Icon(
+                    Icons.markunread_mailbox,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                onChanged: (value) {
+                  address = value.trim();
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'Endereço',
+                  prefixIcon: Icon(
+                    Icons.markunread_mailbox,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  if (value.isNotEmpty && isNumeric(value)) {
+                    addressNum = value.trim();
+                  }
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  labelText: 'nº',
+                  prefixIcon: Icon(
+                    Icons.markunread_mailbox,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
                 obscureText: !this._showPassword,
-                keyboardType: TextInputType.visiblePassword,
+                keyboardType:
+                    TextInputType.visiblePassword, // maybe this is unnecessary
                 onChanged: (value) {
                   password = value.trim();
                 },
@@ -121,26 +229,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               RoundedButton(
                 color: Colors.blueAccent,
-                text: 'Cadastrar',
+                text: 'Cadastrar Pub',
                 onPressed: () async {
-                  print(
-                      "Name: $name. Email: $email. Phone: $phone. Pwd: $password.");
-                  User currentUser = User(
-                      id: null,
-                      name: name,
-                      email: email,
-                      phone: phone,
-                      password: password);
-                  String jsonUser = jsonEncode(currentUser);
-                  var response = await Backend.postUser(jsonUser);
+                  Pub currentPub = Pub(
+                    id: null,
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    password: password,
+                    cnpj: cnpj,
+                    addressCep: addressCep,
+                    address: address,
+                    addressNum: addressNum,
+                    city: city,
+                    state: state,
+                  );
+                  String jsonPub = jsonEncode(currentPub);
+                  var response = await Backend.postPub(jsonPub);
                   String responseBody = response.body;
                   var responseTitle = jsonDecode(responseBody)['title'] ?? "";
                   if (response.statusCode == 201) {
-                    print('Usuário cadastrado! ' +
+                    print('Pub cadastrado! ' +
                         'Status Code: ${response.statusCode}');
                   } else {
                     print('ERRO! ' + 'Status Code: ${response.statusCode}');
-                    // print(response.body);
                     print(responseTitle);
                     setState(() {
                       showDialog(

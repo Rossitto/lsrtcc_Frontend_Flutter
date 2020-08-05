@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
+import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -92,6 +93,12 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 text: 'Cadastrar Banda',
                 onPressed: () {
                   Navigator.pushNamed(context, RegisterBandScreen.id);
+                }),
+            RoundedButton(
+                color: Colors.lightBlueAccent,
+                text: 'Cadastrar Pub',
+                onPressed: () {
+                  Navigator.pushNamed(context, RegisterPubScreen.id);
                 }),
           ],
         ),

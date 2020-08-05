@@ -26,6 +26,17 @@ class Backend {
     );
   }
 
+  static Future<http.Response> postPub(String jsonPub) {
+    return http.post(
+      'http://localhost:8080/pubs',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Accept': 'application/json; charset=UTF-8'
+      },
+      body: jsonPub,
+    );
+  }
+
 // TODO: get method
   static Future<http.Response> getData(url) {
     return http.get(url);
