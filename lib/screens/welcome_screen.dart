@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lsrtcc_flutter/screens/calender_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'login_screen.dart';
@@ -99,6 +100,12 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 text: 'Cadastrar Pub',
                 onPressed: () {
                   Navigator.pushNamed(context, RegisterPubScreen.id);
+                }),
+            RoundedButton(
+                color: Colors.lightBlueAccent,
+                text: 'Agenda',
+                onPressed: () {
+                  Navigator.pushNamed(context, CalendarScreen.id);
                 }),
           ],
         ),
