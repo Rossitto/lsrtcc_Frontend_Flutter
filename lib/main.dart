@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lsrtcc_flutter/screens/calender_screen.dart';
+import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
