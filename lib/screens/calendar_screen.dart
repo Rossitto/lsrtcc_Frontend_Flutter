@@ -4,6 +4,7 @@ import 'package:lsrtcc_flutter/constants.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/services/backend.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CalendarScreen extends StatefulWidget {
   static const String id = 'calendar_screen';
@@ -36,7 +37,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
       body: SingleChildScrollView(
           child: Column(
         children: <Widget>[
-          TableCalendar(calendarController: _calendarController)
+          TableCalendar(
+            calendarController: _calendarController,
+            initialCalendarFormat: CalendarFormat.month,
+            headerStyle: HeaderStyle(
+              centerHeaderTitle: true,
+              formatButtonShowsNext: false,
+            ),
+            startingDayOfWeek: StartingDayOfWeek.monday,
+            onDaySelected: (date, events) {
+              print(date.toLocal().toIso8601String());
+            },
+            builders: CalendarBuilders(),
+          )
         ],
       )),
     );
