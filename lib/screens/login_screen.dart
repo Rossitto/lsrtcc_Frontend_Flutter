@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
-import 'package:lsrtcc_flutter/services/backend.dart';
+import 'package:lsrtcc_flutter/services/backend_api.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';

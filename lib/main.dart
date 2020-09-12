@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
@@ -8,8 +9,14 @@ import 'package:lsrtcc_flutter/screens/registration_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/welcome_screen.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() => runApp(LsrTcc());
+
+// TODO: implement locale: "pt_BR"
+// void main() {
+//   initializeDateFormatting().then((_) => runApp(LsrTcc()));
+// }
 
 class LsrTcc extends StatelessWidget {
   @override
@@ -27,20 +34,4 @@ class LsrTcc extends StatelessWidget {
       },
     );
   }
-}
-
-Map<String, dynamic> encodeMap(Map<DateTime, dynamic> map) {
-  Map<String, dynamic> newMap = {};
-  map.forEach((key, value) {
-    newMap[key.toString()] = map[key];
-  });
-  return newMap;
-}
-
-Map<DateTime, dynamic> decodeMap(Map<String, dynamic> map) {
-  Map<DateTime, dynamic> newMap = {};
-  map.forEach((key, value) {
-    newMap[DateTime.parse(key)] = map[key];
-  });
-  return newMap;
 }

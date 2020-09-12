@@ -3,7 +3,7 @@ import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/pub.dart';
-import 'package:lsrtcc_flutter/services/backend.dart';
+import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:emojis/emojis.dart'; // to use Emoji collection
 
 class RegisterPubScreen extends StatefulWidget {
