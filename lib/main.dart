@@ -11,12 +11,11 @@ import 'screens/registration_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-void main() => runApp(LsrTcc());
+// void main() => runApp(LsrTcc());
 
-// TODO: implement locale: "pt_BR"
-// void main() {
-//   initializeDateFormatting().then((_) => runApp(LsrTcc()));
-// }
+void main() {
+  initializeDateFormatting().then((_) => runApp(LsrTcc()));
+}
 
 class LsrTcc extends StatelessWidget {
   @override

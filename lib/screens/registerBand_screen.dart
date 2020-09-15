@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
-import 'package:emojis/emojis.dart'; // to use Emoji collection
 
 class RegisterBandScreen extends StatefulWidget {
   static const String id = 'registerBand_screen';
@@ -15,7 +14,6 @@ class RegisterBandScreen extends StatefulWidget {
 
 class _RegisterBandScreenState extends State<RegisterBandScreen> {
   bool _showPassword = false;
-  var sadEmoji = Emojis.cryingFace;
 
   // tudo String senão não rola fazer o trim(). Converter após o trim().
   String name;

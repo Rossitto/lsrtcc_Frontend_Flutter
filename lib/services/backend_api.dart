@@ -37,6 +37,17 @@ class Backend {
     );
   }
 
+  static Future<http.Response> postShow(String jsonShow) {
+    return http.post(
+      'http://localhost:8080/shows',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Accept': 'application/json; charset=UTF-8'
+      },
+      body: jsonShow,
+    );
+  }
+
 // TODO: get method
   static Future<http.Response> getData(url) {
     return http.get(url);

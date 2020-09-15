@@ -1,3 +1,4 @@
+import 'package:emojis/emojis.dart';
 import 'package:flutter/material.dart';
 
 const kSendButtonTextStyle = TextStyle(
@@ -41,3 +42,5 @@ RegExp numeric = RegExp(r'^-?[0-9]+$');
 bool isNumeric(String str) {
   return numeric.hasMatch(str);
 }
+
+const sadEmoji = Emojis.cryingFace;
