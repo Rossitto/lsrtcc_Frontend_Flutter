@@ -20,6 +20,7 @@ dependencies:
   table_calendar: ^2.2.3
   shared_preferences: ^0.5.10
   intl: ^0.16.1
+  date_time_format: ^1.0.0+4
 
 dev_dependencies:
   flutter_test:

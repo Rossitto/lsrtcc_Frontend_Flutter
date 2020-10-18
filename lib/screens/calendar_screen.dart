@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -7,6 +8,7 @@ import 'package:lsrtcc_flutter/model/showSchedule.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:date_time_format/date_time_format.dart';
 
 class CalendarScreen extends StatefulWidget {
   static const String id = 'calendar_screen';
@@ -21,15 +23,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
   TextEditingController _eventController;
   List<dynamic> _selectedEvents;
   SharedPreferences prefs;
-  TimeOfDay _timeOfDay;
-
-  ShowSchedule showSchedule =
-      ShowSchedule(pubId: 3, bandId: 3, date: "2020-12-30", time: "23:00:00");
+  TimeOfDay time;
+  var selectedDate;
 
   @override
   void initState() {
     super.initState();
-    _timeOfDay = TimeOfDay.now();
+    time = TimeOfDay.now();
     _calendarController = CalendarController();
     _eventController = TextEditingController();
     _events = {};
@@ -82,7 +82,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
         child: Column(
           children: <Widget>[
             TableCalendar(
-              locale: "pt_BR",
               events: _events,
               calendarController: _calendarController,
               initialCalendarFormat: CalendarFormat.month,
@@ -92,7 +91,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
               ),
               startingDayOfWeek: StartingDayOfWeek.monday,
               onDaySelected: (date, events) {
-                print(date.toLocal().toIso8601String());
+                selectedDate = DateFormat.yMd("pt_BR").format(date.toLocal());
+                print(selectedDate);
                 setState(() {
                   _selectedEvents = events;
                 });
@@ -111,40 +111,79 @@ class _CalendarScreenState extends State<CalendarScreen> {
       ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                content: TextField(
-                  controller: _eventController,
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text("Salvar"),
-                    onPressed: () async {
-                      await postShowToAPI(showSchedule);
-                      // if (_eventController.text.isEmpty) return;
-                      // setState(() {
-                      //   if (_events[_calendarController.selectedDay] != null) {
-                      //     _events[_calendarController.selectedDay]
-                      //         .add(_eventController.text);
-                      //   } else {
-                      //     _events[_calendarController.selectedDay] = [
-                      //       _eventController.text
-                      //     ];
-                      //   }
-                      //   prefs.setString(
-                      //       "events", json.encode(encodeMap(_events)));
-                      //   _eventController.clear();
-                      //   Navigator.pop(context);
-                      // });
-                    },
-                  )
-                ],
-              ),
-            );
+
+          // TODO: Fazer isso funcionar! usar apens um campo DateTime ou 2 campos com Date e com Time???
+          onPressed: () async {
+            await _pickTime();
+            print(time);
+            DateTime now = DateTime.now();
+            var timeDateTime =
+                DateTime(now.year, now.month, now.day, time.hour, time.minute);
+            var timeFormated = DateTimeFormat.format(timeDateTime,
+                format: DateTimeFormats.iso8601);
+
+            print(timeFormated);
+            ShowSchedule showSchedule = ShowSchedule(
+                pubId: 3, bandId: 3, date: selectedDate, time: timeFormated);
+            await postShowToAPI(showSchedule);
+
+            // showDialog(
+            //   context: context,
+            //   builder: (context) => AlertDialog(
+            //     content: TextField(
+            //       controller: _eventController,
+            //     ),
+            //     actions: <Widget>[
+            //       FlatButton(
+            //         child: Text("Salvar"),
+            //         onPressed: () async {
+            //           if (_eventController.text.isEmpty) return;
+
+            //           // setState(() {
+            //           //   if (_events[_calendarController.selectedDay] != null) {
+            //           //     _events[_calendarController.selectedDay]
+            //           //         .add(_eventController.text);
+            //           //   } else {
+            //           //     _events[_calendarController.selectedDay] = [
+            //           //       _eventController.text
+            //           //     ];
+            //           //   }
+            //           //   prefs.setString(
+            //           //       "events", json.encode(encodeMap(_events)));
+            //           //   _eventController.clear();
+            //           //   Navigator.pop(context);
+            //           // });
+            //         },
+            //       )
+            //     ],
+            //   ),
+            // );
           }),
     );
+  }
+
+  // ListTile showTime = ListTile(
+  //     title: Text("Time: ${time.hour}:${time.minute}"),
+  //     trailing: Icon(Icons.keyboard_arrow_down),
+  //     onTap: null);
+
+  _pickTime() async {
+    TimeOfDay t = await showTimePicker(
+        context: context,
+        initialTime: time,
+        helpText: "Show Time",
+        builder: (BuildContext context, Widget child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+            child: child,
+          );
+        });
+
+    if (t != null) {
+      setState(() {
+        time = t;
+      });
+    }
   }
 
   postShowToAPI(ShowSchedule showSchedule) async {
