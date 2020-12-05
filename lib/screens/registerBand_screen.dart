@@ -238,6 +238,17 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                   }
                 },
               ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "voltar",
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

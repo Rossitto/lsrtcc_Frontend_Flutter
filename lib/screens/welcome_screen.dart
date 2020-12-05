@@ -70,7 +70,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   TypewriterAnimatedTextKit(
                     text: ['LSR_TCC'],
                     textStyle: TextStyle(
-                      fontSize: 45.0,
+                      fontSize: 35.0,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
@@ -105,11 +105,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   Navigator.pushNamed(context, RegisterPubScreen.id);
                 }),
             RoundedButton(
-                color: Colors.lightBlueAccent,
-                text: 'Agenda',
-                onPressed: () {
-                  Navigator.pushNamed(context, CalendarScreen.id);
-                }),
+              color: Colors.lightBlueAccent,
+              text: 'Agenda',
+              onPressed: () {
+                Navigator.pushNamed(context, CalendarScreen.id);
+              },
+            ),
+            SizedBox(
+              height: 48.0,
+            ),
           ],
         ),
       ),

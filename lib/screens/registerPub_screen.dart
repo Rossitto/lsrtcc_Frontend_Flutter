@@ -269,6 +269,17 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
                   }
                 },
               ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "voltar",
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

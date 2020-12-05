@@ -157,6 +157,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   }
                 },
               ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "voltar",
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:emojis/emojis.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
@@ -13,6 +14,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _showPassword = false;
+  var sadEmoji = Emojis.cryingFace;
+
+  String email;
+  String password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,21 +40,42 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 48.0,
             ),
             TextField(
+              keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
-                //Do something with the user input.
+                email = value.trim();
               },
-              decoration: kTextFieldDecoration,
+              decoration: kTextFieldDecoration.copyWith(
+                prefixIcon: Icon(
+                  Icons.email,
+                  color: Colors.blueGrey,
+                ),
+              ),
             ),
             SizedBox(
               height: 8.0,
             ),
             TextField(
+              obscureText: !this._showPassword,
+              keyboardType: TextInputType.visiblePassword,
               onChanged: (value) {
-                //Do something with the user input.
+                password = value.trim();
               },
               decoration: kTextFieldDecoration.copyWith(
-                hintText: 'Enter your password',
-              ),
+                  labelText: 'Senha',
+                  prefixIcon: Icon(
+                    Icons.security,
+                    color: Colors.blueGrey,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      color:
+                          this._showPassword ? Colors.blueAccent : Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() => this._showPassword = !this._showPassword);
+                    },
+                  )),
             ),
             SizedBox(
               height: 24.0,
@@ -64,6 +91,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 // print("$msg + \n");
               },
               text: 'Log In',
+            ),
+            SizedBox(
+              height: 24.0,
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "voltar",
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
             ),
           ],
         ),
