@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
+import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
@@ -32,6 +33,7 @@ class LsrTcc extends StatelessWidget {
         RegisterBandScreen.id: (context) => RegisterBandScreen(),
         RegisterPubScreen.id: (context) => RegisterPubScreen(),
         CalendarScreen.id: (context) => CalendarScreen(),
+        ProfileScreen.id: (context) => ProfileScreen(),
       },
     );
   }

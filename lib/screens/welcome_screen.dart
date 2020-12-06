@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
+import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'login_screen.dart';
@@ -78,7 +79,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ),
             ),
             SizedBox(
-              height: 48.0,
+              height: 38.0,
             ),
             RoundedButton(
                 color: Colors.lightBlueAccent,
@@ -109,6 +110,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               text: 'Agenda',
               onPressed: () {
                 Navigator.pushNamed(context, CalendarScreen.id);
+              },
+            ),
+            RoundedButton(
+              color: Colors.lightBlueAccent,
+              text: 'Profile',
+              onPressed: () {
+                Navigator.pushNamed(context, ProfileScreen.id);
               },
             ),
             SizedBox(
