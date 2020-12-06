@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:emojis/emojis.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
+import 'package:lsrtcc_flutter/model/user.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,9 +16,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool _showPassword = false;
   var sadEmoji = Emojis.cryingFace;
-
   String email;
   String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,21 +61,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 password = value.trim();
               },
               decoration: kTextFieldDecoration.copyWith(
-                  labelText: 'Senha',
-                  prefixIcon: Icon(
-                    Icons.security,
-                    color: Colors.blueGrey,
+                labelText: 'Senha',
+                prefixIcon: Icon(
+                  Icons.security,
+                  color: Colors.blueGrey,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    Icons.remove_red_eye,
+                    color: this._showPassword ? Colors.blueAccent : Colors.grey,
                   ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      Icons.remove_red_eye,
-                      color:
-                          this._showPassword ? Colors.blueAccent : Colors.grey,
-                    ),
-                    onPressed: () {
-                      setState(() => this._showPassword = !this._showPassword);
-                    },
-                  )),
+                  onPressed: () {
+                    setState(() => this._showPassword = !this._showPassword);
+                  },
+                ),
+              ),
             ),
             SizedBox(
               height: 24.0,
@@ -83,12 +83,36 @@ class _LoginScreenState extends State<LoginScreen> {
             RoundedButton(
               color: Colors.lightBlueAccent,
               onPressed: () async {
-                var response =
-                    await Backend.getData('http://localhost:8080/users');
-                var responseBody = jsonDecode(response.body);
-                // var msg = utf8.decode(responseBody['title'].runes.toList());
-                print("$responseBody + \n");
-                // print("$msg + \n");
+                User currentUser = User(
+                    id: null,
+                    name: null,
+                    email: email,
+                    phone: null,
+                    password: password);
+                String jsonUser = jsonEncode(currentUser);
+                var response = await Backend.authUser(jsonUser);
+                String responseBody = response.body;
+                var responseTitle = jsonDecode(responseBody)['title'] ?? "";
+                if (response.statusCode == 202) {
+                  print('Login efetuado com sucesso! ' +
+                      'Status Code: ${response.statusCode}');
+                  // TODO: chamar outra tela, com user logado!!
+                } else {
+                  print('ERRO! ' + 'Status Code: ${response.statusCode}');
+                  // print(responseTitle);
+                  setState(() {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text('Ops... Algo deu errado. $sadEmoji'),
+                        content: Text(
+                            '$responseTitle\n\nStatusCode: ${response.statusCode}'),
+                        elevation: 24.0,
+                      ),
+                      barrierDismissible: true,
+                    );
+                  });
+                }
               },
               text: 'Log In',
             ),

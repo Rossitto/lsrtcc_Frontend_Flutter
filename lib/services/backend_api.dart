@@ -15,6 +15,16 @@ class Backend {
     );
   }
 
+  static Future<http.Response> authUser(String jsonUser) {
+    return http.post(
+      'http://localhost:8080/users/auth',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonUser,
+    );
+  }
+
   static Future<http.Response> postBand(String jsonBand) {
     return http.post(
       'http://localhost:8080/bands',
@@ -49,9 +59,9 @@ class Backend {
   }
 
 // TODO: get method
-  static Future<http.Response> getData(url) {
-    return http.get(url);
-  }
+  // static Future<http.Response> getData(url) {
+  //   return http.get(url);
+  // }
 
 // TODO:  se não usar, excluir esse método abaixo!
   // static Future<bool> validatePostUser(jsonUser) async {
