@@ -114,7 +114,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             RoundedButton(
               color: Colors.lightBlueAccent,
-              text: 'Profile',
+              text: 'Perfil',
               onPressed: () {
                 Navigator.pushNamed(context, ProfileScreen.id);
               },

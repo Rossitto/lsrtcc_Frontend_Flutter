@@ -4,6 +4,7 @@ import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
+import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -96,10 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (response.statusCode == 202) {
                   print('Login efetuado com sucesso! ' +
                       'Status Code: ${response.statusCode}');
-                  // TODO: chamar outra tela, com user logado!!
+                  Navigator.pushNamed(context, ProfileScreen.id);
                 } else {
                   print('ERRO! ' + 'Status Code: ${response.statusCode}');
-                  // print(responseTitle);
                   setState(() {
                     showDialog(
                       context: context,

@@ -138,22 +138,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   if (response.statusCode == 201) {
                     print('Usuário cadastrado! ' +
                         'Status Code: ${response.statusCode}');
+                    // TODO: ir para uma tela perguntando se já tem banda/pub ou deseja cadastrar
                   } else {
                     print('ERRO! ' + 'Status Code: ${response.statusCode}');
-                    // print(response.body);
                     print(responseTitle);
-                    setState(() {
-                      showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          title: Text('Ops... Algo deu errado. $sadEmoji'),
-                          content: Text(
-                              '$responseTitle\n\nStatusCode: ${response.statusCode}'),
-                          elevation: 24.0,
-                        ),
-                        barrierDismissible: true,
-                      );
-                    });
+                    setState(
+                      () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: Text('Ops... Algo deu errado. $sadEmoji'),
+                            content: Text(
+                                '$responseTitle\n\nStatusCode: ${response.statusCode}'),
+                            elevation: 24.0,
+                          ),
+                          barrierDismissible: true,
+                        );
+                      },
+                    );
                   }
                 },
               ),
