@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String id = 'profile_screen';
@@ -20,52 +21,26 @@ class _ProfileScreenState extends State<ProfileScreen>
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this);
+    getUserInfo();
+  }
+
+  getUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userInfo = prefs.getString('userLoggedInResponseBody');
+    String userName = prefs.getString('userLoggedInName');
+    int userId = prefs.getInt('userLoggedInId');
+    String userPhone = prefs.getString('userLoggedInPhone');
+    String userEmail = prefs.getString('userLoggedInEmail');
+    print(userInfo);
+    print(userName);
+    print(userId);
+    print(userPhone);
+    print(userEmail);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Material(
-        color: Colors.blueAccent,
-        shadowColor: Colors.black.withOpacity(0.5),
-        child: TabBar(
-          controller: tabController,
-          indicatorColor: Colors.white,
-          tabs: <Widget>[
-            Tab(
-              icon: Icon(
-                Icons.home,
-                color: Colors.white,
-              ),
-            ),
-            Tab(
-              icon: Icon(
-                Icons.chat,
-                color: Colors.white,
-              ),
-            ),
-            Tab(
-              icon: Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
-            ),
-            Tab(
-              icon: Icon(
-                Icons.calendar_today,
-                color: Colors.white,
-              ),
-            ),
-            Tab(
-              icon: Icon(
-                Icons.person,
-                color: Colors.white,
-                // size: 40.0,
-              ),
-            ),
-          ],
-        ),
-      ),
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -86,7 +61,9 @@ class _ProfileScreenState extends State<ProfileScreen>
               Icons.more_vert,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              // TODO: menu 3 pontinhos superior direito: 1) alterar foto de perfil. 2) alterar senha. 3) alterar nickname? 4) alterar e-mail? 5) ver minhas bandas?
+            },
           )
         ],
       ),
@@ -197,8 +174,55 @@ class _ProfileScreenState extends State<ProfileScreen>
             ),
             Container(
               padding: EdgeInsets.only(top: 100),
-              child: Text('COLOCAR AGENDA AQUI'),
-            )
+              child: Text('COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS'),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Material(
+        color: Colors.blueAccent,
+        shadowColor: Colors.black.withOpacity(0.5),
+        child: TabBar(
+          controller: tabController,
+          indicatorColor: Colors.white,
+          tabs: <Widget>[
+            Tab(
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
+            ),
+            Tab(
+              icon: Icon(
+                Icons.chat,
+                color: Colors.white,
+              ),
+            ),
+            Tab(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+            ),
+            Tab(
+              icon: Icon(
+                Icons.calendar_today,
+                color: Colors.white,
+              ),
+            ),
+            Tab(
+              icon: Icon(
+                Icons.person,
+                color: Colors.white,
+                // size: 40.0,
+              ),
+              // TODO: colocar um button invisível aqui e printar o userLoggedInResponseBody do sharedPrefs
+              // child: FlatButton(
+              //   onPressed: () {
+              //     print('PERFIL PRESSIONADO');
+              //   },
+              // ),
+            ),
           ],
         ),
       ),

@@ -11,7 +11,6 @@ import 'package:lsrtcc_flutter/screens/registration_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/welcome_screen.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 // void main() => runApp(LsrTcc());
 

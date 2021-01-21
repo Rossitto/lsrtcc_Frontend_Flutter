@@ -6,6 +6,7 @@ import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -82,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 24.0,
             ),
             RoundedButton(
+              text: 'Log In',
               color: Colors.lightBlueAccent,
               onPressed: () async {
                 User currentUser = User(
@@ -93,10 +95,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 String jsonUser = jsonEncode(currentUser);
                 var response = await Backend.authUser(jsonUser);
                 String responseBody = response.body;
+                // TODO: chamar nova API pegando todos dados do user e carregar esses dados no shared preferences
                 var responseTitle = jsonDecode(responseBody)['title'] ?? "";
                 if (response.statusCode == 202) {
                   print('Login efetuado com sucesso! ' +
                       'Status Code: ${response.statusCode}');
+                  String userName = jsonDecode(responseBody)['name'] ?? "";
+                  String userEmail = jsonDecode(responseBody)['email'] ?? "";
+                  String userPhone = jsonDecode(responseBody)['phone'] ?? "";
+                  int userId = jsonDecode(responseBody)['id'] ?? "";
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.setString('userLoggedInResponseBody', responseBody);
+                  prefs.setString('userLoggedInName', userName);
+                  prefs.setString('userLoggedInEmail', userEmail);
+                  prefs.setString('userLoggedInPhone', userPhone);
+                  prefs.setInt('userLoggedInId', userId);
                   Navigator.pushNamed(context, ProfileScreen.id);
                 } else {
                   print('ERRO! ' + 'Status Code: ${response.statusCode}');
@@ -114,7 +128,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   });
                 }
               },
-              text: 'Log In',
             ),
             SizedBox(
               height: 24.0,
