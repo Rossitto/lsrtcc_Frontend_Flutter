@@ -16,6 +16,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   TabController tabController;
+  String userName;
 
   @override
   void initState() {
@@ -119,7 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     height: 25,
                   ),
                   Text(
-                    '@nickname',
+                    '$userName',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w300,
