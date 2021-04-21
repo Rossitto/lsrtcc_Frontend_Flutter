@@ -53,11 +53,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // TODO: make this not overflow screen
             Expanded(
+              flex: 2,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -79,23 +79,35 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ],
               ),
             ),
-            SizedBox(
-              height: 38.0,
-            ),
-            RoundedButton(
-                color: Colors.lightBlueAccent,
-                text: 'Entrar',
-                onPressed: () {
-                  Navigator.pushNamed(context, LoginScreen.id);
-                }),
-            RoundedButton(
-                color: Colors.blueGrey[400],
-                text: 'Cadastrar',
-                onPressed: () {
-                  Navigator.pushNamed(context, RegistrationScreen.id);
-                }),
-            SizedBox(
-              height: 48.0,
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  RoundedButton(
+                      color: Colors.lightBlueAccent,
+                      text: 'Entrar',
+                      onPressed: () {
+                        Navigator.pushNamed(context, LoginScreen.id);
+                      }),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  RoundedButton(
+                      color: Colors.blueGrey[400],
+                      text: 'Cadastrar',
+                      onPressed: () {
+                        Navigator.pushNamed(context, RegistrationScreen.id);
+                      }),
+                  SizedBox(
+                    height: 70.0,
+                  ),                
+                ],
+              ),
             ),
           ],
         ),
