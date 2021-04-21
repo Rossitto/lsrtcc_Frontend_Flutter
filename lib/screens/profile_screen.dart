@@ -17,6 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   TabController tabController;
   String userName;
+  Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
   @override
   void initState() {

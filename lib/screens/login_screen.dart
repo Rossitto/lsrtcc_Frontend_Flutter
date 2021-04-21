@@ -94,8 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     password: password);
                 String jsonUser = jsonEncode(currentUser);
                 var response = await Backend.authUser(jsonUser);
-                String responseBody = response.body;
-                // TODO: chamar nova API pegando todos dados do user e carregar esses dados no shared preferences
+                String responseBody = response.body;              
                 var responseTitle = jsonDecode(responseBody)['title'] ?? "";
                 if (response.statusCode == 202) {
                   print('Login efetuado com sucesso! ' +
@@ -132,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 24.0,
             ),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
