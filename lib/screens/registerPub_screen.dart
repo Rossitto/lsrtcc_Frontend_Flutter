@@ -269,7 +269,7 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
                   }
                 },
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },

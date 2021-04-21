@@ -159,7 +159,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   }
                 },
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },

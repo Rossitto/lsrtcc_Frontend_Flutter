@@ -238,7 +238,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                   }
                 },
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
