@@ -9,14 +9,14 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class WelcomeScreen extends StatefulWidget {
-  static const String id = 'welcome_screen';
+class WelcomeScreenDebug extends StatefulWidget {
+  static const String id = 'welcome_screen_debug';
 
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  _WelcomeScreenDebugState createState() => _WelcomeScreenDebugState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen>
+class _WelcomeScreenDebugState extends State<WelcomeScreenDebug>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
@@ -70,7 +70,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   ),
                   SizedBox(width: 8.0),
                   TypewriterAnimatedTextKit(
-                    text: ['show biz'],
+                    text: ['LSR_TCC'],
                     textStyle: TextStyle(
                       fontSize: 35.0,
                       fontWeight: FontWeight.w900,
@@ -84,16 +84,42 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             RoundedButton(
                 color: Colors.lightBlueAccent,
-                text: 'Entrar',
+                text: 'Log in',
                 onPressed: () {
                   Navigator.pushNamed(context, LoginScreen.id);
                 }),
             RoundedButton(
-                color: Colors.blueGrey[400],
-                text: 'Cadastrar',
+                color: Colors.lightBlueAccent,
+                text: 'Cadastrar Usuário',
                 onPressed: () {
                   Navigator.pushNamed(context, RegistrationScreen.id);
                 }),
+            RoundedButton(
+                color: Colors.lightBlueAccent,
+                text: 'Cadastrar Banda',
+                onPressed: () {
+                  Navigator.pushNamed(context, RegisterBandScreen.id);
+                }),
+            RoundedButton(
+                color: Colors.lightBlueAccent,
+                text: 'Cadastrar Pub',
+                onPressed: () {
+                  Navigator.pushNamed(context, RegisterPubScreen.id);
+                }),
+            RoundedButton(
+              color: Colors.lightBlueAccent,
+              text: 'Agenda',
+              onPressed: () {
+                Navigator.pushNamed(context, CalendarScreen.id);
+              },
+            ),
+            RoundedButton(
+              color: Colors.lightBlueAccent,
+              text: 'Perfil',
+              onPressed: () {
+                Navigator.pushNamed(context, ProfileScreen.id);
+              },
+            ),
             SizedBox(
               height: 48.0,
             ),
