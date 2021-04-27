@@ -8,6 +8,7 @@ import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/screens/login_screen.dart';
 import 'package:lsrtcc_flutter/screens/registration_screen.dart';
+import 'package:lsrtcc_flutter/services/user_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
@@ -16,11 +17,14 @@ import 'screens/welcome_screen_debug.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await UserSimplePreferences.init();
+
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String userInfo = prefs.getString('userLoggedInResponseBody');
   var isLoggedIn = userInfo == null ? false : true;
   Intl.defaultLocale = "pt_BR";
   initializeDateFormatting();
+
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
