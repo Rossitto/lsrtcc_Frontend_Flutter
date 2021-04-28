@@ -1,6 +1,5 @@
 import 'package:emojis/emojis.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,
@@ -46,7 +45,7 @@ bool isNumeric(String str) {
 
 const sadEmoji = Emojis.cryingFace;
 
-addStringToSP(String varName, String varValue) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString('$varName', "$varValue");
-}
+// addStringToSP(String varName, String varValue) async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   prefs.setString('$varName', "$varValue");
+// }

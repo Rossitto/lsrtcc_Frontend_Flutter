@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String id = 'profile_screen';
@@ -17,63 +17,20 @@ class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   TabController tabController;
 
-  String _haveStarted3Times = '';
-  String _userName3 = '';
+  final userdata = GetStorage();
+
+  String get userName => userdata.read('userName');
 
   @override
   void initState() {
     super.initState();
+    var userName = userdata.read('userName');
     tabController = TabController(length: 5, vsync: this);
-    _incrementStartup();
   }
-
-  Future<int> _getIntFromSharedPref() async {
-    final prefs = await SharedPreferences.getInstance();
-    final startupNumber = prefs.getInt('startupNumber');
-    if (startupNumber == null) {
-      return 0;
-    }
-    return startupNumber;
-  }
-
-  Future<void> _incrementStartup() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    int lastStartupNumber = await _getIntFromSharedPref();
-    int currentStartupNumber = ++lastStartupNumber;
-    await prefs.setInt('startupNumber', currentStartupNumber);
-
-    if (currentStartupNumber == 3) {
-      setState(() {
-        _haveStarted3Times = '$currentStartupNumber Times Completed';
-      });
-      await _resetCounter();
-    } else {
-      setState(() {
-        _haveStarted3Times = '$currentStartupNumber Times started the app';
-      });
-    }
-  }
-
-  Future<void> _resetCounter() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('startupNumber', 0);
-  }
-
-  // getUserInfo() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String userInfo = prefs.getString('userLoggedInResponseBody');
-  //   String userName = prefs.getString('userLoggedInName');
-  //   int userId = prefs.getInt('userLoggedInId');
-  //   String userPhone = prefs.getString('userLoggedInPhone');
-  //   String userEmail = prefs.getString('userLoggedInEmail');
-  //   return prefs;
-  // }
 
   @override
   Widget build(BuildContext context) {
-    print('context userName: $_userName3');
-    print('context _haveStarted3Times: $_haveStarted3Times');
+    print('context userName: ${userName}');
 
     return Scaffold(
       appBar: AppBar(
@@ -154,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     height: 25,
                   ),
                   Text(
-                    _haveStarted3Times,
+                    userName,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w300,

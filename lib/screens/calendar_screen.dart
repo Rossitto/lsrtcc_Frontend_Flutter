@@ -7,7 +7,6 @@ import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/showSchedule.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:date_time_format/date_time_format.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -22,7 +21,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
   CalendarController _calendarController;
   TextEditingController _eventController;
   List<dynamic> _selectedEvents;
-  SharedPreferences prefs;
   TimeOfDay time;
   var selectedDate;
 
@@ -34,21 +32,21 @@ class _CalendarScreenState extends State<CalendarScreen> {
     _eventController = TextEditingController();
     _events = {};
     _selectedEvents = [];
-    initPrefs();
+    // initPrefs();
   }
 
-  initPrefs() async {
-    prefs = await SharedPreferences.getInstance();
-    setState(
-      () {
-        _events = Map<DateTime, List<dynamic>>.from(
-          decodeMap(
-            json.decode(prefs.getString("events") ?? "{}"),
-          ),
-        );
-      },
-    );
-  }
+  // initPrefs() async {
+  //   prefs = await SharedPreferences.getInstance();
+  //   setState(
+  //     () {
+  //       _events = Map<DateTime, List<dynamic>>.from(
+  //         decodeMap(
+  //           json.decode(prefs.getString("events") ?? "{}"),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   void dispose() {

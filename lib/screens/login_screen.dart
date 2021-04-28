@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:emojis/emojis.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -20,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   var sadEmoji = Emojis.cryingFace;
   String email;
   String password;
+
+  final userdata = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     password: password);
                 String jsonUser = jsonEncode(currentUser);
                 var response = await Backend.authUser(jsonUser);
-                String responseBody = response.body;              
+                String responseBody = response.body;
                 var responseTitle = jsonDecode(responseBody)['title'] ?? "";
                 if (response.statusCode == 202) {
                   print('Login efetuado com sucesso! ' +
@@ -103,13 +105,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   String userEmail = jsonDecode(responseBody)['email'] ?? "";
                   String userPhone = jsonDecode(responseBody)['phone'] ?? "";
                   int userId = jsonDecode(responseBody)['id'] ?? "";
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  prefs.setString('userLoggedInResponseBody', responseBody);
-                  prefs.setString('userLoggedInName', userName);
-                  prefs.setString('userLoggedInEmail', userEmail);
-                  prefs.setString('userLoggedInPhone', userPhone);
-                  prefs.setInt('userLoggedInId', userId);
+                  // SharedPreferences prefs =
+                  //     await SharedPreferences.getInstance();
+                  // prefs.setString('userLoggedInResponseBody', responseBody);
+                  // prefs.setString('userLoggedInName', userName);
+                  // prefs.setString('userLoggedInEmail', userEmail);
+                  // prefs.setString('userLoggedInPhone', userPhone);
+                  // prefs.setInt('userLoggedInId', userId);
+                  userdata.write('userIsLogged', true);
+                  userdata.write('userName', userName);
+                  userdata.write('userEmail', userEmail);
+                  userdata.write('userPhone', userPhone);
+                  userdata.write('userId', userId);
                   Navigator.pushNamed(context, ProfileScreen.id);
                 } else {
                   print('ERRO! ' + 'Status Code: ${response.statusCode}');
