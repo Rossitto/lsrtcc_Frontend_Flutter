@@ -4,6 +4,7 @@ import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
+import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -41,22 +42,54 @@ class _ProfileScreenState extends State<ProfileScreen>
         ),
         elevation: 0,
         backgroundColor: Colors.blueAccent[700],
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+        //   onPressed: () {
+        //     // Navigator.pop(context);
+        //   },
+        // ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
+          PopupMenuButton(
+            itemBuilder: (BuildContext bc) => [
+              PopupMenuItem(child: Text("Sair"), value: WelcomeScreen.id),
+            ],
+            onSelected: (route) {
+              print(route);
+              Navigator.pushNamed(context, route);
+            },
+            child: Icon(
               Icons.more_vert,
               color: Colors.white,
             ),
-            onPressed: () {
-              // TODO: menu 3 pontinhos superior direito: 1) alterar foto de perfil. 2) alterar senha. 3) alterar nickname? 4) alterar e-mail? 5) ver minhas bandas?
-            },
-          )
+          ),
+
+          // PopupMenuButton(
+          //   onSelected: (dynamic index) {
+          //     print('index is $index');
+          //     Navigator.pushNamed(context, WelcomeScreen.id);
+          //   },
+          //   child: Icon(
+          //     Icons.more_vert,
+          //     color: Colors.white,
+          //   ),
+          //   itemBuilder: (context) {
+          //     return List.generate(1, (index) {
+          //       return PopupMenuItem(
+          //         child: Text('Sair'),
+          //       );
+          //     });
+          //   },
+          // ),
+
+          // IconButton(
+          //   icon: Icon(
+          //     Icons.more_vert,
+          //     color: Colors.white,
+          //   ),
+          //   onPressed: () {
+          //     // TODO: menu 3 pontinhos superior direito: 1) alterar foto de perfil. 2) alterar senha. 3) alterar nickname? 4) alterar e-mail? 5) ver minhas bandas?
+          //   },
+          // )
         ],
       ),
       body: Container(
@@ -208,12 +241,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                 color: Colors.white,
                 // size: 40.0,
               ),
-              // TODO: colocar um button invisível aqui e printar o userLoggedInResponseBody do sharedPrefs
-              // child: FlatButton(
-              //   onPressed: () {
-              //     print('PERFIL PRESSIONADO');
-              //   },
-              // ),
             ),
           ],
         ),
