@@ -45,7 +45,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
     if (picked != null)
       setState(() {
         selectedDate = picked;
+        print('selectedDate sem format: $selectedDate');
         _dateController.text = DateFormat.yMd().format(selectedDate);
+        print('_dateController.text: ${_dateController.text}');
       });
   }
 
@@ -69,17 +71,20 @@ class _DateTimePickerState extends State<DateTimePicker> {
         _timeController.text = _time;
         _timeController.text = formatDate(
             DateTime(2020, 08, 1, selectedTime.hour, selectedTime.minute),
-            [hh, ':', nn, " ", am]).toString();
+            [hh, ':', nn]).toString();
       });
   }
 
   @override
   void initState() {
-    _dateController.text = DateFormat.yMd().format(DateTime.now());
+    var dataFormatada = formatDate(DateTime.now(), [dd, '/', mm, '/', yyyy]);
+    // print('dataFormatada = $dataFormatada');
+    _dateController.text = dataFormatada;
 
-    _timeController.text = formatDate(
+    var horaFormatada = formatDate(
         DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
-        [hh, ':', nn, " ", am]).toString();
+        [HH, ':', nn]).toString();
+    _timeController.text = horaFormatada;
     super.initState();
   }
 
@@ -91,7 +96,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Date time picker'),
+        title: Text('Agendar Evento'),
       ),
       body: Container(
         width: _width,
@@ -103,7 +108,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             Column(
               children: <Widget>[
                 Text(
-                  'Escolha a Data',
+                  'Data do Evento',
                   style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w600,
@@ -141,7 +146,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             Column(
               children: <Widget>[
                 Text(
-                  'Escolha a Hora',
+                  'Hora do Evento',
                   style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w600,
