@@ -10,10 +10,12 @@ import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/screens/login_screen.dart';
 import 'package:lsrtcc_flutter/screens/registration_screen.dart';
 import 'package:lsrtcc_flutter/services/user_preferences.dart';
+import 'components/DateTimePicker.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/welcome_screen_debug.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,14 +28,25 @@ Future<void> main() async {
   final userdata = GetStorage();
   userdata.writeIfNull('userIsLogged', false);
 
-  Intl.defaultLocale = "pt_BR";
-  initializeDateFormatting();
+  // Intl.defaultLocale = "pt_BR";
+  // initializeDateFormatting();
 
   runApp(
     MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("pt"),
+      ],
       debugShowCheckedModeBanner: false,
       initialRoute:
-          userdata.read('userIsLogged') ? ProfileScreen.id : WelcomeScreen.id,
+          // ! tela inicial TESTE:
+          WelcomeScreenDebug.id,
+      // * tela inicial verdadeira:
+      // userdata.read('userIsLogged') ? ProfileScreen.id : WelcomeScreen.id,
       routes: {
         WelcomeScreenDebug.id: (context) => WelcomeScreenDebug(),
         WelcomeScreen.id: (context) => WelcomeScreen(),
@@ -43,6 +56,7 @@ Future<void> main() async {
         RegisterPubScreen.id: (context) => RegisterPubScreen(),
         CalendarScreen.id: (context) => CalendarScreen(),
         ProfileScreen.id: (context) => ProfileScreen(),
+        DateTimePicker.id: (context) => DateTimePicker(),
       },
     ),
   );

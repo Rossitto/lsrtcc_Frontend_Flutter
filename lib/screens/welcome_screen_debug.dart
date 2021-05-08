@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lsrtcc_flutter/components/DateTimePicker.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
@@ -117,6 +118,13 @@ class _WelcomeScreenDebugState extends State<WelcomeScreenDebug>
               text: 'Perfil',
               onPressed: () {
                 Navigator.pushNamed(context, ProfileScreen.id);
+              },
+            ),
+            RoundedButton(
+              color: Colors.lightBlueAccent,
+              text: 'DateTimePicker',
+              onPressed: () {
+                Navigator.pushNamed(context, DateTimePicker.id);
               },
             ),
             SizedBox(

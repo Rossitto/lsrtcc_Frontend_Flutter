@@ -88,13 +88,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 formatButtonShowsNext: false,
               ),
               startingDayOfWeek: StartingDayOfWeek.monday,
-              onDaySelected: (date, events) {
-                selectedDate = DateFormat.yMd("pt_BR").format(date.toLocal());
-                print(selectedDate);
-                setState(() {
-                  _selectedEvents = events;
-                });
-              },
+              // ? comentei isso abaixo após trocar o Locale, antes estava usando Intl
+              // onDaySelected: (date, events) {
+              //   selectedDate = DateFormat.yMd("pt_BR").format(date.toLocal());
+              //   print(selectedDate);
+              //   setState(() {
+              //     _selectedEvents = events;
+              //   });
+              // },
               builders: CalendarBuilders(),
             ),
             ..._selectedEvents.map(
@@ -110,20 +111,22 @@ class _CalendarScreenState extends State<CalendarScreen> {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
 
-          // TODO: Fazer isso funcionar! usar apens um campo DateTime ou 2 campos com Date e com Time???
+          // TODO: Fazer isso funcionar! usar apenas um campo DateTime ou 2 campos com Date e com Time???
           onPressed: () async {
             await _pickTime();
-            print(time);
+            print('time = $time');
             DateTime now = DateTime.now();
             var timeDateTime =
                 DateTime(now.year, now.month, now.day, time.hour, time.minute);
             var timeFormated = DateTimeFormat.format(timeDateTime,
                 format: DateTimeFormats.iso8601);
 
-            print(timeFormated);
+            // prefs.setString("events", json.encode(encodeMap(_events)));
+
+            print('timeFormated = $timeFormated');
             ShowSchedule showSchedule = ShowSchedule(
                 pubId: 3, bandId: 3, date: selectedDate, time: timeFormated);
-            await postShowToAPI(showSchedule);
+            // await postShowToAPI(showSchedule);
 
             // showDialog(
             //   context: context,
@@ -132,7 +135,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             //       controller: _eventController,
             //     ),
             //     actions: <Widget>[
-            //       FlatButton(
+            //       TextButton(
             //         child: Text("Salvar"),
             //         onPressed: () async {
             //           if (_eventController.text.isEmpty) return;
@@ -169,7 +172,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     TimeOfDay t = await showTimePicker(
         context: context,
         initialTime: time,
-        helpText: "Show Time",
+        helpText: "Hora do evento",
         builder: (BuildContext context, Widget child) {
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
@@ -212,3 +215,41 @@ class _CalendarScreenState extends State<CalendarScreen> {
     }
   }
 }
+
+
+
+// _showAddDialog() async {
+//   await showDialog(
+//       context: context,
+//       builder: (context) => AlertDialog(
+//             backgroundColor: Colors.white70,
+//             title: Text("Add Events"),
+//             content: TextField(
+//               controller: _eventController,
+//             ),
+//             actions: <Widget>[
+//               FlatButton(
+//                 child: Text(
+//                   "Save",
+//                   style:
+//                       TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+//                 ),
+//                 onPressed: () {
+//                   if (_eventController.text.isEmpty) return;
+//                   setState(() {
+//                     if (_events[_controller.selectedDay] != null) {
+//                       _events[_controller.selectedDay]
+//                           .add(_eventController.text);
+//                     } else {
+//                       _events[_controller.selectedDay] = [
+//                         _eventController.text
+//                       ];
+//                     }
+//                     _eventController.clear();
+//                     Navigator.pop(context);
+//                   });
+//                 },
+//               )
+//             ],
+//           ));
+// }
