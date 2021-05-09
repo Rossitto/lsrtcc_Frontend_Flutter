@@ -2,6 +2,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:intl/intl.dart';
+import 'package:lsrtcc_flutter/components/rounded_button.dart';
 
 class DateTimePicker extends StatefulWidget {
   static const String id = 'dateTimePicker_screen';
@@ -45,8 +46,10 @@ class _DateTimePickerState extends State<DateTimePicker> {
     if (picked != null)
       setState(() {
         selectedDate = picked;
-        print('selectedDate sem format: $selectedDate');
-        _dateController.text = DateFormat.yMd().format(selectedDate);
+        // print('selectedDate sem format: $selectedDate');
+        var selectedDateFormatada =
+            formatDate(selectedDate, [dd, '/', mm, '/', yyyy]);
+        _dateController.text = selectedDateFormatada;
         print('_dateController.text: ${_dateController.text}');
       });
   }
@@ -71,7 +74,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
         _timeController.text = _time;
         _timeController.text = formatDate(
             DateTime(2020, 08, 1, selectedTime.hour, selectedTime.minute),
-            [hh, ':', nn]).toString();
+            [HH, ':', nn]).toString();
+        print('_timeController.text: ${_timeController.text}');
       });
   }
 
@@ -180,6 +184,55 @@ class _DateTimePickerState extends State<DateTimePicker> {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            RoundedButton(
+              color: Colors.blueAccent,
+              text: 'SALVAR',
+              onPressed: () {
+                print('_dateController.text: ${_dateController.text}');
+                print('_timeController.text: ${_timeController.text}');
+              },
+              // onPressed: () async {
+              //   Pub currentPub = Pub(
+              //     id: null,
+              //     name: name,
+              //     email: email,
+              //     phone: phone,
+              //     password: password,
+              //     cnpj: cnpj,
+              //     addressCep: addressCep,
+              //     address: address,
+              //     addressNum: addressNum,
+              //     city: city,
+              //     state: state,
+              //   );
+              //   String jsonPub = jsonEncode(currentPub);
+              //   var response = await Backend.postPub(jsonPub);
+              //   String responseBody = response.body;
+              //   var responseTitle = jsonDecode(responseBody)['title'] ?? "";
+              //   if (response.statusCode == 201) {
+              //     print('Pub cadastrado! ' +
+              //         'Status Code: ${response.statusCode}');
+              //   } else {
+              //     print('ERRO! ' + 'Status Code: ${response.statusCode}');
+              //     print(responseTitle);
+              //     setState(() {
+              //       showDialog(
+              //         context: context,
+              //         builder: (_) => AlertDialog(
+              //           title: Text('Ops... Algo deu errado. $sadEmoji'),
+              //           content: Text(
+              //               '$responseTitle\n\nStatusCode: ${response.statusCode}'),
+              //           elevation: 24.0,
+              //         ),
+              //         barrierDismissible: true,
+              //       );
+              //     },);
+              //   }
+              // },
             ),
           ],
         ),
