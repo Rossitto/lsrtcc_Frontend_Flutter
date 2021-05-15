@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
+import 'package:lsrtcc_flutter/constants.dart';
+import 'package:lsrtcc_flutter/model/showSchedule.dart';
+import 'package:lsrtcc_flutter/screens/profile_screen.dart';
+import 'package:lsrtcc_flutter/services/backend_api.dart';
 
 class DateTimePicker extends StatefulWidget {
   static const String id = 'dateTimePicker_screen';
@@ -27,6 +33,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
+  TextEditingController _dateISOController = TextEditingController();
+  // TextEditingController _timeISOController = TextEditingController();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -45,12 +53,17 @@ class _DateTimePickerState extends State<DateTimePicker> {
     );
     if (picked != null)
       setState(() {
-        selectedDate = picked;
+        selectedDate = picked; // 2021-05-20 00:00:00.000
         // print('selectedDate sem format: $selectedDate');
         var selectedDateFormatada =
             formatDate(selectedDate, [dd, '/', mm, '/', yyyy]);
         _dateController.text = selectedDateFormatada;
         print('_dateController.text: ${_dateController.text}');
+
+        var selectedDateISO =
+            formatDate(selectedDate, [yyyy, '-', mm, '-', dd]);
+        _dateISOController.text = selectedDateISO;
+        print('_dateISOController.text: ${_dateISOController.text}');
       });
   }
 
@@ -191,48 +204,62 @@ class _DateTimePickerState extends State<DateTimePicker> {
             RoundedButton(
               color: Colors.blueAccent,
               text: 'SALVAR',
-              onPressed: () {
+              onPressed: () async {
                 print('_dateController.text: ${_dateController.text}');
                 print('_timeController.text: ${_timeController.text}');
+
+                var showTimestamp = DateTime.parse(
+                    "${_dateISOController.text} ${_timeController.text}");
+                print('showTimestamp = $showTimestamp');
+                // TODO : pegar o Pub ID certo ao postar ShowSchedule
+                // TODO : pegar o Band ID certo ao postar ShowSchedule
+                ShowSchedule currentShow = ShowSchedule(
+                  pubId: 2,
+                  bandId: 2,
+                  show_datetime: showTimestamp,
+                );
+
+                String jsonShow = jsonEncode(currentShow);
+                print('jsonShow = $jsonShow');
+                // TODO: se show já existir = PUT em vez de POST e enviar o ID do show na URL.
+                var response = await Backend.postShow(jsonShow);
+                String responseBody = response.body;
+                print('responseBody = $responseBody');
+                // var responseTitle = jsonDecode(responseBody)['title'] ?? "";
+                var responseTitle = '';
+                if (response.statusCode == 201) {
+                  print('Evento agendado com sucesso! ' +
+                      'Status Code: ${response.statusCode}');
+                  //   String userName = jsonDecode(responseBody)['name'] ?? "";
+                  //   String userEmail = jsonDecode(responseBody)['email'] ?? "";
+                  //   String userPhone = jsonDecode(responseBody)['phone'] ?? "";
+                  //   int userId = jsonDecode(responseBody)['id'] ?? "";
+                  //   userdata.write('userIsLogged', true);
+                  //   userdata.write('userName', userName);
+                  //   userdata.write('userEmail', userEmail);
+                  //   userdata.write('userPhone', userPhone);
+                  //   userdata.write('userId', userId);
+                  Navigator.pushNamed(context, ProfileScreen.id);
+                } else {
+                  print('ERRO! ' + 'Status Code: ${response.statusCode}');
+                  print(responseTitle);
+                  setState(
+                    () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text('Ops... Algo deu errado. $sadEmoji'),
+                          content: Text(
+                              '$responseTitle\n\nStatusCode: ${response.statusCode}'),
+                          elevation: 24.0,
+                        ),
+                        barrierDismissible: true,
+                      );
+                    },
+                  );
+                }
+                ;
               },
-              // onPressed: () async {
-              //   Pub currentPub = Pub(
-              //     id: null,
-              //     name: name,
-              //     email: email,
-              //     phone: phone,
-              //     password: password,
-              //     cnpj: cnpj,
-              //     addressCep: addressCep,
-              //     address: address,
-              //     addressNum: addressNum,
-              //     city: city,
-              //     state: state,
-              //   );
-              //   String jsonPub = jsonEncode(currentPub);
-              //   var response = await Backend.postPub(jsonPub);
-              //   String responseBody = response.body;
-              //   var responseTitle = jsonDecode(responseBody)['title'] ?? "";
-              //   if (response.statusCode == 201) {
-              //     print('Pub cadastrado! ' +
-              //         'Status Code: ${response.statusCode}');
-              //   } else {
-              //     print('ERRO! ' + 'Status Code: ${response.statusCode}');
-              //     print(responseTitle);
-              //     setState(() {
-              //       showDialog(
-              //         context: context,
-              //         builder: (_) => AlertDialog(
-              //           title: Text('Ops... Algo deu errado. $sadEmoji'),
-              //           content: Text(
-              //               '$responseTitle\n\nStatusCode: ${response.statusCode}'),
-              //           elevation: 24.0,
-              //         ),
-              //         barrierDismissible: true,
-              //       );
-              //     },);
-              //   }
-              // },
             ),
           ],
         ),

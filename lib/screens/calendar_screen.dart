@@ -124,8 +124,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
             // prefs.setString("events", json.encode(encodeMap(_events)));
 
             print('timeFormated = $timeFormated');
-            ShowSchedule showSchedule = ShowSchedule(
-                pubId: 3, bandId: 3, date: selectedDate, time: timeFormated);
+            // ShowSchedule showSchedule = ShowSchedule(
+            //     pubId: 3, bandId: 3, date: selectedDate, time: timeFormated);
             // await postShowToAPI(showSchedule);
 
             // showDialog(

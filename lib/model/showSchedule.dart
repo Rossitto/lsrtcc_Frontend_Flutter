@@ -6,34 +6,46 @@ class ShowSchedule {
   final int _id;
   int _pubId;
   int _bandId;
-  dynamic _date;
-  dynamic _time;
+  // dynamic _date;
+  // dynamic _time;
+  DateTime _show_datetime;
+  bool _confirmed;
+  DateTime _confirmed_at;
+  DateTime _requested_at;
 
   ShowSchedule(
       {int id,
       @required int pubId,
       @required int bandId,
-      @required date,
-      @required time})
+      @required DateTime show_datetime,
+      bool confirmed,
+      DateTime confirmed_at,
+      DateTime requested_at})
       : _id = id,
         _pubId = pubId,
         _bandId = bandId,
-        _date = date,
-        _time = time;
+        _show_datetime = show_datetime,
+        _confirmed = confirmed,
+        _confirmed_at = confirmed_at,
+        _requested_at = requested_at;
 
   ShowSchedule copyWith({
     int id,
     int pubId,
     int bandId,
-    dynamic date,
-    dynamic time,
+    DateTime show_datetime,
+    bool confirmed,
+    DateTime confirmed_at,
+    DateTime requested_at,
   }) {
     return ShowSchedule(
       id: id ?? this._id,
       pubId: pubId ?? this._pubId,
       bandId: bandId ?? this._bandId,
-      date: date ?? this._date,
-      time: time ?? this._time,
+      show_datetime: show_datetime ?? this._show_datetime,
+      confirmed: confirmed ?? this._confirmed,
+      confirmed_at: confirmed_at ?? this._confirmed_at,
+      requested_at: requested_at ?? this._requested_at,
     );
   }
 
@@ -42,8 +54,10 @@ class ShowSchedule {
       'id': _id,
       'pub_id': _pubId,
       'band_id': _bandId,
-      'date': _date,
-      'time': _time,
+      'show_datetime': _show_datetime,
+      'confirmed': _confirmed,
+      'confirmed_at': _confirmed_at,
+      'requested_at': _requested_at,
     };
   }
 
@@ -54,8 +68,10 @@ class ShowSchedule {
       id: map['id'],
       pubId: map['pub_id'],
       bandId: map['band_id'],
-      date: map['date'],
-      time: map['time'],
+      show_datetime: map['show_datetime'],
+      confirmed: map['confirmed'],
+      confirmed_at: map['confirmed_at'],
+      requested_at: map['requested_at'],
     );
   }
 
@@ -66,7 +82,7 @@ class ShowSchedule {
 
   @override
   String toString() {
-    return 'ShowSchedule(id: $_id, pub_id: $_pubId, band_id: $_bandId, date: $_date, time: $_time)';
+    return 'ShowSchedule(id: $_id, pub_id: $_pubId, band_id: $_bandId, show_datetime: $_show_datetime, confirmed: $_confirmed, confirmed_at: $_confirmed_at, requested_at: $_requested_at)';
   }
 
   @override
@@ -77,8 +93,10 @@ class ShowSchedule {
         o._id == _id &&
         o._pubId == _pubId &&
         o._bandId == _bandId &&
-        o._date == _date &&
-        o._time == _time;
+        o._show_datetime == _show_datetime &&
+        o._confirmed == _confirmed &&
+        o._confirmed_at == _confirmed_at &&
+        o._requested_at == _requested_at;
   }
 
   @override
@@ -86,7 +104,9 @@ class ShowSchedule {
     return _id.hashCode ^
         _pubId.hashCode ^
         _bandId.hashCode ^
-        _date.hashCode ^
-        _time.hashCode;
+        _show_datetime.hashCode ^
+        _confirmed.hashCode ^
+        _confirmed_at.hashCode ^
+        _requested_at.hashCode;
   }
 }

@@ -58,21 +58,14 @@ class Backend {
     );
   }
 
-// TODO: get method
-  // static Future<http.Response> getData(url) {
-  //   return http.get(url);
-  // }
-
-// TODO:  se não usar, excluir esse método abaixo!
-  // static Future<bool> validatePostUser(jsonUser) async {
-  //   http.Response response = await postUser(jsonUser);
-
-  //   if (response.statusCode == 201) {
-  //     return true;
-  //   } else {
-  //     print(response.statusCode);
-  //     return false;
-  //   }
-  // }
-
+  static Future<http.Response> putShow(String jsonShow, int id) {
+    return http.post(
+      'http://localhost:8080/shows/$id',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Accept': 'application/json; charset=UTF-8'
+      },
+      body: jsonShow,
+    );
+  }
 }

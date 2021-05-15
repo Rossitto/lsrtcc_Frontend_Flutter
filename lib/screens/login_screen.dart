@@ -105,6 +105,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   String userEmail = jsonDecode(responseBody)['email'] ?? "";
                   String userPhone = jsonDecode(responseBody)['phone'] ?? "";
                   int userId = jsonDecode(responseBody)['id'] ?? "";
+                  userdata.write('userIsLogged', true);
+                  userdata.write('userName', userName);
+                  userdata.write('userEmail', userEmail);
+                  userdata.write('userPhone', userPhone);
+                  userdata.write('userId', userId);
+                  Navigator.pushNamed(context, ProfileScreen.id);
                   // SharedPreferences prefs =
                   //     await SharedPreferences.getInstance();
                   // prefs.setString('userLoggedInResponseBody', responseBody);
@@ -112,12 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   // prefs.setString('userLoggedInEmail', userEmail);
                   // prefs.setString('userLoggedInPhone', userPhone);
                   // prefs.setInt('userLoggedInId', userId);
-                  userdata.write('userIsLogged', true);
-                  userdata.write('userName', userName);
-                  userdata.write('userEmail', userEmail);
-                  userdata.write('userPhone', userPhone);
-                  userdata.write('userId', userId);
-                  Navigator.pushNamed(context, ProfileScreen.id);
+
                 } else {
                   print('ERRO! ' + 'Status Code: ${response.statusCode}');
                   setState(() {
