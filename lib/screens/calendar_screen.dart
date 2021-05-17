@@ -187,33 +187,33 @@ class _CalendarScreenState extends State<CalendarScreen> {
     }
   }
 
-  postShowToAPI(ShowSchedule showSchedule) async {
-    print(showSchedule);
-    String jsonShow = showSchedule.toJson();
-    // String jsonShow = jsonEncode(showSchedule);
-    var response = await Backend.postShow(jsonShow);
-    String responseBody = response.body;
-    var responseTitle = jsonDecode(responseBody)['title'] ?? "";
-    if (response.statusCode == 201) {
-      print('Show agendado! ' + 'Status Code: ${response.statusCode}');
-    } else {
-      print('ERRO! ' + 'Status Code: ${response.statusCode}');
-      // print(response.body);
-      print(responseTitle);
-      setState(() {
-        showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            title: Text('Ops... Algo deu errado. $sadEmoji'),
-            content:
-                Text('$responseTitle\n\nStatusCode: ${response.statusCode}'),
-            elevation: 24.0,
-          ),
-          barrierDismissible: true,
-        );
-      });
-    }
-  }
+  // postShowToAPI(ShowSchedule showSchedule) async {
+  //   print(showSchedule);
+  // var jsonShow = showSchedule.toJson();
+  // String jsonShow = jsonEncode(showSchedule);
+  // var response = await Backend.postShow(jsonShow);
+  //   String responseBody = response.body;
+  //   var responseTitle = jsonDecode(responseBody)['title'] ?? "";
+  //   if (response.statusCode == 201) {
+  //     print('Show agendado! ' + 'Status Code: ${response.statusCode}');
+  //   } else {
+  //     print('ERRO! ' + 'Status Code: ${response.statusCode}');
+  //     // print(response.body);
+  //     print(responseTitle);
+  //     setState(() {
+  //       showDialog(
+  //         context: context,
+  //         builder: (_) => AlertDialog(
+  //           title: Text('Ops... Algo deu errado. $sadEmoji'),
+  //           content:
+  //               Text('$responseTitle\n\nStatusCode: ${response.statusCode}'),
+  //           elevation: 24.0,
+  //         ),
+  //         barrierDismissible: true,
+  //       );
+  //     });
+  //   }
+  // }
 }
 
 

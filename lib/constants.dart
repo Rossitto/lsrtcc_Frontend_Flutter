@@ -1,5 +1,6 @@
 import 'package:emojis/emojis.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,
@@ -49,3 +50,8 @@ const sadEmoji = Emojis.cryingFace;
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
 //   prefs.setString('$varName', "$varValue");
 // }
+
+String nowFormatted = DateFormat("yyyy-MM-ddTHH:mm").format(DateTime.now());
+
+String formatTimestamp(DateTime timestamp) =>
+    DateFormat("yyyy-MM-ddTHH:mm").format(timestamp);

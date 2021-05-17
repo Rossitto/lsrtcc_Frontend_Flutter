@@ -47,7 +47,7 @@ class Backend {
     );
   }
 
-  static Future<http.Response> postShow(String jsonShow) {
+  static Future<http.Response> postShow(var jsonShow) {
     return http.post(
       'http://localhost:8080/shows',
       headers: <String, String>{

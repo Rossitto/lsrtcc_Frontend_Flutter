@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
@@ -9,6 +8,7 @@ import 'package:lsrtcc_flutter/constants.dart';
 import 'package:lsrtcc_flutter/model/showSchedule.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
+import 'package:intl/intl.dart';
 
 class DateTimePicker extends StatefulWidget {
   static const String id = 'dateTimePicker_screen';
@@ -97,6 +97,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
     var dataFormatada = formatDate(DateTime.now(), [dd, '/', mm, '/', yyyy]);
     // print('dataFormatada = $dataFormatada');
     _dateController.text = dataFormatada;
+
+    var selectedDateISO = formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]);
+    _dateISOController.text = selectedDateISO;
 
     var horaFormatada = formatDate(
         DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
@@ -206,43 +209,46 @@ class _DateTimePickerState extends State<DateTimePicker> {
               text: 'SALVAR',
               onPressed: () async {
                 print('_dateController.text: ${_dateController.text}');
+                print('_dateISOController.text: ${_dateISOController.text}');
                 print('_timeController.text: ${_timeController.text}');
 
                 var showTimestamp = DateTime.parse(
                     "${_dateISOController.text} ${_timeController.text}");
                 print('showTimestamp = $showTimestamp');
+
+                var showTimestampFormatted = formatTimestamp(showTimestamp);
+                print('showTimestampFormatted = $showTimestampFormatted');
+
                 // TODO : pegar o Pub ID certo ao postar ShowSchedule
                 // TODO : pegar o Band ID certo ao postar ShowSchedule
                 ShowSchedule currentShow = ShowSchedule(
-                  pubId: 2,
-                  bandId: 2,
-                  show_datetime: showTimestamp,
+                  id: null,
+                  pub_id: 2,
+                  band_id: 2,
+                  show_datetime: showTimestampFormatted.toString(),
+                  confirmed: false,
+                  confirmed_at: null,
+                  requested_at: nowFormatted.toString(),
                 );
-
+                // print('DateTime.now() = ${DateTime.now()}');
+                print('currentShow = $currentShow');
                 String jsonShow = jsonEncode(currentShow);
                 print('jsonShow = $jsonShow');
+
                 // TODO: se show já existir = PUT em vez de POST e enviar o ID do show na URL.
+
                 var response = await Backend.postShow(jsonShow);
                 String responseBody = response.body;
                 print('responseBody = $responseBody');
-                // var responseTitle = jsonDecode(responseBody)['title'] ?? "";
-                var responseTitle = '';
                 if (response.statusCode == 201) {
                   print('Evento agendado com sucesso! ' +
                       'Status Code: ${response.statusCode}');
-                  //   String userName = jsonDecode(responseBody)['name'] ?? "";
-                  //   String userEmail = jsonDecode(responseBody)['email'] ?? "";
-                  //   String userPhone = jsonDecode(responseBody)['phone'] ?? "";
-                  //   int userId = jsonDecode(responseBody)['id'] ?? "";
-                  //   userdata.write('userIsLogged', true);
-                  //   userdata.write('userName', userName);
-                  //   userdata.write('userEmail', userEmail);
-                  //   userdata.write('userPhone', userPhone);
-                  //   userdata.write('userId', userId);
+                  // String showId = jsonDecode(responseBody)['id'] ?? "";
                   Navigator.pushNamed(context, ProfileScreen.id);
                 } else {
+                  var responseTitle =
+                      jsonDecode(responseBody)['title'] ?? "Erro";
                   print('ERRO! ' + 'Status Code: ${response.statusCode}');
-                  print(responseTitle);
                   setState(
                     () {
                       showDialog(
@@ -258,7 +264,6 @@ class _DateTimePickerState extends State<DateTimePicker> {
                     },
                   );
                 }
-                ;
               },
             ),
           ],

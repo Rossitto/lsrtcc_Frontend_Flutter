@@ -1,29 +1,27 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 class ShowSchedule {
   final int _id;
-  int _pubId;
-  int _bandId;
+  int _pub_id;
+  int _band_id;
+  String _show_datetime;
+  bool _confirmed;
+  String _confirmed_at;
+  String _requested_at;
   // dynamic _date;
   // dynamic _time;
-  DateTime _show_datetime;
-  bool _confirmed;
-  DateTime _confirmed_at;
-  DateTime _requested_at;
 
   ShowSchedule(
       {int id,
-      @required int pubId,
-      @required int bandId,
-      @required DateTime show_datetime,
+      @required int pub_id,
+      @required int band_id,
+      @required String show_datetime,
       bool confirmed,
-      DateTime confirmed_at,
-      DateTime requested_at})
+      String confirmed_at,
+      String requested_at})
       : _id = id,
-        _pubId = pubId,
-        _bandId = bandId,
+        _pub_id = pub_id,
+        _band_id = band_id,
         _show_datetime = show_datetime,
         _confirmed = confirmed,
         _confirmed_at = confirmed_at,
@@ -31,17 +29,17 @@ class ShowSchedule {
 
   ShowSchedule copyWith({
     int id,
-    int pubId,
-    int bandId,
-    DateTime show_datetime,
+    int pub_id,
+    int band_id,
+    String show_datetime,
     bool confirmed,
-    DateTime confirmed_at,
-    DateTime requested_at,
+    String confirmed_at,
+    String requested_at,
   }) {
     return ShowSchedule(
       id: id ?? this._id,
-      pubId: pubId ?? this._pubId,
-      bandId: bandId ?? this._bandId,
+      pub_id: pub_id ?? this._pub_id,
+      band_id: band_id ?? this._band_id,
       show_datetime: show_datetime ?? this._show_datetime,
       confirmed: confirmed ?? this._confirmed,
       confirmed_at: confirmed_at ?? this._confirmed_at,
@@ -49,64 +47,83 @@ class ShowSchedule {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': _id,
-      'pub_id': _pubId,
-      'band_id': _bandId,
-      'show_datetime': _show_datetime,
-      'confirmed': _confirmed,
-      'confirmed_at': _confirmed_at,
-      'requested_at': _requested_at,
-    };
-  }
+  ShowSchedule.fromJson(Map<String, dynamic> json)
+      : _id = json['id'],
+        _pub_id = json['pub_id'],
+        _band_id = json['band_id'],
+        _show_datetime = json['show_datetime'],
+        _confirmed = json['confirmed'],
+        _confirmed_at = json['confirmed_at'],
+        _requested_at = json['requested_at'];
 
-  factory ShowSchedule.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
+  Map<String, dynamic> toJson() => {
+        'id': _id,
+        'pub_id': _pub_id,
+        'band_id': _band_id,
+        'show_datetime': _show_datetime,
+        'confirmed': _confirmed,
+        'confirmed_at': _confirmed_at,
+        'requested_at': _requested_at
+      };
 
-    return ShowSchedule(
-      id: map['id'],
-      pubId: map['pub_id'],
-      bandId: map['band_id'],
-      show_datetime: map['show_datetime'],
-      confirmed: map['confirmed'],
-      confirmed_at: map['confirmed_at'],
-      requested_at: map['requested_at'],
-    );
-  }
+  // Map<String, dynamic> toMap() {
+  //   return {
+  //     'id': _id,
+  //     'pub_id': _pub_id,
+  //     'band_id': _band_id,
+  //     'show_datetime': _show_datetime,
+  //     'confirmed': _confirmed,
+  //     'confirmed_at': _confirmed_at,
+  //     'requested_at': _requested_at,
+  //   };
+  // }
 
-  String toJson() => json.encode(toMap());
+  // factory ShowSchedule.fromMap(Map<String, dynamic> map) {
+  //   if (map == null) return null;
 
-  factory ShowSchedule.fromJson(String source) =>
-      ShowSchedule.fromMap(json.decode(source));
+  //   return ShowSchedule(
+  //     id: map['id'],
+  //     pub_id: map['pub_id'],
+  //     band_id: map['band_id'],
+  //     show_datetime: map['show_datetime'],
+  //     confirmed: map['confirmed'],
+  //     confirmed_at: map['confirmed_at'],
+  //     requested_at: map['requested_at'],
+  //   );
+  // }
 
-  @override
-  String toString() {
-    return 'ShowSchedule(id: $_id, pub_id: $_pubId, band_id: $_bandId, show_datetime: $_show_datetime, confirmed: $_confirmed, confirmed_at: $_confirmed_at, requested_at: $_requested_at)';
-  }
+  // String toJson() => json.encode(toMap());
 
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+  // factory ShowSchedule.fromJson(String source) =>
+  //     ShowSchedule.fromMap(json.decode(source));
 
-    return o is ShowSchedule &&
-        o._id == _id &&
-        o._pubId == _pubId &&
-        o._bandId == _bandId &&
-        o._show_datetime == _show_datetime &&
-        o._confirmed == _confirmed &&
-        o._confirmed_at == _confirmed_at &&
-        o._requested_at == _requested_at;
-  }
+  // @override
+  // String toString() {
+  //   return 'ShowSchedule(id: $_id, pub_id: $_pub_id, band_id: $_band_id, show_datetime: $_show_datetime, confirmed: $_confirmed, confirmed_at: $_confirmed_at, requested_at: $_requested_at)';
+  // }
 
-  @override
-  int get hashCode {
-    return _id.hashCode ^
-        _pubId.hashCode ^
-        _bandId.hashCode ^
-        _show_datetime.hashCode ^
-        _confirmed.hashCode ^
-        _confirmed_at.hashCode ^
-        _requested_at.hashCode;
-  }
+  // @override
+  // bool operator ==(Object o) {
+  //   if (identical(this, o)) return true;
+
+  //   return o is ShowSchedule &&
+  //       o._id == _id &&
+  //       o._pub_id == _pub_id &&
+  //       o._band_id == _band_id &&
+  //       o._show_datetime == _show_datetime &&
+  //       o._confirmed == _confirmed &&
+  //       o._confirmed_at == _confirmed_at &&
+  //       o._requested_at == _requested_at;
+  // }
+
+  // @override
+  // int get hashCode {
+  //   return _id.hashCode ^
+  //       _pub_id.hashCode ^
+  //       _band_id.hashCode ^
+  //       _show_datetime.hashCode ^
+  //       _confirmed.hashCode ^
+  //       _confirmed_at.hashCode ^
+  //       _requested_at.hashCode;
+  // }
 }
