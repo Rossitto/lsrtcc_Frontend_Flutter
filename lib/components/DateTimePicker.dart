@@ -9,6 +9,7 @@ import 'package:lsrtcc_flutter/model/showSchedule.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DateTimePicker extends StatefulWidget {
   static const String id = 'dateTimePicker_screen';
@@ -116,7 +117,19 @@ class _DateTimePickerState extends State<DateTimePicker> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Agendar Evento'),
+        // title: Text('Agendar Evento', ),
+        title: Text(
+          'Agendar Evento',
+          style: GoogleFonts.lato(
+            textStyle: TextStyle(
+              color: Colors.white,
+              letterSpacing: .5,
+              fontSize: 26,
+              fontWeight: FontWeight.w700,
+              fontStyle: FontStyle.normal,
+            ),
+          ),
+        ),
       ),
       body: Container(
         width: _width,
@@ -129,10 +142,20 @@ class _DateTimePickerState extends State<DateTimePicker> {
               children: <Widget>[
                 Text(
                   'Data do Evento',
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.5),
+                  style: GoogleFonts.lato(
+                    textStyle: TextStyle(
+                      color: Colors.blue,
+                      letterSpacing: .5,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.normal,
+                    ),
+                  ),
+                  // TextStyle(
+                  //   fontStyle: FontStyle.italic,
+                  //   fontWeight: FontWeight.w600,
+                  //   letterSpacing: 0.5,
+                  // ),
                 ),
                 InkWell(
                   onTap: () {
@@ -167,10 +190,15 @@ class _DateTimePickerState extends State<DateTimePicker> {
               children: <Widget>[
                 Text(
                   'Hora do Evento',
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.5),
+                  style: GoogleFonts.lato(
+                    textStyle: TextStyle(
+                      color: Colors.blue,
+                      letterSpacing: .5,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.normal,
+                    ),
+                  ),
                 ),
                 InkWell(
                   onTap: () {
@@ -244,7 +272,22 @@ class _DateTimePickerState extends State<DateTimePicker> {
                   print('Evento agendado com sucesso! ' +
                       'Status Code: ${response.statusCode}');
                   // String showId = jsonDecode(responseBody)['id'] ?? "";
-                  Navigator.pushNamed(context, ProfileScreen.id);
+
+                  // TODO: levar para a tela de perfil
+                  // Navigator.pushNamed(context, ProfileScreen.id);
+                  setState(
+                    () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text('OK! $happyEmoji'),
+                          content: Text('Evento pré-agendado com sucesso!'),
+                          elevation: 24.0,
+                        ),
+                        barrierDismissible: true,
+                      );
+                    },
+                  );
                 } else {
                   var responseTitle =
                       jsonDecode(responseBody)['title'] ?? "Erro";

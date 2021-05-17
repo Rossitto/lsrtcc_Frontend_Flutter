@@ -46,6 +46,8 @@ bool isNumeric(String str) {
 
 const sadEmoji = Emojis.cryingFace;
 
+const happyEmoji = Emojis.smilingFace;
+
 // addStringToSP(String varName, String varValue) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
 //   prefs.setString('$varName', "$varValue");

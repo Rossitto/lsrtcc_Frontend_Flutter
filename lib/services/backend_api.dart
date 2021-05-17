@@ -68,4 +68,16 @@ class Backend {
       body: jsonShow,
     );
   }
+
+  static Future<http.Response> getBandsByUser(int userId) {
+    var response = http.get(
+      'http://localhost:8080/bands/user/$userId',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Accept': 'application/json; charset=UTF-8'
+      },
+    );
+    // print('getBandsByUser response: $response');
+    return response;
+  }
 }

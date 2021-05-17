@@ -20,18 +20,24 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   final userdata = GetStorage();
 
+  int get userId => userdata.read('userId');
   String get userName => userdata.read('userName');
+  var bands;
+  var bandName_1;
 
   @override
   void initState() {
     super.initState();
-    var userName = userdata.read('userName');
+    var userName = userdata.read('userName') ?? '';
     tabController = TabController(length: 5, vsync: this);
+    bandName_1 = apiGetBandsByUser();
+    // print('initState bands: $bands');
   }
 
   @override
   Widget build(BuildContext context) {
     print('context userName: ${userName}');
+    print('context bands: $bands');
 
     return Scaffold(
       appBar: AppBar(
@@ -199,7 +205,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             ),
             Container(
               padding: EdgeInsets.only(top: 100),
-              child: Text('COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS'),
+              // TODO: COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS
+              child: Text('Banda: $bandName_1'),
             ),
           ],
         ),
@@ -246,5 +253,24 @@ class _ProfileScreenState extends State<ProfileScreen>
         ),
       ),
     );
+  }
+
+  apiGetBandsByUser() async {
+    print('apiGetBandsByUser userId: $userId');
+
+    var response = await Backend.getBandsByUser(userId);
+
+    String responseBody = response.body;
+    print('apiGetBandsByUser responseBody: $responseBody');
+
+    if (response.statusCode == 200) {
+      String bandName_1 = jsonDecode(responseBody)[0]['name'] ?? "";
+      print('apiGetBandsByUser bandName_1: $bandName_1');
+
+      setState(() {
+        return bandName_1;
+      });
+    }
+    return;
   }
 }

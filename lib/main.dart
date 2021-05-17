@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
@@ -33,6 +34,7 @@ Future<void> main() async {
 
   runApp(
     MaterialApp(
+      theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -44,9 +46,9 @@ Future<void> main() async {
       debugShowCheckedModeBanner: false,
       initialRoute:
           // ! tela inicial TESTE:
-          WelcomeScreenDebug.id,
-      // * tela inicial verdadeira:
-      // userdata.read('userIsLogged') ? ProfileScreen.id : WelcomeScreen.id,
+          // WelcomeScreenDebug.id,
+          // * tela inicial verdadeira:
+          userdata.read('userIsLogged') ? ProfileScreen.id : WelcomeScreen.id,
       routes: {
         WelcomeScreenDebug.id: (context) => WelcomeScreenDebug(),
         WelcomeScreen.id: (context) => WelcomeScreen(),
