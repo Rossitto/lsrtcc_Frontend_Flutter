@@ -32,7 +32,7 @@ class User {
 
   // User();
 
-// Sem esses métodos, não é possível transformar um objeto dessa classe em um arquivo JSON!
+// Sem esses métodos, não é possível transformar um objeto dessa classe em um arquivo JSON! Não chamo eles exatamente, mas sem eles, jsonEncode() não roda: https://www.codegrepper.com/code-examples/dart/Converting+object+to+an+encodable+object+failed%3A+Instance+of+%27DioError%27
   User.fromJson(Map<String, dynamic> json)
       : _id = json['id'],
         _name = json['name'],
