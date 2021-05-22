@@ -106,13 +106,13 @@ class _WelcomeScreenDebugState extends State<WelcomeScreenDebug>
                 onPressed: () {
                   Navigator.pushNamed(context, RegisterPubScreen.id);
                 }),
-            RoundedButton(
-              color: Colors.lightBlueAccent,
-              text: 'Agenda',
-              onPressed: () {
-                Navigator.pushNamed(context, CalendarScreen.id);
-              },
-            ),
+            // RoundedButton(
+            //   color: Colors.lightBlueAccent,
+            //   text: 'Agenda (deprecated)',
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, CalendarScreen.id);
+            //   },
+            // ),
             RoundedButton(
               color: Colors.lightBlueAccent,
               text: 'Perfil',
@@ -122,7 +122,7 @@ class _WelcomeScreenDebugState extends State<WelcomeScreenDebug>
             ),
             RoundedButton(
               color: Colors.lightBlueAccent,
-              text: 'DateTimePicker',
+              text: 'Agendar Evento',
               onPressed: () {
                 Navigator.pushNamed(context, DateTimePicker.id);
               },

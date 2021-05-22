@@ -46,9 +46,9 @@ Future<void> main() async {
       debugShowCheckedModeBanner: false,
       initialRoute:
           // ! tela inicial TESTE:
-          // WelcomeScreenDebug.id,
-          // * tela inicial verdadeira:
-          userdata.read('userIsLogged') ? ProfileScreen.id : WelcomeScreen.id,
+          WelcomeScreenDebug.id,
+      // * tela inicial verdadeira:
+      // userdata.read('userIsLogged') ? ProfileScreen.id : WelcomeScreen.id,
       routes: {
         WelcomeScreenDebug.id: (context) => WelcomeScreenDebug(),
         WelcomeScreen.id: (context) => WelcomeScreen(),
