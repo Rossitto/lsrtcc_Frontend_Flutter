@@ -10,7 +10,9 @@ import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/screens/login_screen.dart';
 import 'package:lsrtcc_flutter/screens/registration_screen.dart';
+import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:lsrtcc_flutter/services/user_preferences.dart';
+import 'package:provider/provider.dart';
 import 'components/DateTimePicker.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
@@ -33,33 +35,36 @@ Future<void> main() async {
   // initializeDateFormatting();
 
   runApp(
-    MaterialApp(
-      theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale("pt"),
-      ],
-      debugShowCheckedModeBanner: false,
-      initialRoute:
-          // ! tela inicial TESTE:
-          WelcomeScreenDebug.id,
-      // * tela inicial verdadeira:
-      // userdata.read('userIsLogged') ? ProfileScreen.id : WelcomeScreen.id,
-      routes: {
-        WelcomeScreenDebug.id: (context) => WelcomeScreenDebug(),
-        WelcomeScreen.id: (context) => WelcomeScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
-        RegistrationScreen.id: (context) => RegistrationScreen(),
-        RegisterBandScreen.id: (context) => RegisterBandScreen(),
-        RegisterPubScreen.id: (context) => RegisterPubScreen(),
-        CalendarScreen.id: (context) => CalendarScreen(),
-        ProfileScreen.id: (context) => ProfileScreen(),
-        DateTimePicker.id: (context) => DateTimePicker(),
-      },
+    ChangeNotifierProvider(
+      create: (context) => ApiData(),
+      child: MaterialApp(
+        theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale("pt"),
+        ],
+        debugShowCheckedModeBanner: false,
+        initialRoute:
+            // ! tela inicial TESTE:
+            // WelcomeScreenDebug.id,
+            // * tela inicial verdadeira:
+            userdata.read('userIsLogged') ? ProfileScreen.id : WelcomeScreen.id,
+        routes: {
+          WelcomeScreenDebug.id: (context) => WelcomeScreenDebug(),
+          WelcomeScreen.id: (context) => WelcomeScreen(),
+          LoginScreen.id: (context) => LoginScreen(),
+          RegistrationScreen.id: (context) => RegistrationScreen(),
+          RegisterBandScreen.id: (context) => RegisterBandScreen(),
+          RegisterPubScreen.id: (context) => RegisterPubScreen(),
+          CalendarScreen.id: (context) => CalendarScreen(),
+          ProfileScreen.id: (context) => ProfileScreen(),
+          DateTimePicker.id: (context) => DateTimePicker(),
+        },
+      ),
     ),
   );
 }

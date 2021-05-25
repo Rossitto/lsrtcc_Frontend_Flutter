@@ -6,6 +6,8 @@ import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
+import 'package:provider/provider.dart';
+import 'package:lsrtcc_flutter/services/api_data.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String id = 'profile_screen';
@@ -17,28 +19,30 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   TabController tabController;
-
   final userdata = GetStorage();
-
-  int get userId => userdata.read('userId');
-  String get userName => userdata.read('userName');
-  var bands;
-  var bandName_1;
+  int userId;
+  String userName;
+  String bandName_1;
 
   @override
   void initState() {
+    userId = userdata.read('userId');
+    userName = userdata.read('userName') ?? '';
+    tabController = TabController(length: 4, vsync: this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
+    });
+    bandName_1 = userdata.read('bandName_1');
     super.initState();
-    var userName = userdata.read('userName') ?? '';
-    tabController = TabController(length: 5, vsync: this);
-    bandName_1 = apiGetBandsByUser();
-    // print('initState bands: $bands');
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('context userName: ${userName}');
-    print('context bands: $bands');
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -139,10 +143,20 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                       ],
                     ),
-                    child: CircleAvatar(
-                      radius: 100,
-                      backgroundImage: AssetImage('images/profile1.jpg'),
+                    child: Hero(
+                      tag: 'logo',
+                      child: CircleAvatar(
+                        radius: 100,
+                        backgroundImage: AssetImage('images/logo.png'),
+                      ),
                     ),
+                    // child: Hero(
+                    //   tag: 'logo',
+                    //   child: Container(
+                    //     height: 200.0,
+                    //     child: Image.asset('images/logo.png'),
+                    //   ),
+                    // ),
                   ),
                   //   ],
                   // ),
@@ -150,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     height: 25,
                   ),
                   Text(
-                    userName,
+                    userName ?? '',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w300,
@@ -206,12 +220,13 @@ class _ProfileScreenState extends State<ProfileScreen>
             Container(
               padding: EdgeInsets.only(top: 100),
               // TODO: COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS
-              child: Text('Banda: $bandName_1'),
+              child: Text('Banda: ${bandName_1}'),
             ),
           ],
         ),
       ),
       bottomNavigationBar: Material(
+        elevation: 30.0,
         color: Colors.blueAccent,
         shadowColor: Colors.black.withOpacity(0.5),
         child: TabBar(
@@ -224,12 +239,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                 color: Colors.white,
               ),
             ),
-            Tab(
-              icon: Icon(
-                Icons.chat,
-                color: Colors.white,
-              ),
-            ),
+            // Tab(
+            //   icon: Icon(
+            //     Icons.chat,
+            //     color: Colors.white,
+            //   ),
+            // ),
             Tab(
               icon: Icon(
                 Icons.search,
@@ -253,24 +268,5 @@ class _ProfileScreenState extends State<ProfileScreen>
         ),
       ),
     );
-  }
-
-  apiGetBandsByUser() async {
-    print('apiGetBandsByUser userId: $userId');
-
-    var response = await Backend.getBandsByUser(userId);
-
-    String responseBody = response.body;
-    print('apiGetBandsByUser responseBody: $responseBody');
-
-    if (response.statusCode == 200) {
-      String bandName_1 = jsonDecode(responseBody)[0]['name'] ?? "";
-      print('apiGetBandsByUser bandName_1: $bandName_1');
-
-      setState(() {
-        return bandName_1;
-      });
-    }
-    return;
   }
 }
