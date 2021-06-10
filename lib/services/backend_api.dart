@@ -4,6 +4,7 @@ import 'dart:convert';
 class Backend {
   // String url;
   // Backend(this.url);
+  String host = '192.168.1.75';
 
   static Future<http.Response> postUser(String jsonUser) {
     return http.post(
@@ -72,6 +73,18 @@ class Backend {
   static Future<http.Response> getBandsByUser(int userId) {
     var response = http.get(
       'http://localhost:8080/bands/user/$userId',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Accept': 'application/json; charset=UTF-8'
+      },
+    );
+    // print('getBandsByUser response: $response');
+    return response;
+  }
+
+  static Future<http.Response> getPubsByUser(int userId) {
+    var response = http.get(
+      'http://localhost:8080/pubs/user/$userId',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         // 'Accept': 'application/json; charset=UTF-8'

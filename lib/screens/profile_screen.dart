@@ -26,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   int userId;
   String userName;
   String bandName_1;
+  String pubName_1;
 
   @override
   void initState() {
@@ -36,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
     });
     bandName_1 = userdata.read('bandName_1');
+    pubName_1 = userdata.read('pubName_1');
     super.initState();
   }
 
@@ -235,8 +237,14 @@ class _ProfileScreenState extends State<ProfileScreen>
               padding: EdgeInsets.only(top: 100),
               // TODO: COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS
               child:
-                  // ListViewHome(),
-                  Text('Banda: ${bandName_1}'),
+                  // // EXCEPTION: Vertical viewport was given unbounded height.
+                  // AnythingListView(
+                  //   titles: ["List 1", "List 2", "List 3"],
+                  //   onTapTile: () {
+                  //     print('Algum Card foi pressionado!');
+                  //   },
+                  // ),
+                  Text('Banda: ${bandName_1} \nPub: ${pubName_1}'),
             ),
           ],
         ),

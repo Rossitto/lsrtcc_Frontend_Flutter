@@ -74,34 +74,39 @@ class _UserBandsPubsState extends State<UserBandsPubs>
       ),
       backgroundColor: animation.value,
       body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Container(
-            padding: EdgeInsets.only(top: 20),
-            child: ListView.builder(
-                itemCount: titles.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                      child: ListTile(
-                          onTap: () {
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(titles[index] + ' pressed!'),
-                            ));
-                          },
-                          title: Text(titles[index]),
-                          subtitle: Text(subtitles[index]),
-                          leading: CircleAvatar(
-                            child: Image.asset('images/logo.png'),
-                            //     Hero(
-                            //   tag: 'logo',
-                            //   child: Container(
-                            //     child: Image.asset('images/logo.png'),
-                            //     height: 100.0,
-                            //   ),
-                            // ),
-                          ),
-                          trailing: Icon(icons[index])));
-                }),
-          )),
+        padding: EdgeInsets.symmetric(horizontal: 24.0),
+        child: Container(
+          padding: EdgeInsets.only(top: 20),
+          child: ListView.builder(
+              itemCount: titles.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    onTap: () {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text(titles[index] + ' pressed!'),
+                      ));
+                    },
+                    title: Text(titles[index]),
+                    subtitle: Text(subtitles[index]),
+                    leading: CircleAvatar(
+                      child: Image.asset('images/logo.png'),
+                      //     Hero(
+                      //   tag: 'logo',
+                      //   child: Container(
+                      //     child: Image.asset('images/logo.png'),
+                      //     height: 100.0,
+                      //   ),
+                      // ),
+                    ),
+                    trailing: Icon(
+                      icons[index],
+                    ),
+                  ),
+                );
+              }),
+        ),
+      ),
     );
   }
 }

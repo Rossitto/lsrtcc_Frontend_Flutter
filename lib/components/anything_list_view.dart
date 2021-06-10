@@ -10,33 +10,41 @@ import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:provider/provider.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
 
-class ListViewHome extends StatelessWidget {
-  final titles = ["List 1", "List 2", "List 3"];
-  final subtitles = [
-    "Here is list 1 subtitle",
-    "Here is list 2 subtitle",
-    "Here is list 3 subtitle"
-  ];
-  final icons = [Icons.ac_unit, Icons.access_alarm, Icons.access_time];
+class AnythingListView extends StatelessWidget {
+  AnythingListView(
+      {@required this.titles,
+      this.subtitles,
+      this.icons,
+      @required this.onTapTile});
+
+  final List titles;
+  final List subtitles;
+  final List icons;
+  final Function onTapTile;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return Container(
+      padding: EdgeInsets.only(top: 20),
+      child: ListView.builder(
         itemCount: titles.length,
         itemBuilder: (context, index) {
           return Card(
               child: ListTile(
-                  onTap: () {
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(titles[index] + ' pressed!'),
-                    ));
-                  },
+                  onTap: onTapTile,
+                  // () {
+                  //   Scaffold.of(context).showSnackBar(SnackBar(
+                  //     content: Text(titles[index] + ' pressed!'),
+                  //   ));
+                  // },
                   title: Text(titles[index]),
                   subtitle: Text(subtitles[index]),
                   leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://images.unsplash.com/photo-1547721064-da6cfb341d50")),
+                    child: Image.asset('images/logo.png'),
+                  ),
                   trailing: Icon(icons[index])));
-        });
+        },
+      ),
+    );
   }
 }
