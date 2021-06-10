@@ -7,6 +7,7 @@ import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
+import 'package:lsrtcc_flutter/screens/user_bands_pubs.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/screens/login_screen.dart';
 import 'package:lsrtcc_flutter/screens/registration_screen.dart';
@@ -14,6 +15,7 @@ import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:lsrtcc_flutter/services/user_preferences.dart';
 import 'package:provider/provider.dart';
 import 'components/DateTimePicker.dart';
+import 'screens/all_registrations_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/welcome_screen.dart';
@@ -63,6 +65,8 @@ Future<void> main() async {
           CalendarScreen.id: (context) => CalendarScreen(),
           ProfileScreen.id: (context) => ProfileScreen(),
           DateTimePicker.id: (context) => DateTimePicker(),
+          AllRegistrationsScreen.id: (context) => AllRegistrationsScreen(),
+          UserBandsPubs.id: (context) => UserBandsPubs(),
         },
       ),
     ),

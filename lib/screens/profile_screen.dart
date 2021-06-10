@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
+import 'package:lsrtcc_flutter/components/anything_list_view.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
+import 'package:lsrtcc_flutter/screens/all_registrations_screen.dart';
+import 'package:lsrtcc_flutter/screens/user_bands_pubs.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +64,18 @@ class _ProfileScreenState extends State<ProfileScreen>
         actions: <Widget>[
           PopupMenuButton(
             itemBuilder: (BuildContext bc) => [
-              PopupMenuItem(child: Text("Sair"), value: WelcomeScreen.id),
+              PopupMenuItem(
+                child: Text("Minhas Bandas/Pubs"),
+                value: UserBandsPubs.id,
+              ),
+              PopupMenuItem(
+                child: Text("Cadastrar Banda/Pub"),
+                value: AllRegistrationsScreen.id,
+              ),
+              PopupMenuItem(
+                child: Text("Sair"),
+                value: WelcomeScreen.id,
+              ),
             ],
             onSelected: (route) {
               print(route);
@@ -220,53 +234,66 @@ class _ProfileScreenState extends State<ProfileScreen>
             Container(
               padding: EdgeInsets.only(top: 100),
               // TODO: COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS
-              child: Text('Banda: ${bandName_1}'),
+              child:
+                  // ListViewHome(),
+                  Text('Banda: ${bandName_1}'),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: Material(
-        elevation: 30.0,
-        color: Colors.blueAccent,
-        shadowColor: Colors.black.withOpacity(0.5),
-        child: TabBar(
-          controller: tabController,
-          indicatorColor: Colors.white,
-          tabs: <Widget>[
-            Tab(
-              icon: Icon(
-                Icons.home,
-                color: Colors.white,
-              ),
-            ),
-            // Tab(
-            //   icon: Icon(
-            //     Icons.chat,
-            //     color: Colors.white,
-            //   ),
-            // ),
-            Tab(
-              icon: Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
-            ),
-            Tab(
-              icon: Icon(
-                Icons.calendar_today,
-                color: Colors.white,
-              ),
-            ),
-            Tab(
-              icon: Icon(
-                Icons.person,
-                color: Colors.white,
-                // size: 40.0,
-              ),
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Material(
+      //   elevation: 30.0,
+      //   color: Colors.blueAccent,
+      //   shadowColor: Colors.black.withOpacity(0.5),
+      //   child: TabBar(
+      //     onTap: (index) {
+      //       switch (index) {
+      //         // case 1:
+      //         //   Navigator.pushNamed(context, "/second");
+      //         //   break;
+      //         case 4:
+      //           Navigator.pushNamed(context, AllRegistrationsScreen.id);
+      //           break;
+      //       }
+      //     },
+      //     controller: tabController,
+      //     indicatorColor: Colors.white,
+      //     tabs: <Widget>[
+      //       Tab(
+      //         icon: Icon(
+      //           Icons.home,
+      //           color: Colors.white,
+      //         ),
+      //       ),
+      //       // Tab(
+      //       //   icon: Icon(
+      //       //     Icons.chat,
+      //       //     color: Colors.white,
+      //       //   ),
+      //       // ),
+      //       Tab(
+      //         icon: Icon(
+      //           Icons.search,
+      //           color: Colors.white,
+      //         ),
+      //       ),
+      //       Tab(
+      //         icon: Icon(
+      //           Icons.calendar_today,
+      //           color: Colors.white,
+      //         ),
+      //       ),
+      //       Tab(
+      //         icon: Icon(
+      //           Icons.person,
+      //           color: Colors.white,
+      //           // TODO: ir para a AllRegistrationsScreen
+      //           // size: 40.0,
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
