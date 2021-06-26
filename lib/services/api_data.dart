@@ -43,7 +43,7 @@ class ApiData extends ChangeNotifier {
     print('apiGetPubsByUser responseBody: $responseBody');
 
     // && responseBody != '[]'
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && responseBody != '[]') {
       String apiPubName_1 = jsonDecode(responseBody)[0]['name'] ?? "";
       _pubName_1 = apiPubName_1;
       print('apiGetBandsByUser pubName_1: $_pubName_1');

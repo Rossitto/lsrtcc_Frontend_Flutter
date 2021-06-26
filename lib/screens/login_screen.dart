@@ -27,10 +27,16 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     var msg_login = userdata.read('msg_login');
     if (msg_login != null) {
-      Future(() {
-        final snackBar = SnackBar(content: Text(msg_login));
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      });
+      Future(
+        () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(msg_login),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        },
+      );
     }
     userdata.remove('msg_login');
     super.initState();
