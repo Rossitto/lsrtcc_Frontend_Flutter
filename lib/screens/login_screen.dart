@@ -24,6 +24,19 @@ class _LoginScreenState extends State<LoginScreen> {
   final userdata = GetStorage();
 
   @override
+  void initState() {
+    var msg_login = userdata.read('msg_login');
+    if (msg_login != null) {
+      Future(() {
+        final snackBar = SnackBar(content: Text(msg_login));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
+    userdata.remove('msg_login');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

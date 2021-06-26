@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
+import 'package:lsrtcc_flutter/screens/login_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:emojis/emojis.dart'; // to use Emoji collection
 
@@ -16,6 +18,7 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool _showPassword = false;
   var sadEmoji = Emojis.cryingFace;
+  final userdata = GetStorage();
 
   String name;
   String email;
@@ -138,7 +141,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   if (response.statusCode == 201) {
                     print('Usuário cadastrado! ' +
                         'Status Code: ${response.statusCode}');
-                    // TODO: ir para uma tela perguntando se já tem banda/pub ou deseja cadastrar
+                    userdata.writeInMemory('msg_login',
+                        'Usuário Cadastrado com Sucesso! $happyEmoji');
+                    Navigator.pushNamed(context, LoginScreen.id);
                   } else {
                     print('ERRO! ' + 'Status Code: ${response.statusCode}');
                     print(responseTitle);
