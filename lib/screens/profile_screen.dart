@@ -35,6 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     tabController = TabController(length: 4, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
+      Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
     });
     bandName_1 = userdata.read('bandName_1');
     pubName_1 = userdata.read('pubName_1');
@@ -67,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           PopupMenuButton(
             itemBuilder: (BuildContext bc) => [
               PopupMenuItem(
-                child: Text("Minhas Bandas/Pubs"),
+                child: Text("Minha Banda/Pub"),
                 value: UserBandsPubs.id,
               ),
               PopupMenuItem(

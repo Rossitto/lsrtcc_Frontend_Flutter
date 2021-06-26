@@ -4,7 +4,7 @@ import 'dart:convert';
 class Backend {
   // String url;
   // Backend(this.url);
-  String host = '192.168.1.75';
+  // String host = '192.168.1.75';
 
   static Future<http.Response> postUser(String jsonUser) {
     return http.post(
