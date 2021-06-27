@@ -48,7 +48,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
-      reverse: true,
       scrollDirection: Axis.vertical,
       child: ConstrainedBox(
         constraints: BoxConstraints(
@@ -57,11 +56,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         child: Scaffold(
           backgroundColor: Colors.white,
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+          body: Center(
+            child: ListView(
+              shrinkWrap: true,
+              reverse: true,
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
               children: <Widget>[
                 Hero(
                   tag: 'logo',
@@ -190,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-              ],
+              ].reversed.toList(),
             ),
           ),
         ),
