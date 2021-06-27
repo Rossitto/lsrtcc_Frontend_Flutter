@@ -54,7 +54,10 @@ class _ProfileScreenState extends State<ProfileScreen>
         centerTitle: true,
         title: Text(
           'Perfil',
-          style: TextStyle(color: Colors.white70),
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 25.0,
+          ),
         ),
         elevation: 0,
         backgroundColor: Colors.blueAccent[700],

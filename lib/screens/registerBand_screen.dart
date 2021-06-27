@@ -19,7 +19,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
   String name;
   String email;
   String phone;
-  String password;
+  // String password;
   String cnpj;
   String feeBrl;
   String membersNum;
@@ -165,32 +165,32 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
               SizedBox(
                 height: 8.0,
               ),
-              TextField(
-                obscureText: !this._showPassword,
-                keyboardType:
-                    TextInputType.visiblePassword, // maybe this is unnecessary
-                onChanged: (value) {
-                  password = value.trim();
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                    labelText: 'Senha',
-                    prefixIcon: Icon(
-                      Icons.security,
-                      color: Colors.blueGrey,
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: this._showPassword
-                            ? Colors.blueAccent
-                            : Colors.grey,
-                      ),
-                      onPressed: () {
-                        setState(
-                            () => this._showPassword = !this._showPassword);
-                      },
-                    )),
-              ),
+              // TextField(
+              //   obscureText: !this._showPassword,
+              //   keyboardType:
+              //       TextInputType.visiblePassword, // maybe this is unnecessary
+              //   onChanged: (value) {
+              //     password = value.trim();
+              //   },
+              //   decoration: kTextFieldDecoration.copyWith(
+              //       labelText: 'Senha',
+              //       prefixIcon: Icon(
+              //         Icons.security,
+              //         color: Colors.blueGrey,
+              //       ),
+              //       suffixIcon: IconButton(
+              //         icon: Icon(
+              //           Icons.remove_red_eye,
+              //           color: this._showPassword
+              //               ? Colors.blueAccent
+              //               : Colors.grey,
+              //         ),
+              //         onPressed: () {
+              //           setState(
+              //               () => this._showPassword = !this._showPassword);
+              //         },
+              //       )),
+              // ),
               SizedBox(
                 height: 24.0,
               ),
@@ -205,7 +205,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                     name: name,
                     email: email,
                     phone: phone,
-                    password: password,
+                    // password: password,
                     cnpj: cnpj,
                     feeBrl: feeBrl,
                     membersNum: membersNum,

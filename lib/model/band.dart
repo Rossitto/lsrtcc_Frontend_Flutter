@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Band {
-  final int _id; //TODO: check if id will be int or String
+  final int _id;
   String _name;
   String _cnpj;
   String _feeBrl;
