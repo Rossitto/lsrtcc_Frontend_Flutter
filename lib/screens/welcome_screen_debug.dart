@@ -48,89 +48,100 @@ class _WelcomeScreenDebugState extends State<WelcomeScreenDebug>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: animation.value,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            // TODO: make this not overflow screen
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Hero(
-                    tag: 'logo',
-                    child: Container(
-                      child: Image.asset('images/logo.png'),
-                      height: 100.0,
-                    ),
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: screenHeight,
+          maxWidth: screenWidth,
+        ),
+        child: Scaffold(
+          backgroundColor: animation.value,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                // TODO: make this not overflow screen
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Hero(
+                        tag: 'logo',
+                        child: Container(
+                          child: Image.asset('images/logo.png'),
+                          height: 100.0,
+                        ),
+                      ),
+                      SizedBox(width: 8.0),
+                      TypewriterAnimatedTextKit(
+                        text: ['LSR_TCC'],
+                        textStyle: TextStyle(
+                          fontSize: 35.0,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 8.0),
-                  TypewriterAnimatedTextKit(
-                    text: ['LSR_TCC'],
-                    textStyle: TextStyle(
-                      fontSize: 35.0,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 38.0,
+                ),
+                RoundedButton(
+                    color: Colors.lightBlueAccent,
+                    text: 'Log in',
+                    onPressed: () {
+                      Navigator.pushNamed(context, LoginScreen.id);
+                    }),
+                RoundedButton(
+                    color: Colors.lightBlueAccent,
+                    text: 'Cadastrar Usuário',
+                    onPressed: () {
+                      Navigator.pushNamed(context, RegistrationScreen.id);
+                    }),
+                RoundedButton(
+                    color: Colors.lightBlueAccent,
+                    text: 'Cadastrar Banda',
+                    onPressed: () {
+                      Navigator.pushNamed(context, RegisterBandScreen.id);
+                    }),
+                RoundedButton(
+                    color: Colors.lightBlueAccent,
+                    text: 'Cadastrar Pub',
+                    onPressed: () {
+                      Navigator.pushNamed(context, RegisterPubScreen.id);
+                    }),
+                // RoundedButton(
+                //   color: Colors.lightBlueAccent,
+                //   text: 'Agenda (deprecated)',
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, CalendarScreen.id);
+                //   },
+                // ),
+                RoundedButton(
+                  color: Colors.lightBlueAccent,
+                  text: 'Perfil',
+                  onPressed: () {
+                    Navigator.pushNamed(context, ProfileScreen.id);
+                  },
+                ),
+                RoundedButton(
+                  color: Colors.lightBlueAccent,
+                  text: 'Agendar Evento',
+                  onPressed: () {
+                    Navigator.pushNamed(context, DateTimePicker.id);
+                  },
+                ),
+                SizedBox(
+                  height: 48.0,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 38.0,
-            ),
-            RoundedButton(
-                color: Colors.lightBlueAccent,
-                text: 'Log in',
-                onPressed: () {
-                  Navigator.pushNamed(context, LoginScreen.id);
-                }),
-            RoundedButton(
-                color: Colors.lightBlueAccent,
-                text: 'Cadastrar Usuário',
-                onPressed: () {
-                  Navigator.pushNamed(context, RegistrationScreen.id);
-                }),
-            RoundedButton(
-                color: Colors.lightBlueAccent,
-                text: 'Cadastrar Banda',
-                onPressed: () {
-                  Navigator.pushNamed(context, RegisterBandScreen.id);
-                }),
-            RoundedButton(
-                color: Colors.lightBlueAccent,
-                text: 'Cadastrar Pub',
-                onPressed: () {
-                  Navigator.pushNamed(context, RegisterPubScreen.id);
-                }),
-            // RoundedButton(
-            //   color: Colors.lightBlueAccent,
-            //   text: 'Agenda (deprecated)',
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, CalendarScreen.id);
-            //   },
-            // ),
-            RoundedButton(
-              color: Colors.lightBlueAccent,
-              text: 'Perfil',
-              onPressed: () {
-                Navigator.pushNamed(context, ProfileScreen.id);
-              },
-            ),
-            RoundedButton(
-              color: Colors.lightBlueAccent,
-              text: 'Agendar Evento',
-              onPressed: () {
-                Navigator.pushNamed(context, DateTimePicker.id);
-              },
-            ),
-            SizedBox(
-              height: 48.0,
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -72,94 +72,105 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('AGENDA'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            TableCalendar(
-              events: _events,
-              calendarController: _calendarController,
-              initialCalendarFormat: CalendarFormat.month,
-              headerStyle: HeaderStyle(
-                centerHeaderTitle: true,
-                formatButtonShowsNext: false,
-              ),
-              startingDayOfWeek: StartingDayOfWeek.monday,
-              // ? comentei isso abaixo após trocar o Locale, antes estava usando Intl
-              // onDaySelected: (date, events) {
-              //   selectedDate = DateFormat.yMd("pt_BR").format(date.toLocal());
-              //   print(selectedDate);
-              //   setState(() {
-              //     _selectedEvents = events;
-              //   });
-              // },
-              builders: CalendarBuilders(),
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: screenHeight,
+          maxWidth: screenWidth,
+        ),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('AGENDA'),
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                TableCalendar(
+                  events: _events,
+                  calendarController: _calendarController,
+                  initialCalendarFormat: CalendarFormat.month,
+                  headerStyle: HeaderStyle(
+                    centerHeaderTitle: true,
+                    formatButtonShowsNext: false,
+                  ),
+                  startingDayOfWeek: StartingDayOfWeek.monday,
+                  // ? comentei isso abaixo após trocar o Locale, antes estava usando Intl
+                  // onDaySelected: (date, events) {
+                  //   selectedDate = DateFormat.yMd("pt_BR").format(date.toLocal());
+                  //   print(selectedDate);
+                  //   setState(() {
+                  //     _selectedEvents = events;
+                  //   });
+                  // },
+                  builders: CalendarBuilders(),
+                ),
+                ..._selectedEvents.map(
+                  (event) => ListTile(
+                    title: Text(event),
+                    // TODO: implementar mostrar hora do evento
+                    // trailing: TimeOfDay.fromDateTime(event.dateTime),
+                  ),
+                ),
+              ],
             ),
-            ..._selectedEvents.map(
-              (event) => ListTile(
-                title: Text(event),
-                // TODO: implementar mostrar hora do evento
-                // trailing: TimeOfDay.fromDateTime(event.dateTime),
-              ),
-            ),
-          ],
+          ),
+          floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.add),
+
+              // TODO: Fazer isso funcionar! usar apenas um campo DateTime ou 2 campos com Date e com Time???
+              onPressed: () async {
+                await _pickTime();
+                print('time = $time');
+                DateTime now = DateTime.now();
+                var timeDateTime = DateTime(
+                    now.year, now.month, now.day, time.hour, time.minute);
+                var timeFormated = DateTimeFormat.format(timeDateTime,
+                    format: DateTimeFormats.iso8601);
+
+                // prefs.setString("events", json.encode(encodeMap(_events)));
+
+                print('timeFormated = $timeFormated');
+                // ShowSchedule showSchedule = ShowSchedule(
+                //     pubId: 3, bandId: 3, date: selectedDate, time: timeFormated);
+                // await postShowToAPI(showSchedule);
+
+                // showDialog(
+                //   context: context,
+                //   builder: (context) => AlertDialog(
+                //     content: TextField(
+                //       controller: _eventController,
+                //     ),
+                //     actions: <Widget>[
+                //       TextButton(
+                //         child: Text("Salvar"),
+                //         onPressed: () async {
+                //           if (_eventController.text.isEmpty) return;
+
+                //           // setState(() {
+                //           //   if (_events[_calendarController.selectedDay] != null) {
+                //           //     _events[_calendarController.selectedDay]
+                //           //         .add(_eventController.text);
+                //           //   } else {
+                //           //     _events[_calendarController.selectedDay] = [
+                //           //       _eventController.text
+                //           //     ];
+                //           //   }
+                //           //   prefs.setString(
+                //           //       "events", json.encode(encodeMap(_events)));
+                //           //   _eventController.clear();
+                //           //   Navigator.pop(context);
+                //           // });
+                //         },
+                //       )
+                //     ],
+                //   ),
+                // );
+              }),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-
-          // TODO: Fazer isso funcionar! usar apenas um campo DateTime ou 2 campos com Date e com Time???
-          onPressed: () async {
-            await _pickTime();
-            print('time = $time');
-            DateTime now = DateTime.now();
-            var timeDateTime =
-                DateTime(now.year, now.month, now.day, time.hour, time.minute);
-            var timeFormated = DateTimeFormat.format(timeDateTime,
-                format: DateTimeFormats.iso8601);
-
-            // prefs.setString("events", json.encode(encodeMap(_events)));
-
-            print('timeFormated = $timeFormated');
-            // ShowSchedule showSchedule = ShowSchedule(
-            //     pubId: 3, bandId: 3, date: selectedDate, time: timeFormated);
-            // await postShowToAPI(showSchedule);
-
-            // showDialog(
-            //   context: context,
-            //   builder: (context) => AlertDialog(
-            //     content: TextField(
-            //       controller: _eventController,
-            //     ),
-            //     actions: <Widget>[
-            //       TextButton(
-            //         child: Text("Salvar"),
-            //         onPressed: () async {
-            //           if (_eventController.text.isEmpty) return;
-
-            //           // setState(() {
-            //           //   if (_events[_calendarController.selectedDay] != null) {
-            //           //     _events[_calendarController.selectedDay]
-            //           //         .add(_eventController.text);
-            //           //   } else {
-            //           //     _events[_calendarController.selectedDay] = [
-            //           //       _eventController.text
-            //           //     ];
-            //           //   }
-            //           //   prefs.setString(
-            //           //       "events", json.encode(encodeMap(_events)));
-            //           //   _eventController.clear();
-            //           //   Navigator.pop(context);
-            //           // });
-            //         },
-            //       )
-            //     ],
-            //   ),
-            // );
-          }),
     );
   }
 

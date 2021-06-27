@@ -57,3 +57,7 @@ String nowFormatted = DateFormat("yyyy-MM-ddTHH:mm").format(DateTime.now());
 
 String formatTimestamp(DateTime timestamp) =>
     DateFormat("yyyy-MM-ddTHH:mm").format(timestamp);
+
+final String khost = '192.168.1.75:8080';
+// final String host = 'localhost:8080';
+

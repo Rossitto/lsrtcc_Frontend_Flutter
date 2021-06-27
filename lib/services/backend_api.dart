@@ -1,14 +1,15 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:lsrtcc_flutter/constants.dart';
 
 class Backend {
   // String url;
   // Backend(this.url);
-  // String host = '192.168.1.75';
+  // String host = '192.168.1.75:8080';
 
   static Future<http.Response> postUser(String jsonUser) {
     return http.post(
-      'http://localhost:8080/users',
+      'http://${khost}/users',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -18,7 +19,7 @@ class Backend {
 
   static Future<http.Response> authUser(String jsonUser) {
     return http.post(
-      'http://localhost:8080/users/auth',
+      'http://${khost}/users/auth',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -28,7 +29,7 @@ class Backend {
 
   static Future<http.Response> postBand(String jsonBand) {
     return http.post(
-      'http://localhost:8080/bands',
+      'http://${khost}/bands',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         // 'Accept': 'application/json; charset=UTF-8'
@@ -39,7 +40,7 @@ class Backend {
 
   static Future<http.Response> postPub(String jsonPub) {
     return http.post(
-      'http://localhost:8080/pubs',
+      'http://${khost}/pubs',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         // 'Accept': 'application/json; charset=UTF-8'
@@ -50,7 +51,7 @@ class Backend {
 
   static Future<http.Response> postShow(var jsonShow) {
     return http.post(
-      'http://localhost:8080/shows',
+      'http://${khost}/shows',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         // 'Accept': 'application/json; charset=UTF-8'
@@ -61,7 +62,7 @@ class Backend {
 
   static Future<http.Response> putShow(String jsonShow, int id) {
     return http.post(
-      'http://localhost:8080/shows/$id',
+      'http://${khost}/shows/$id',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         // 'Accept': 'application/json; charset=UTF-8'
@@ -72,7 +73,7 @@ class Backend {
 
   static Future<http.Response> getBandsByUser(int userId) {
     var response = http.get(
-      'http://localhost:8080/bands/user/$userId',
+      'http://${khost}/bands/user/$userId',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         // 'Accept': 'application/json; charset=UTF-8'
@@ -84,7 +85,7 @@ class Backend {
 
   static Future<http.Response> getPubsByUser(int userId) {
     var response = http.get(
-      'http://localhost:8080/pubs/user/$userId',
+      'http://${khost}/pubs/user/$userId',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         // 'Accept': 'application/json; charset=UTF-8'

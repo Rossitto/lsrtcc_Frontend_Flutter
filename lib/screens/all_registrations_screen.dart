@@ -48,88 +48,99 @@ class _AllRegistrationsScreenState extends State<AllRegistrationsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Cadastro',
-          style: TextStyle(color: Colors.white70),
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: screenHeight,
+          maxWidth: screenWidth,
         ),
-        elevation: 0,
-        backgroundColor: Colors.blueAccent[700],
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        // actions: <Widget>[
-        //   PopupMenuButton(
-        //     itemBuilder: (BuildContext bc) => [
-        //       PopupMenuItem(child: Text("Sair"), value: WelcomeScreen.id),
-        //       PopupMenuItem(
-        //           child: Text("Cadastrar Pub/Banda"),
-        //           value: AllRegistrationsScreen.id),
-        //     ],
-        //     onSelected: (route) {
-        //       print(route);
-        //       Navigator.pushNamed(context, route);
-        //     },
-        //     child: Icon(
-        //       Icons.more_vert,
-        //       color: Colors.white,
-        //     ),
-        //   ),
-        // ],
-      ),
-      backgroundColor: animation.value,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Hero(
-                    tag: 'logo',
-                    child: Container(
-                      child: Image.asset('images/logo.png'),
-                      height: 100.0,
-                    ),
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Cadastro',
+              style: TextStyle(color: Colors.white70),
+            ),
+            elevation: 0,
+            backgroundColor: Colors.blueAccent[700],
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            // actions: <Widget>[
+            //   PopupMenuButton(
+            //     itemBuilder: (BuildContext bc) => [
+            //       PopupMenuItem(child: Text("Sair"), value: WelcomeScreen.id),
+            //       PopupMenuItem(
+            //           child: Text("Cadastrar Pub/Banda"),
+            //           value: AllRegistrationsScreen.id),
+            //     ],
+            //     onSelected: (route) {
+            //       print(route);
+            //       Navigator.pushNamed(context, route);
+            //     },
+            //     child: Icon(
+            //       Icons.more_vert,
+            //       color: Colors.white,
+            //     ),
+            //   ),
+            // ],
+          ),
+          backgroundColor: animation.value,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Hero(
+                        tag: 'logo',
+                        child: Container(
+                          child: Image.asset('images/logo.png'),
+                          height: 100.0,
+                        ),
+                      ),
+                      SizedBox(width: 8.0),
+                      Text(
+                        'Show Biz',
+                        style: TextStyle(
+                          fontSize: 35.0,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 8.0),
-                  Text(
-                    'Show Biz',
-                    style: TextStyle(
-                      fontSize: 35.0,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 38.0,
+                ),
+                RoundedButton(
+                    color: Colors.blueAccent,
+                    text: 'Cadastrar Banda',
+                    onPressed: () {
+                      Navigator.pushNamed(context, RegisterBandScreen.id);
+                    }),
+                RoundedButton(
+                    color: Colors.blueAccent,
+                    text: 'Cadastrar Pub',
+                    onPressed: () {
+                      Navigator.pushNamed(context, RegisterPubScreen.id);
+                    }),
+                SizedBox(
+                  height: 48.0,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 38.0,
-            ),
-            RoundedButton(
-                color: Colors.blueAccent,
-                text: 'Cadastrar Banda',
-                onPressed: () {
-                  Navigator.pushNamed(context, RegisterBandScreen.id);
-                }),
-            RoundedButton(
-                color: Colors.blueAccent,
-                text: 'Cadastrar Pub',
-                onPressed: () {
-                  Navigator.pushNamed(context, RegisterPubScreen.id);
-                }),
-            SizedBox(
-              height: 48.0,
-            ),
-          ],
+          ),
         ),
       ),
     );

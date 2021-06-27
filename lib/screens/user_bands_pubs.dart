@@ -56,55 +56,66 @@ class _UserBandsPubsState extends State<UserBandsPubs>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Minhas Bandas/Pubs',
-          style: TextStyle(color: Colors.white70),
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: screenHeight,
+          maxWidth: screenWidth,
         ),
-        elevation: 0,
-        backgroundColor: Colors.blueAccent[700],
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      backgroundColor: animation.value,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: Container(
-          padding: EdgeInsets.only(top: 20),
-          child: ListView.builder(
-              itemCount: titles.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    onTap: () {
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text(titles[index] + ' pressed!'),
-                      ));
-                    },
-                    title: Text(titles[index]),
-                    subtitle: Text(subtitles[index]),
-                    leading: CircleAvatar(
-                      child: Image.asset('images/logo.png'),
-                      //     Hero(
-                      //   tag: 'logo',
-                      //   child: Container(
-                      //     child: Image.asset('images/logo.png'),
-                      //     height: 100.0,
-                      //   ),
-                      // ),
-                    ),
-                    trailing: Icon(
-                      icons[index],
-                    ),
-                  ),
-                );
-              }),
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Minhas Bandas/Pubs',
+              style: TextStyle(color: Colors.white70),
+            ),
+            elevation: 0,
+            backgroundColor: Colors.blueAccent[700],
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          backgroundColor: animation.value,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Container(
+              padding: EdgeInsets.only(top: 20),
+              child: ListView.builder(
+                  itemCount: titles.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        onTap: () {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text(titles[index] + ' pressed!'),
+                          ));
+                        },
+                        title: Text(titles[index]),
+                        subtitle: Text(subtitles[index]),
+                        leading: CircleAvatar(
+                          child: Image.asset('images/logo.png'),
+                          //     Hero(
+                          //   tag: 'logo',
+                          //   child: Container(
+                          //     child: Image.asset('images/logo.png'),
+                          //     height: 100.0,
+                          //   ),
+                          // ),
+                        ),
+                        trailing: Icon(
+                          icons[index],
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ),
         ),
       ),
     );

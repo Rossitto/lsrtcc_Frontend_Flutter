@@ -49,263 +49,274 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Perfil',
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 25.0,
-          ),
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: screenHeight,
+          maxWidth: screenWidth,
         ),
-        elevation: 0,
-        backgroundColor: Colors.blueAccent[700],
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-        //   onPressed: () {
-        //     // Navigator.pop(context);
-        //   },
-        // ),
-        actions: <Widget>[
-          PopupMenuButton(
-            itemBuilder: (BuildContext bc) => [
-              PopupMenuItem(
-                child: Text("Minha Banda/Pub"),
-                value: UserBandsPubs.id,
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Perfil',
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 25.0,
               ),
-              PopupMenuItem(
-                child: Text("Cadastrar Banda/Pub"),
-                value: AllRegistrationsScreen.id,
-              ),
-              PopupMenuItem(
-                child: Text("Sair"),
-                value: WelcomeScreen.id,
-              ),
-            ],
-            onSelected: (route) {
-              print(route);
-              Navigator.pushNamed(context, route);
-            },
-            child: Icon(
-              Icons.more_vert,
-              color: Colors.white,
             ),
-          ),
-
-          // PopupMenuButton(
-          //   onSelected: (dynamic index) {
-          //     print('index is $index');
-          //     Navigator.pushNamed(context, WelcomeScreen.id);
-          //   },
-          //   child: Icon(
-          //     Icons.more_vert,
-          //     color: Colors.white,
-          //   ),
-          //   itemBuilder: (context) {
-          //     return List.generate(1, (index) {
-          //       return PopupMenuItem(
-          //         child: Text('Sair'),
-          //       );
-          //     });
-          //   },
-          // ),
-
-          // IconButton(
-          //   icon: Icon(
-          //     Icons.more_vert,
-          //     color: Colors.white,
-          //   ),
-          //   onPressed: () {
-          //     // TODO: menu 3 pontinhos superior direito: 1) alterar foto de perfil. 2) alterar senha. 3) alterar nickname? 4) alterar e-mail? 5) ver minhas bandas?
-          //   },
-          // )
-        ],
-      ),
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 10),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2 - 40,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.7),
-                    blurRadius: 20,
-                    spreadRadius: 10,
+            elevation: 0,
+            backgroundColor: Colors.blueAccent[700],
+            // leading: IconButton(
+            //   icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+            //   onPressed: () {
+            //     // Navigator.pop(context);
+            //   },
+            // ),
+            actions: <Widget>[
+              PopupMenuButton(
+                itemBuilder: (BuildContext bc) => [
+                  PopupMenuItem(
+                    child: Text("Minha Banda/Pub"),
+                    value: UserBandsPubs.id,
+                  ),
+                  PopupMenuItem(
+                    child: Text("Cadastrar Banda/Pub"),
+                    value: AllRegistrationsScreen.id,
+                  ),
+                  PopupMenuItem(
+                    child: Text("Sair"),
+                    value: WelcomeScreen.id,
                   ),
                 ],
-                color: Colors.blueAccent[700],
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(30),
-                  bottomLeft: Radius.circular(30),
+                onSelected: (route) {
+                  print(route);
+                  Navigator.pushNamed(context, route);
+                },
+                child: Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
                 ),
               ),
-              child: Column(
-                children: <Widget>[
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: <Widget>[
-                  Container(
-                    height: 200,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.blueAccent[700],
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.blue[900],
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                        ),
-                      ],
-                    ),
-                    child: Hero(
-                      tag: 'logo',
-                      child: CircleAvatar(
-                        radius: 100,
-                        backgroundImage: AssetImage('images/logo.png'),
+
+              // PopupMenuButton(
+              //   onSelected: (dynamic index) {
+              //     print('index is $index');
+              //     Navigator.pushNamed(context, WelcomeScreen.id);
+              //   },
+              //   child: Icon(
+              //     Icons.more_vert,
+              //     color: Colors.white,
+              //   ),
+              //   itemBuilder: (context) {
+              //     return List.generate(1, (index) {
+              //       return PopupMenuItem(
+              //         child: Text('Sair'),
+              //       );
+              //     });
+              //   },
+              // ),
+
+              // IconButton(
+              //   icon: Icon(
+              //     Icons.more_vert,
+              //     color: Colors.white,
+              //   ),
+              //   onPressed: () {
+              //     // TODO: menu 3 pontinhos superior direito: 1) alterar foto de perfil. 2) alterar senha. 3) alterar nickname? 4) alterar e-mail? 5) ver minhas bandas?
+              //   },
+              // )
+            ],
+          ),
+          body: Container(
+            color: Colors.white,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(top: 10),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2 - 40,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.7),
+                        blurRadius: 20,
+                        spreadRadius: 10,
                       ),
-                    ),
-                    // child: Hero(
-                    //   tag: 'logo',
-                    //   child: Container(
-                    //     height: 200.0,
-                    //     child: Image.asset('images/logo.png'),
-                    //   ),
-                    // ),
-                  ),
-                  //   ],
-                  // ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    userName ?? '',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 15.0,
+                    ],
+                    color: Colors.blueAccent[700],
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(30),
+                      bottomLeft: Radius.circular(30),
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 20, right: 20),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       // TODO: aqui são os ícones abaixo da foto de perfil. Não precisará.
-                  //       Container(
-                  //         height: 60,
-                  //         width: 60,
-                  //         decoration: BoxDecoration(
-                  //           color: Colors.blueAccent[700],
-                  //           borderRadius: BorderRadius.circular(30),
-                  //           boxShadow: [
-                  //             BoxShadow(
-                  //               color: Colors.blueAccent[700],
-                  //               spreadRadius: 1,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.all(4.0),
-                  //           child: Column(
-                  //             children: [
-                  //               Icon(
-                  //                 Icons.photo_camera,
-                  //                 color: Colors.white,
-                  //               ),
-                  //               SizedBox(
-                  //                 height: 3,
-                  //               ),
-                  //               Text(
-                  //                 'Camera',
-                  //                 style: TextStyle(
-                  //                   color: Colors.white,
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // )
-                ],
-              ),
+                  child: Column(
+                    children: <Widget>[
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: <Widget>[
+                      Container(
+                        height: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent[700],
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.blue[900],
+                              spreadRadius: 2,
+                              blurRadius: 3,
+                            ),
+                          ],
+                        ),
+                        child: Hero(
+                          tag: 'logo',
+                          child: CircleAvatar(
+                            radius: 100,
+                            backgroundImage: AssetImage('images/logo.png'),
+                          ),
+                        ),
+                        // child: Hero(
+                        //   tag: 'logo',
+                        //   child: Container(
+                        //     height: 200.0,
+                        //     child: Image.asset('images/logo.png'),
+                        //   ),
+                        // ),
+                      ),
+                      //   ],
+                      // ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        userName ?? '',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 20, right: 20),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       // TODO: aqui são os ícones abaixo da foto de perfil. Não precisará.
+                      //       Container(
+                      //         height: 60,
+                      //         width: 60,
+                      //         decoration: BoxDecoration(
+                      //           color: Colors.blueAccent[700],
+                      //           borderRadius: BorderRadius.circular(30),
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color: Colors.blueAccent[700],
+                      //               spreadRadius: 1,
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         child: Padding(
+                      //           padding: const EdgeInsets.all(4.0),
+                      //           child: Column(
+                      //             children: [
+                      //               Icon(
+                      //                 Icons.photo_camera,
+                      //                 color: Colors.white,
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 3,
+                      //               ),
+                      //               Text(
+                      //                 'Camera',
+                      //                 style: TextStyle(
+                      //                   color: Colors.white,
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 100),
+                  // TODO: COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS
+                  child:
+                      // // EXCEPTION: Vertical viewport was given unbounded height.
+                      // AnythingListView(
+                      //   titles: ["List 1", "List 2", "List 3"],
+                      //   onTapTile: () {
+                      //     print('Algum Card foi pressionado!');
+                      //   },
+                      // ),
+                      Text('Banda: ${bandName_1} \nPub: ${pubName_1}'),
+                ),
+              ],
             ),
-            Container(
-              padding: EdgeInsets.only(top: 100),
-              // TODO: COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS
-              child:
-                  // // EXCEPTION: Vertical viewport was given unbounded height.
-                  // AnythingListView(
-                  //   titles: ["List 1", "List 2", "List 3"],
-                  //   onTapTile: () {
-                  //     print('Algum Card foi pressionado!');
-                  //   },
-                  // ),
-                  Text('Banda: ${bandName_1} \nPub: ${pubName_1}'),
-            ),
-          ],
+          ),
+          // bottomNavigationBar: Material(
+          //   elevation: 30.0,
+          //   color: Colors.blueAccent,
+          //   shadowColor: Colors.black.withOpacity(0.5),
+          //   child: TabBar(
+          //     onTap: (index) {
+          //       switch (index) {
+          //         // case 1:
+          //         //   Navigator.pushNamed(context, "/second");
+          //         //   break;
+          //         case 4:
+          //           Navigator.pushNamed(context, AllRegistrationsScreen.id);
+          //           break;
+          //       }
+          //     },
+          //     controller: tabController,
+          //     indicatorColor: Colors.white,
+          //     tabs: <Widget>[
+          //       Tab(
+          //         icon: Icon(
+          //           Icons.home,
+          //           color: Colors.white,
+          //         ),
+          //       ),
+          //       // Tab(
+          //       //   icon: Icon(
+          //       //     Icons.chat,
+          //       //     color: Colors.white,
+          //       //   ),
+          //       // ),
+          //       Tab(
+          //         icon: Icon(
+          //           Icons.search,
+          //           color: Colors.white,
+          //         ),
+          //       ),
+          //       Tab(
+          //         icon: Icon(
+          //           Icons.calendar_today,
+          //           color: Colors.white,
+          //         ),
+          //       ),
+          //       Tab(
+          //         icon: Icon(
+          //           Icons.person,
+          //           color: Colors.white,
+          //           // TODO: ir para a AllRegistrationsScreen
+          //           // size: 40.0,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ),
       ),
-      // bottomNavigationBar: Material(
-      //   elevation: 30.0,
-      //   color: Colors.blueAccent,
-      //   shadowColor: Colors.black.withOpacity(0.5),
-      //   child: TabBar(
-      //     onTap: (index) {
-      //       switch (index) {
-      //         // case 1:
-      //         //   Navigator.pushNamed(context, "/second");
-      //         //   break;
-      //         case 4:
-      //           Navigator.pushNamed(context, AllRegistrationsScreen.id);
-      //           break;
-      //       }
-      //     },
-      //     controller: tabController,
-      //     indicatorColor: Colors.white,
-      //     tabs: <Widget>[
-      //       Tab(
-      //         icon: Icon(
-      //           Icons.home,
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //       // Tab(
-      //       //   icon: Icon(
-      //       //     Icons.chat,
-      //       //     color: Colors.white,
-      //       //   ),
-      //       // ),
-      //       Tab(
-      //         icon: Icon(
-      //           Icons.search,
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //       Tab(
-      //         icon: Icon(
-      //           Icons.calendar_today,
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //       Tab(
-      //         icon: Icon(
-      //           Icons.person,
-      //           color: Colors.white,
-      //           // TODO: ir para a AllRegistrationsScreen
-      //           // size: 40.0,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
