@@ -101,165 +101,141 @@ class _ProfileScreenState extends State<ProfileScreen>
                   color: Colors.white,
                 ),
               ),
-
-              // PopupMenuButton(
-              //   onSelected: (dynamic index) {
-              //     print('index is $index');
-              //     Navigator.pushNamed(context, WelcomeScreen.id);
-              //   },
-              //   child: Icon(
-              //     Icons.more_vert,
-              //     color: Colors.white,
-              //   ),
-              //   itemBuilder: (context) {
-              //     return List.generate(1, (index) {
-              //       return PopupMenuItem(
-              //         child: Text('Sair'),
-              //       );
-              //     });
-              //   },
-              // ),
-
-              // IconButton(
-              //   icon: Icon(
-              //     Icons.more_vert,
-              //     color: Colors.white,
-              //   ),
-              //   onPressed: () {
-              //     // TODO: menu 3 pontinhos superior direito: 1) alterar foto de perfil. 2) alterar senha. 3) alterar nickname? 4) alterar e-mail? 5) ver minhas bandas?
-              //   },
-              // )
             ],
           ),
-          body: Container(
-            color: Colors.white,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(top: 10),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 2 - 40,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.7),
-                        blurRadius: 20,
-                        spreadRadius: 10,
-                      ),
-                    ],
-                    color: Colors.blueAccent[700],
-                    borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(30),
-                      bottomLeft: Radius.circular(30),
-                    ),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: <Widget>[
-                      Container(
-                        height: 200,
-                        width: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.blueAccent[700],
-                          borderRadius: BorderRadius.circular(100),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blue[900],
-                              spreadRadius: 2,
-                              blurRadius: 3,
-                            ),
-                          ],
+          body: SingleChildScrollView(
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(top: 10),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 2 - 40,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.7),
+                          blurRadius: 20,
+                          spreadRadius: 10,
                         ),
-                        child: Hero(
-                          tag: 'logo',
-                          child: CircleAvatar(
-                            radius: 100,
-                            backgroundImage: AssetImage('images/logo.png'),
+                      ],
+                      color: Colors.blueAccent[700],
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(30),
+                        bottomLeft: Radius.circular(30),
+                      ),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: <Widget>[
+                        Container(
+                          height: 200,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.blueAccent[700],
+                            borderRadius: BorderRadius.circular(100),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.blue[900],
+                                spreadRadius: 2,
+                                blurRadius: 3,
+                              ),
+                            ],
+                          ),
+                          child: Hero(
+                            tag: 'logo',
+                            child: CircleAvatar(
+                              radius: 100,
+                              backgroundImage: AssetImage(
+                                  'images/profile1.jpg'), // images/logo.png
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                          // child: Hero(
+                          //   tag: 'logo',
+                          //   child: Container(
+                          //     height: 200.0,
+                          //     child: Image.asset('images/logo.png'),
+                          //   ),
+                          // ),
+                        ),
+                        //   ],
+                        // ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Text(
+                          userName ?? '',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 15.0,
                           ),
                         ),
-                        // child: Hero(
-                        //   tag: 'logo',
-                        //   child: Container(
-                        //     height: 200.0,
-                        //     child: Image.asset('images/logo.png'),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 20, right: 20),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       // TODO: aqui são os ícones abaixo da foto de perfil. Não precisará.
+                        //       Container(
+                        //         height: 60,
+                        //         width: 60,
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.blueAccent[700],
+                        //           borderRadius: BorderRadius.circular(30),
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.blueAccent[700],
+                        //               spreadRadius: 1,
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.all(4.0),
+                        //           child: Column(
+                        //             children: [
+                        //               Icon(
+                        //                 Icons.photo_camera,
+                        //                 color: Colors.white,
+                        //               ),
+                        //               SizedBox(
+                        //                 height: 3,
+                        //               ),
+                        //               Text(
+                        //                 'Camera',
+                        //                 style: TextStyle(
+                        //                   color: Colors.white,
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
                         //   ),
-                        // ),
-                      ),
-                      //   ],
-                      // ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Text(
-                        userName ?? '',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 15.0,
-                        ),
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 20, right: 20),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       // TODO: aqui são os ícones abaixo da foto de perfil. Não precisará.
-                      //       Container(
-                      //         height: 60,
-                      //         width: 60,
-                      //         decoration: BoxDecoration(
-                      //           color: Colors.blueAccent[700],
-                      //           borderRadius: BorderRadius.circular(30),
-                      //           boxShadow: [
-                      //             BoxShadow(
-                      //               color: Colors.blueAccent[700],
-                      //               spreadRadius: 1,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //         child: Padding(
-                      //           padding: const EdgeInsets.all(4.0),
-                      //           child: Column(
-                      //             children: [
-                      //               Icon(
-                      //                 Icons.photo_camera,
-                      //                 color: Colors.white,
-                      //               ),
-                      //               SizedBox(
-                      //                 height: 3,
-                      //               ),
-                      //               Text(
-                      //                 'Camera',
-                      //                 style: TextStyle(
-                      //                   color: Colors.white,
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // )
-                    ],
+                        // )
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 100),
-                  // TODO: COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS
-                  child:
-                      // // EXCEPTION: Vertical viewport was given unbounded height.
-                      // AnythingListView(
-                      //   titles: ["List 1", "List 2", "List 3"],
-                      //   onTapTile: () {
-                      //     print('Algum Card foi pressionado!');
-                      //   },
-                      // ),
-                      Text('Banda: ${bandName_1} \nPub: ${pubName_1}'),
-                ),
-              ],
+                  Container(
+                    padding: EdgeInsets.only(top: 100),
+                    // TODO: COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS
+                    child:
+                        // // EXCEPTION: Vertical viewport was given unbounded height.
+                        // AnythingListView(
+                        //   titles: ["List 1", "List 2", "List 3"],
+                        //   onTapTile: () {
+                        //     print('Algum Card foi pressionado!');
+                        //   },
+                        // ),
+                        Text('Banda: ${bandName_1} \nPub: ${pubName_1}'),
+                  ),
+                ],
+              ),
             ),
           ),
           // bottomNavigationBar: Material(

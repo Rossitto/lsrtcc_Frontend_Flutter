@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(msg_login),
-              duration: Duration(seconds: 2),
+              duration: Duration(seconds: 5),
             ),
           );
         },
