@@ -129,6 +129,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   userdata.write('userEmail', userEmail);
                   userdata.write('userPhone', userPhone);
                   userdata.write('userId', userId);
+
+                  Map<String, dynamic> userMap = jsonDecode(responseBody);
+                  User currentUser = User.fromJson(userMap);
+                  userdata.write('currentUser', currentUser);
+
                   Navigator.pushNamed(context, ProfileScreen.id);
                   // SharedPreferences prefs =
                   //     await SharedPreferences.getInstance();

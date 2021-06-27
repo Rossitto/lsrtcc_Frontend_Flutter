@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lsrtcc_flutter/model/user.dart';
 
 class Band {
   final int _id;
@@ -9,7 +10,7 @@ class Band {
   String _style;
   String _phone;
   String _email;
-  String _password;
+  List<User> _user;
 
   set name(name) => _name;
   set cnpj(cnpj) => _cnpj;
@@ -18,7 +19,7 @@ class Band {
   set style(style) => _style;
   set phone(phone) => _phone;
   set email(email) => _email;
-  set password(password) => _password;
+  set user(user) => _user;
 
   get id => _id;
   get name => _name;
@@ -28,14 +29,14 @@ class Band {
   get style => _style;
   get phone => _phone;
   get email => _email;
-  get password => _password;
+  get user => _user;
 
   Band(
       {id,
       @required name,
       @required email,
       @required phone,
-      @required password,
+      @required user,
       cnpj,
       feeBrl,
       membersNum,
@@ -44,7 +45,7 @@ class Band {
         _name = name,
         _email = email,
         _phone = phone,
-        _password = password,
+        _user = user,
         _cnpj = cnpj,
         _feeBrl = feeBrl,
         _membersNum = membersNum,
@@ -55,7 +56,7 @@ class Band {
         _name = json['name'],
         _email = json['email'],
         _phone = json['phone'],
-        _password = json['password'],
+        _user = json['user'],
         _cnpj = json['cnpj'],
         _feeBrl = json['fee_brl'],
         _membersNum = json['members_num'],
@@ -66,7 +67,7 @@ class Band {
         'name': _name,
         'email': _email,
         'phone': _phone,
-        'password': _password,
+        'user': _user,
         'cnpj': _cnpj,
         'fee_brl': _feeBrl,
         'members_num': _membersNum,

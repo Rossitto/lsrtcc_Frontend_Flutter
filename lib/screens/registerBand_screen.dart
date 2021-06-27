@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
+import 'package:lsrtcc_flutter/model/user.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 
 class RegisterBandScreen extends StatefulWidget {
@@ -25,8 +27,18 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
   String membersNum;
   String style;
 
+  final userdata = GetStorage();
+
   @override
   Widget build(BuildContext context) {
+    User currentUser = userdata.read('currentUser');
+
+    // String currentUserString = userdata.read('currentUser');
+    // Map<String, dynamic> userMap = jsonDecode(currentUserString);
+    // User currentUser = User.fromJson(userMap);
+
+    print('user: $currentUser');
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -210,9 +222,14 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                     feeBrl: feeBrl,
                     membersNum: membersNum,
                     style: style,
+                    user: [currentUser],
                   );
                   print(currentBand);
                   String jsonBand = jsonEncode(currentBand);
+
+                  // ? TESTANDO...
+                  print(jsonBand);
+
                   var response = await Backend.postBand(jsonBand);
                   String responseBody = response.body;
                   var responseTitle = jsonDecode(responseBody)['title'] ?? "";
