@@ -92,9 +92,13 @@ class _UserBandsPubsState extends State<UserBandsPubs>
                     return Card(
                       child: ListTile(
                         onTap: () {
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text(titles[index] + ' pressed!'),
-                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              behavior: SnackBarBehavior.floating,
+                              content: Text(titles[index] + ' pressed!'),
+                              duration: Duration(seconds: 4),
+                            ),
+                          );
                         },
                         title: Text(titles[index]),
                         subtitle: Text(subtitles[index]),

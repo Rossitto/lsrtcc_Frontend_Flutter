@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/pub.dart';
+import 'package:lsrtcc_flutter/model/user.dart';
+import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:emojis/emojis.dart'; // to use Emoji collection
 
@@ -21,7 +24,6 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
   String name;
   String email;
   String phone;
-  String password;
   String cnpj;
   String address;
   String addressNum;
@@ -29,8 +31,14 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
   String city;
   String state;
 
+  final userdata = GetStorage();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> userMap = userdata.read('currentUser');
+    User currentUser = User.fromJson(userMap);
+    print(currentUser);
+
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
@@ -204,35 +212,33 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  TextField(
-                    obscureText: !this._showPassword,
-                    keyboardType: TextInputType
-                        .visiblePassword, // maybe this is unnecessary
-                    onChanged: (value) {
-                      password = value.trim();
-                    },
-                    decoration: kTextFieldDecoration.copyWith(
-                        labelText: 'Senha',
-                        prefixIcon: Icon(
-                          Icons.security,
-                          color: Colors.blueGrey,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.remove_red_eye,
-                            color: this._showPassword
-                                ? Colors.blueAccent
-                                : Colors.grey,
-                          ),
-                          onPressed: () {
-                            setState(
-                                () => this._showPassword = !this._showPassword);
-                          },
-                        )),
-                  ),
+                  // SizedBox(
+                  //   height: 8.0,
+                  // ),
+                  // TextField(
+                  //   obscureText: !this._showPassword,
+                  //   keyboardType: TextInputType
+                  //       .visiblePassword, // maybe this is unnecessary
+                  //   onChanged: (value) {
+                  //     password = value.trim();
+                  //   },
+                  //   decoration: kTextFieldDecoration.copyWith(
+                  //       labelText: 'Senha',
+                  //       prefixIcon: Icon(
+                  //         Icons.security,
+                  //         color: Colors.blueGrey,
+                  //       ),
+                  //       suffixIcon: IconButton(
+                  //         icon: Icon(
+                  //           Icons.remove_red_eye,
+                  //           color: this._showPassword ? Colors.blueAccent : Colors.grey,
+                  //         ),
+                  //         onPressed: () {
+                  //           setState(
+                  //               () => this._showPassword = !this._showPassword);
+                  //         },
+                  //       )),
+                  // ),
                   SizedBox(
                     height: 24.0,
                   ),
@@ -245,7 +251,7 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
                         name: name,
                         email: email,
                         phone: phone,
-                        password: password,
+                        user: currentUser,
                         cnpj: cnpj,
                         addressCep: addressCep,
                         address: address,
@@ -261,6 +267,10 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
                       if (response.statusCode == 201) {
                         print('Pub cadastrado! ' +
                             'Status Code: ${response.statusCode}');
+
+                        userdata.writeInMemory('msg_register_pub',
+                            'Pub Cadastrado com Sucesso! $happyEmoji');
+                        Navigator.pushNamed(context, ProfileScreen.id);
                       } else {
                         print('ERRO! ' + 'Status Code: ${response.statusCode}');
                         print(responseTitle);

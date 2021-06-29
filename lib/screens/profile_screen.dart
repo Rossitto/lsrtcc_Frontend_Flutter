@@ -30,6 +30,38 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   void initState() {
+    var msg_register_band = userdata.read('msg_register_band');
+    if (msg_register_band != null) {
+      Future(
+        () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(msg_register_band),
+              duration: Duration(seconds: 5),
+            ),
+          );
+        },
+      );
+    }
+    userdata.remove('msg_register_band');
+
+    var msg_register_pub = userdata.read('msg_register_pub');
+    if (msg_register_pub != null) {
+      Future(
+        () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(msg_register_pub),
+              duration: Duration(seconds: 5),
+            ),
+          );
+        },
+      );
+    }
+    userdata.remove('msg_register_pub');
+
     userId = userdata.read('userId');
     userName = userdata.read('userName') ?? '';
     tabController = TabController(length: 4, vsync: this);

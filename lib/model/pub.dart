@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:lsrtcc_flutter/model/user.dart';
 
 class Pub {
-  final int _id; //TODO: check if id will be int or String
+  final int _id;
   String _name;
   String _cnpj;
   String _phone;
   String _email;
-  String _password;
+  User _user;
   String _address;
   String _addressNum;
   String _addressCep;
@@ -17,7 +18,7 @@ class Pub {
   set cnpj(cnpj) => _cnpj;
   set phone(phone) => _phone;
   set email(email) => _email;
-  set password(password) => _password;
+  set user(user) => _user;
   set address(address) => _address;
   set addressNum(addressNum) => _addressNum;
   set addressCep(addressCep) => _addressCep;
@@ -29,7 +30,7 @@ class Pub {
   get cnpj => _cnpj;
   get phone => _phone;
   get email => _email;
-  get password => _password;
+  get user => _user;
   get address => _address;
   get addressNum => _addressNum;
   get addressCep => _addressCep;
@@ -41,7 +42,7 @@ class Pub {
       @required name,
       @required email,
       @required phone,
-      @required password,
+      @required user,
       @required cnpj,
       address,
       addressNum,
@@ -52,7 +53,7 @@ class Pub {
         _name = name,
         _email = email,
         _phone = phone,
-        _password = password,
+        _user = user,
         _cnpj = cnpj,
         _address = address,
         _addressNum = addressNum,
@@ -65,7 +66,7 @@ class Pub {
         _name = json['name'],
         _email = json['email'],
         _phone = json['phone'],
-        _password = json['password'],
+        _user = json['user'],
         _cnpj = json['cnpj'],
         _address = json['address'],
         _addressNum = json['address_num'],
@@ -78,7 +79,7 @@ class Pub {
         'name': _name,
         'email': _email,
         'phone': _phone,
-        'password': _password,
+        'user': _user,
         'cnpj': _cnpj,
         'address': _address,
         'address_num': _addressNum,

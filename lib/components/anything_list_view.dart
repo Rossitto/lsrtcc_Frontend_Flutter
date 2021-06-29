@@ -30,19 +30,18 @@ class AnythingListView extends StatelessWidget {
         itemCount: titles.length,
         itemBuilder: (context, index) {
           return Card(
-              child: ListTile(
-                  onTap: onTapTile,
-                  // () {
-                  //   Scaffold.of(context).showSnackBar(SnackBar(
-                  //     content: Text(titles[index] + ' pressed!'),
-                  //   ));
-                  // },
-                  title: Text(titles[index]),
-                  subtitle: Text(subtitles[index]),
-                  leading: CircleAvatar(
-                    child: Image.asset('images/logo.png'),
-                  ),
-                  trailing: Icon(icons[index])));
+            child: ListTile(
+              onTap: onTapTile,
+              title: Text(titles[index]),
+              subtitle: Text(subtitles[index]),
+              leading: CircleAvatar(
+                child: Image.asset('images/logo.png'),
+              ),
+              trailing: Icon(
+                icons[index],
+              ),
+            ),
+          );
         },
       ),
     );

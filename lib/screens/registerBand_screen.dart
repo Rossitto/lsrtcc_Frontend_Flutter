@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
+import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 
 class RegisterBandScreen extends StatefulWidget {
@@ -21,7 +22,6 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
   String name;
   String email;
   String phone;
-  // String password;
   String cnpj;
   String feeBrl;
   String membersNum;
@@ -31,13 +31,13 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
 
   @override
   Widget build(BuildContext context) {
-    User currentUser = userdata.read('currentUser');
+    Map<String, dynamic> userMap = userdata.read('currentUser');
+    User currentUser = User.fromJson(userMap);
+    print(currentUser);
 
     // String currentUserString = userdata.read('currentUser');
     // Map<String, dynamic> userMap = jsonDecode(currentUserString);
     // User currentUser = User.fromJson(userMap);
-
-    print('user: $currentUser');
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -167,7 +167,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                   style = value.trim();
                 },
                 decoration: kTextFieldDecoration.copyWith(
-                  labelText: 'Estilo musical que melhor define',
+                  labelText: 'Estilo musical',
                   prefixIcon: Icon(
                     Icons.queue_music,
                     color: Colors.blueGrey,
@@ -236,6 +236,10 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                   if (response.statusCode == 201) {
                     print('Banda cadastrada! ' +
                         'Status Code: ${response.statusCode}');
+
+                    userdata.writeInMemory('msg_register_band',
+                        'Banda Cadastrada com Sucesso! $happyEmoji');
+                    Navigator.pushNamed(context, ProfileScreen.id);
                   } else {
                     print('ERRO! ' + 'Status Code: ${response.statusCode}');
                     // print(response.body);

@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
         () {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              behavior: SnackBarBehavior.floating,
               content: Text(msg_login),
               duration: Duration(seconds: 5),
             ),
@@ -146,8 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       userdata.write('userId', userId);
 
                       Map<String, dynamic> userMap = jsonDecode(responseBody);
-                      User currentUser = User.fromJson(userMap);
-                      userdata.write('currentUser', currentUser);
+                      User currentUserToSave = User.fromJson(userMap);
+                      userdata.write('currentUser', currentUserToSave);
 
                       Navigator.pushNamed(context, ProfileScreen.id);
                       // SharedPreferences prefs =

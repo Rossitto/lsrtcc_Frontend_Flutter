@@ -8,7 +8,7 @@ import 'package:lsrtcc_flutter/services/backend_api.dart';
 class ApiData extends ChangeNotifier {
   // VALORES INICIAIS:
   String _bandName_1 = 'BANDA HardCoded do User';
-  String _pubName_1 = 'BANDA HardCoded do User';
+  String _pubName_1 = 'PUB HardCoded do User';
   final _userdata = GetStorage();
 
   // MÉTODOS EFETIVAMENTE UTILIZADOS PRA PEGAR E SETAR OS VALORES DAS VARIÁVEIS USADAS PELO APP:
@@ -44,9 +44,12 @@ class ApiData extends ChangeNotifier {
 
     // && responseBody != '[]'
     if (response.statusCode == 200 && responseBody != '[]') {
-      String apiPubName_1 = jsonDecode(responseBody)[0]['name'] ?? "";
+      String apiPubName_1 = jsonDecode(responseBody).isEmpty
+          ? ''
+          : jsonDecode(responseBody)[0]['name'];
       _pubName_1 = apiPubName_1;
-      print('apiGetBandsByUser pubName_1: $_pubName_1');
+      // String apiPubName_1 = jsonDecode(responseBody)[0]['name'] ?? "";
+      print('apiGetPubsByUser pubName_1: $_pubName_1');
       _userdata.write('pubName_1', _pubName_1);
       notifyListeners();
     }
