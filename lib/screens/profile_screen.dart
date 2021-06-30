@@ -62,15 +62,17 @@ class _ProfileScreenState extends State<ProfileScreen>
     }
     userdata.remove('msg_register_pub');
 
+    tabController = TabController(length: 4, vsync: this);
+
     userId = userdata.read('userId');
     userName = userdata.read('userName') ?? '';
-    tabController = TabController(length: 4, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
       Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
     });
     bandName_1 = userdata.read('bandName_1');
     pubName_1 = userdata.read('pubName_1');
+
     super.initState();
   }
 
@@ -81,6 +83,45 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
+    userId = userdata.read('userId');
+    userName = userdata.read('userName') ?? '';
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
+      Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
+    });
+    bandName_1 = userdata.read('bandName_1');
+    pubName_1 = userdata.read('pubName_1');
+
+    AlertDialog exitDialog = AlertDialog(
+      title: Text('Deseja realmente sair?'),
+      content:
+          Text('Você terá que entrar com sua senha novamente para voltar.'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text(
+            'Cancelar',
+            style: TextStyle(
+              color: Color(0xFF6200EE),
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.popAndPushNamed(context, WelcomeScreen.id);
+          },
+          child: Text(
+            'Sair',
+            style: TextStyle(
+              color: Color(0xFF6200EE),
+            ),
+          ),
+        ),
+      ],
+    );
+
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
@@ -119,14 +160,18 @@ class _ProfileScreenState extends State<ProfileScreen>
                     child: Text("Cadastrar Banda/Pub"),
                     value: AllRegistrationsScreen.id,
                   ),
-                  PopupMenuItem(
-                    child: Text("Sair"),
-                    value: WelcomeScreen.id,
-                  ),
+                  PopupMenuItem(child: Text("Sair"), value: 'EXIT'),
                 ],
                 onSelected: (route) {
                   print(route);
-                  Navigator.pushNamed(context, route);
+                  if (route == 'EXIT') {
+                    print('EXIT escolhido!');
+
+                    showDialog<void>(
+                        context: context, builder: (context) => exitDialog);
+                  } else {
+                    Navigator.pushNamed(context, route);
+                  }
                 },
                 child: Icon(
                   Icons.more_vert,
