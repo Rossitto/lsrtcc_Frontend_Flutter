@@ -17,32 +17,39 @@ class ApiData extends ChangeNotifier {
   void apiGetUserBands(int userId) async {
     var response = await Backend.getBandsByUser(userId);
 
-    String responseBody = response.body;
-    print('apiGetBandsByUser responseBody: $responseBody');
+    String userBandsResponseBody = response.body;
+    print('apiGetBandsByUser responseBody: $userBandsResponseBody');
 
-    final userBands = bandFromJson(responseBody);
-    print('apiGetBandsByUser userBands: $userBands');
-
-    var userBandsLength = userBands.length;
-    print('apiGetBandsByUser userBandsLength: $userBandsLength');
-
-    var userBand_1_name = userBands[1].name;
-    var userBand_1_style = userBands[1].style;
-    print('apiGetBandsByUser userBand_1_name: $userBand_1_name');
-    print('apiGetBandsByUser userBand_1_style: $userBand_1_style');
+    // var userBand_1_name = userBands[1].name;
+    // var userBand_1_style = userBands[1].style;
+    // print('apiGetBandsByUser userBand_1_name: $userBand_1_name');
+    // print('apiGetBandsByUser userBand_1_style: $userBand_1_style');
 
     // && responseBody != '[]'
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && userBandsResponseBody != '[]') {
       // String apiBandName_1 = jsonDecode(responseBody)[0]['name'] ?? "";
-      String apiBandName_1 = jsonDecode(responseBody).isEmpty
-          ? ''
-          : jsonDecode(responseBody)[0]['name'];
-      _bandName_1 = apiBandName_1;
-      print('apiGetBandsByUser bandName_1: $_bandName_1');
-      _userdata.write('bandName_1', _bandName_1);
+      // String apiBandName_1 = jsonDecode(responseBody).isEmpty     ? ''
+      //     : jsonDecode(responseBody)[0]['name'];
+      // _bandName_1 = apiBandName_1;
+      // print('apiGetBandsByUser bandName_1: $_bandName_1');
+      // _userdata.write('bandName_1', _bandName_1);
+
+      // var userBands = bandFromJson(userBandsResponseBody);
+      // print('apiGetBandsByUser userBands: $userBands');
+      _userdata.write('userBandsResponseBody', userBandsResponseBody);
+
+      var userBandsCount = userBandsResponseBody.length;
+      // print('apiGetBandsByUser userBandsCount: $userBandsCount');
+      _userdata.write('userBandsCount', userBandsCount);
+
       notifyListeners();
     }
+
     _bandName_1 = 'Nenhuma banda';
+
+    // _userdata.write('userBands', null);
+    _userdata.write('userBandsCount', 0);
+
     notifyListeners();
   }
 

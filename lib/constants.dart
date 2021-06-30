@@ -48,6 +48,8 @@ const sadEmoji = Emojis.cryingFace;
 
 const happyEmoji = Emojis.grinningFaceWithBigEyes;
 
+const personEmoji = Emojis.bustInSilhouette;
+
 // addStringToSP(String varName, String varValue) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
 //   prefs.setString('$varName', "$varValue");

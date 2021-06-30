@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/components/DateTimePicker.dart';
+import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
@@ -11,6 +12,7 @@ import 'login_screen.dart';
 import 'registration_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
+import 'package:lsrtcc_flutter/constants.dart';
 
 class UserBandsPubs extends StatefulWidget {
   static const String id = 'user_bands_pubs';
@@ -66,6 +68,9 @@ class _UserBandsPubsState extends State<UserBandsPubs>
       Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
       // Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
     });
+    var userBandsResponseBody = userdata.read('userBandsResponseBody');
+    var userBandsCount = userdata.read('userBandsCount');
+    var userBands = bandFromJson(userBandsResponseBody); // List<Band>
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -95,41 +100,43 @@ class _UserBandsPubsState extends State<UserBandsPubs>
           backgroundColor: animation.value,
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
+            // TODO: reaproveitar todo esse container para Pubs
             child: Container(
               padding: EdgeInsets.only(top: 20),
               child: ListView.builder(
-                  itemCount: titles.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              behavior: SnackBarBehavior.floating,
-                              content: Text(titles[index] +
-                                  ' pressed!'), // começa no 1 e não no 0
-                              duration: Duration(seconds: 1),
-                            ),
-                          );
-                        },
-                        title: Text(titles[index]),
-                        subtitle: Text(subtitles[index]),
-                        leading: CircleAvatar(
-                          child: Image.asset('images/logo.png'),
-                          //     Hero(
-                          //   tag: 'logo',
-                          //   child: Container(
-                          //     child: Image.asset('images/logo.png'),
-                          //     height: 100.0,
-                          //   ),
-                          // ),
-                        ),
-                        trailing: Icon(
-                          icons[index],
+                itemCount: userBands.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      isThreeLine: true,
+                      onTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(userBands[index].name +
+                                ' pressed!'), // começa no 1 e não no 0
+                            duration: Duration(seconds: 1),
+                          ),
+                        );
+                      },
+                      title: Text(userBands[index].name),
+                      subtitle: Text(
+                        '${userBands[index].style}\n${userBands[index].membersNum} $personEmoji',
+                        style: TextStyle(
+                          height: 1.25,
+                          wordSpacing: 1.0,
+                          letterSpacing: 1.0,
                         ),
                       ),
-                    );
-                  }),
+                      leading: CircleAvatar(
+                        child: Image.asset('images/logo.png'),
+                      ),
+                      trailing: Icon(Icons
+                          .star_outline_sharp), // * em PUB usar = Icons.nightlife
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),
