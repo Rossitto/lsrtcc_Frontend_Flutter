@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/components/DateTimePicker.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
+import 'package:lsrtcc_flutter/services/api_data.dart';
+import 'package:provider/provider.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -20,6 +23,7 @@ class _UserBandsPubsState extends State<UserBandsPubs>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
+  final userdata = GetStorage();
 
   final titles = ["List 1", "List 2", "List 3"];
   final subtitles = [
@@ -56,6 +60,13 @@ class _UserBandsPubsState extends State<UserBandsPubs>
 
   @override
   Widget build(BuildContext context) {
+    var userId = userdata.read('userId');
+    var userName = userdata.read('userName') ?? '';
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
+      // Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
+    });
+
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
@@ -95,8 +106,9 @@ class _UserBandsPubsState extends State<UserBandsPubs>
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               behavior: SnackBarBehavior.floating,
-                              content: Text(titles[index] + ' pressed!'),
-                              duration: Duration(seconds: 4),
+                              content: Text(titles[index] +
+                                  ' pressed!'), // começa no 1 e não no 0
+                              duration: Duration(seconds: 1),
                             ),
                           );
                         },

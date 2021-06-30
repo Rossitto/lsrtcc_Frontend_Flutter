@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 
@@ -11,16 +12,24 @@ class ApiData extends ChangeNotifier {
   String _pubName_1 = 'PUB HardCoded do User';
   final _userdata = GetStorage();
 
-  // MÉTODOS EFETIVAMENTE UTILIZADOS PRA PEGAR E SETAR OS VALORES DAS VARIÁVEIS USADAS PELO APP:
   String get bandName_1 => _bandName_1;
 
   void apiGetUserBands(int userId) async {
-    print('valor inicial _bandName_1 = $_bandName_1');
-
-    print('getUserBands userId = $userId');
     var response = await Backend.getBandsByUser(userId);
+
     String responseBody = response.body;
     print('apiGetBandsByUser responseBody: $responseBody');
+
+    final userBands = bandFromJson(responseBody);
+    print('apiGetBandsByUser userBands: $userBands');
+
+    var userBandsLength = userBands.length;
+    print('apiGetBandsByUser userBandsLength: $userBandsLength');
+
+    var userBand_1_name = userBands[1].name;
+    var userBand_1_style = userBands[1].style;
+    print('apiGetBandsByUser userBand_1_name: $userBand_1_name');
+    print('apiGetBandsByUser userBand_1_style: $userBand_1_style');
 
     // && responseBody != '[]'
     if (response.statusCode == 200) {

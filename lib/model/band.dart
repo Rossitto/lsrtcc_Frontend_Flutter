@@ -1,76 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
 
+import 'dart:convert';
+
+// To parse this JSON data, do
+//
+//     final band = bandFromJson(jsonString);
+
+List<Band> bandFromJson(String str) =>
+    List<Band>.from(json.decode(str).map((x) => Band.fromJson(x)));
+
+String bandToJson(List<Band> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class Band {
-  final int _id;
-  String _name;
-  String _cnpj;
-  String _feeBrl;
-  String _membersNum;
-  String _style;
-  String _phone;
-  String _email;
-  List<User> _user;
+  Band({
+    this.id,
+    this.user,
+    this.name,
+    this.cnpj,
+    this.feeBrl,
+    this.membersNum,
+    this.style,
+    this.phone,
+    this.email,
+  });
 
-  set name(name) => _name;
-  set cnpj(cnpj) => _cnpj;
-  set feeBrl(feeBrl) => _feeBrl;
-  set membersNum(membersNum) => _membersNum;
-  set style(style) => _style;
-  set phone(phone) => _phone;
-  set email(email) => _email;
-  set user(user) => _user;
+  int id;
+  List<User> user;
+  String name;
+  String cnpj;
+  double feeBrl;
+  int membersNum;
+  String style;
+  String phone;
+  String email;
 
-  get id => _id;
-  get name => _name;
-  get cnpj => _cnpj;
-  get feeBrl => _feeBrl;
-  get membersNum => _membersNum;
-  get style => _style;
-  get phone => _phone;
-  get email => _email;
-  get user => _user;
-
-  Band(
-      {id,
-      @required name,
-      @required email,
-      @required phone,
-      @required user,
-      cnpj,
-      feeBrl,
-      membersNum,
-      style})
-      : _id = id,
-        _name = name,
-        _email = email,
-        _phone = phone,
-        _user = user,
-        _cnpj = cnpj,
-        _feeBrl = feeBrl,
-        _membersNum = membersNum,
-        _style = style;
-
-  Band.fromJson(Map<String, dynamic> json)
-      : _id = json['id'],
-        _name = json['name'],
-        _email = json['email'],
-        _phone = json['phone'],
-        _user = json['user'],
-        _cnpj = json['cnpj'],
-        _feeBrl = json['fee_brl'],
-        _membersNum = json['members_num'],
-        _style = json['style'];
+  factory Band.fromJson(Map<String, dynamic> json) => Band(
+        id: json["id"],
+        user: List<User>.from(json["user"].map((x) => User.fromJson(x))),
+        name: json["name"],
+        cnpj: json["cnpj"] == null ? null : json["cnpj"],
+        feeBrl: json["fee_brl"],
+        membersNum: json["members_num"],
+        style: json["style"],
+        phone: json["phone"],
+        email: json["email"],
+      );
 
   Map<String, dynamic> toJson() => {
-        'id': _id,
-        'name': _name,
-        'email': _email,
-        'phone': _phone,
-        'user': _user,
-        'cnpj': _cnpj,
-        'fee_brl': _feeBrl,
-        'members_num': _membersNum,
-        'style': _style
+        "id": id,
+        "user": List<dynamic>.from(user.map((x) => x.toJson())),
+        "name": name,
+        "cnpj": cnpj == null ? null : cnpj,
+        "fee_brl": feeBrl,
+        "members_num": membersNum,
+        "style": style,
+        "phone": phone,
+        "email": email,
       };
 }
+
+
+
+//   set name(name) => _name;
+// set cnpj(cnpj) => _cnpj;
+// set feeBrl(feeBrl) => _feeBrl;
+// set membersNum(membersNum) => _membersNum;
+// set style(style) => _style;
+// set phone(phone) => _phone;
+// set email(email) => _email;
+// set user(user) => _user;
+
+// get id => _id;
+// get name => _name;
+// get cnpj => _cnpj;
+// get feeBrl => _feeBrl;
+// get membersNum => _membersNum;
+// get style => _style;
+// get phone => _phone;
+// get email => _email;
+// get user => _user;

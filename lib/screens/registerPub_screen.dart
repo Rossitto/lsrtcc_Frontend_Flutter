@@ -253,9 +253,9 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
                         phone: phone,
                         user: currentUser,
                         cnpj: cnpj,
-                        addressCep: addressCep,
+                        addressCep: int.parse(addressCep),
                         address: address,
-                        addressNum: addressNum,
+                        addressNum: int.parse(addressNum),
                         city: city,
                         state: state,
                       );

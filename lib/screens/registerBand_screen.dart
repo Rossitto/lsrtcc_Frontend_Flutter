@@ -219,8 +219,8 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                     phone: phone,
                     // password: password,
                     cnpj: cnpj,
-                    feeBrl: feeBrl,
-                    membersNum: membersNum,
+                    feeBrl: double.parse(feeBrl),
+                    membersNum: int.parse(membersNum),
                     style: style,
                     user: [currentUser],
                   );
