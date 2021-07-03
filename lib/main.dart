@@ -11,6 +11,7 @@ import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'package:lsrtcc_flutter/screens/my_bands.dart';
+import 'package:lsrtcc_flutter/screens/search.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/screens/login_screen.dart';
 import 'package:lsrtcc_flutter/screens/registration_screen.dart';
@@ -73,6 +74,7 @@ Future<void> main() async {
           MyBandsEmpty.id: (context) => MyBandsEmpty(),
           MyPubs.id: (context) => MyPubs(),
           MyPubsEmpty.id: (context) => MyPubsEmpty(),
+          SearchScreen.id: (context) => SearchScreen(),
         },
       ),
     ),

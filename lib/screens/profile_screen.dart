@@ -10,6 +10,7 @@ import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/screens/my_bands.dart';
 import 'package:lsrtcc_flutter/screens/my_pubs.dart';
 import 'package:lsrtcc_flutter/screens/my_pubs_empty.dart';
+import 'package:lsrtcc_flutter/screens/search.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:provider/provider.dart';
@@ -163,6 +164,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                   //   child: Text("Cadastrar Banda/Pub"),
                   //   value: AllRegistrationsScreen.id,
                   // ),
+                  PopupMenuItem(
+                    child: Text("Buscar Bandas/Pubs"),
+                    value: SearchScreen.id,
+                  ),
                   PopupMenuItem(child: Text("Sair"), value: 'EXIT'),
                 ],
                 onSelected: (route) {
