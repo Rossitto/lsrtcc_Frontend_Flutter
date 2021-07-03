@@ -8,6 +8,8 @@ import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/screens/all_registrations_screen.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/screens/my_bands.dart';
+import 'package:lsrtcc_flutter/screens/my_pubs.dart';
+import 'package:lsrtcc_flutter/screens/my_pubs_empty.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:provider/provider.dart';
@@ -45,14 +47,14 @@ class _ProfileScreenState extends State<ProfileScreen>
     }
     userdata.remove('msg_register_band');
 
-    var msg_register_pub = userdata.read('msg_register_pub');
-    if (msg_register_pub != null) {
+    var msgRegisterPub = userdata.read('msg_register_pub');
+    if (msgRegisterPub != null) {
       Future(
         () {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              content: Text(msg_register_pub),
+              content: Text(msgRegisterPub),
               duration: Duration(seconds: 5),
             ),
           );
@@ -79,6 +81,9 @@ class _ProfileScreenState extends State<ProfileScreen>
     });
     var userBandsCount = userdata.read('userBandsCount');
     print('Profile userBandsCount: $userBandsCount');
+
+    var userPubsCount = userdata.read('userPubsCount');
+    print('Profile userPubsCount: $userPubsCount');
 
     userId = userdata.read('userId');
     userName = userdata.read('userName') ?? '';
@@ -151,16 +156,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                     value: userBandsCount == 0 ? MyBandsEmpty.id : MyBands.id,
                   ),
                   PopupMenuItem(
-                    child: Text("Cadastrar Banda/Pub"),
-                    value: AllRegistrationsScreen.id,
+                    child: Text("Meus Pubs"),
+                    value: userPubsCount == 0 ? MyPubsEmpty.id : MyPubs.id,
                   ),
+                  // PopupMenuItem(
+                  //   child: Text("Cadastrar Banda/Pub"),
+                  //   value: AllRegistrationsScreen.id,
+                  // ),
                   PopupMenuItem(child: Text("Sair"), value: 'EXIT'),
                 ],
                 onSelected: (route) {
                   print(route);
                   if (route == 'EXIT') {
                     print('EXIT escolhido!');
-
                     showDialog<void>(
                         context: context, builder: (context) => exitDialog);
                   } else {

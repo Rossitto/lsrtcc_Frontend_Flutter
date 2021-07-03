@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:lsrtcc_flutter/components/DateTimePicker.dart';
-import 'package:lsrtcc_flutter/model/band.dart';
-import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
-import 'package:lsrtcc_flutter/screens/profile_screen.dart';
-import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
+import 'package:lsrtcc_flutter/model/pub.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:provider/provider.dart';
-import 'login_screen.dart';
-import 'registration_screen.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 
-class MyBands extends StatefulWidget {
-  static const String id = 'my_bands';
+class MyPubs extends StatefulWidget {
+  static const String id = 'my_pubs';
 
   @override
-  _MyBandsState createState() => _MyBandsState();
+  _MyPubsState createState() => _MyPubsState();
 }
 
-class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
+class _MyPubsState extends State<MyPubs> with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
   final userdata = GetStorage();
@@ -36,21 +29,21 @@ class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    var msgRegisterBand = userdata.read('msg_register_band');
-    if (msgRegisterBand != null) {
+    var msgRegisterPub = userdata.read('msg_register_pub');
+    if (msgRegisterPub != null) {
       Future(
         () {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              content: Text(msgRegisterBand),
+              content: Text(msgRegisterPub),
               duration: Duration(seconds: 5),
             ),
           );
         },
       );
     }
-    userdata.remove('msg_register_band');
+    userdata.remove('msg_register_pub');
 
     controller = AnimationController(
       vsync: this,
@@ -81,16 +74,15 @@ class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
     var userName = userdata.read('userName') ?? '';
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
-      // Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
+      Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
     });
-    var userBandsResponseBody = userdata.read('userBandsResponseBody');
-    var userBandsCount = userdata.read('userBandsCount');
-    print('MyBands userBandsCount: $userBandsCount');
+    var userPubsResponseBody = userdata.read('userPubsResponseBody');
+    var userPubsCount = userdata.read('userPubsCount');
+    print('MyPubs userPubsCount: $userPubsCount');
 
-    var userBands = userBandsCount == 0
+    var userPubs = userPubsCount == 0
         ? null
-        : bandFromJson(userBandsResponseBody); // List<Band>
+        : pubFromJson(userPubsResponseBody); // List<Pub>
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -100,7 +92,7 @@ class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Minhas Bandas',
+          'Meus Pubs',
           style: TextStyle(color: Colors.white70),
         ),
         elevation: 5.0,
@@ -123,10 +115,10 @@ class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(top: 20),
-                child: userBandsCount == 0
+                child: userPubsCount == 0
                     ? Center(
                         child: Text(
-                          'Você não pertence a nenhuma banda ainda... $sadEmoji',
+                          'Você não pertence a nenhuma band ainda... $sadEmoji',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 25.0,
@@ -136,7 +128,7 @@ class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
                     : ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: userBands.length,
+                        itemCount: userPubs.length,
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
@@ -145,15 +137,15 @@ class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     behavior: SnackBarBehavior.floating,
-                                    content: Text(userBands[index].name +
+                                    content: Text(userPubs[index].name +
                                         ' pressed!'), // começa no 1 e não no 0
                                     duration: Duration(seconds: 1),
                                   ),
                                 );
                               },
-                              title: Text(userBands[index].name),
+                              title: Text(userPubs[index].name),
                               subtitle: Text(
-                                '${userBands[index].style}\n${userBands[index].membersNum} $personEmoji',
+                                '${userPubs[index].city}\n${userPubs[index].address} $addressEmoji',
                                 style: TextStyle(
                                   height: 1.25,
                                   wordSpacing: 1.0,
@@ -164,20 +156,18 @@ class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
                                 child: Image.asset('images/logo_not_alpha.png'),
                               ),
                               trailing: Icon(Icons
-                                  .star_outline_sharp), // * em PUB usar = Icons.nightlife
+                                  .nightlife), // * em PUB usar = Icons.nightlife
                             ),
                           );
                         },
                       ),
               ),
             ),
-            // TODO: add botão cadastrar nova banda
-
             RoundedButton(
               color: Colors.blueAccent,
-              text: 'Cadastrar Banda',
+              text: 'Cadastrar Pub',
               onPressed: () {
-                Navigator.pushNamed(context, RegisterBandScreen.id);
+                Navigator.pushNamed(context, RegisterPubScreen.id);
               },
             ),
             SizedBox(

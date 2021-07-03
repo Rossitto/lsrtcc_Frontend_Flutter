@@ -50,6 +50,9 @@ const happyEmoji = Emojis.grinningFaceWithBigEyes;
 
 const personEmoji = Emojis.bustInSilhouette;
 
+const addressEmoji =
+    Emojis.roundPushpin; // Globe showing Americas // round pushpin
+
 // addStringToSP(String varName, String varValue) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
 //   prefs.setString('$varName', "$varValue");

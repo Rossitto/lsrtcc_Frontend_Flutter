@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/pub.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
+import 'package:lsrtcc_flutter/screens/my_pubs.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:emojis/emojis.dart'; // to use Emoji collection
@@ -270,7 +271,7 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
 
                         userdata.writeInMemory('msg_register_pub',
                             'Pub Cadastrado com Sucesso! $happyEmoji');
-                        Navigator.pushNamed(context, ProfileScreen.id);
+                        Navigator.pushNamed(context, MyPubs.id);
                       } else {
                         print('ERRO! ' + 'Status Code: ${response.statusCode}');
                         print(responseTitle);
