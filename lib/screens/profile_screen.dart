@@ -7,7 +7,7 @@ import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/screens/all_registrations_screen.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
-import 'package:lsrtcc_flutter/screens/user_bands_pubs.dart';
+import 'package:lsrtcc_flutter/screens/my_bands.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:provider/provider.dart';
@@ -26,19 +26,17 @@ class _ProfileScreenState extends State<ProfileScreen>
   final userdata = GetStorage();
   int userId;
   String userName;
-  String bandName_1;
-  String pubName_1;
 
   @override
   void initState() {
-    var msg_register_band = userdata.read('msg_register_band');
-    if (msg_register_band != null) {
+    var msgRegisterBand = userdata.read('msg_register_band');
+    if (msgRegisterBand != null) {
       Future(
         () {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
-              content: Text(msg_register_band),
+              content: Text(msgRegisterBand),
               duration: Duration(seconds: 5),
             ),
           );
@@ -65,15 +63,6 @@ class _ProfileScreenState extends State<ProfileScreen>
 
     tabController = TabController(length: 4, vsync: this);
 
-    // userId = userdata.read('userId');
-    // userName = userdata.read('userName') ?? '';
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
-    //   Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
-    // });
-    // bandName_1 = userdata.read('bandName_1');
-    // pubName_1 = userdata.read('pubName_1');
-
     super.initState();
   }
 
@@ -84,17 +73,15 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    var userBandsCount = userdata.read('userBandsCount');
-    print('userBandsCount: $userBandsCount');
-
-    userId = userdata.read('userId');
-    userName = userdata.read('userName') ?? '';
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
       Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
     });
-    bandName_1 = userdata.read('bandName_1');
-    pubName_1 = userdata.read('pubName_1');
+    var userBandsCount = userdata.read('userBandsCount');
+    print('Profile userBandsCount: $userBandsCount');
+
+    userId = userdata.read('userId');
+    userName = userdata.read('userName') ?? '';
 
     AlertDialog exitDialog = AlertDialog(
       title: Text('Deseja realmente sair?'),
@@ -128,6 +115,9 @@ class _ProfileScreenState extends State<ProfileScreen>
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    print('screenHeight: $screenHeight');
+    print('screenWidth: $screenWidth');
+
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: ConstrainedBox(
@@ -158,9 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 itemBuilder: (BuildContext bc) => [
                   PopupMenuItem(
                     child: Text("Minhas Bandas"),
-                    value: userBandsCount == 0
-                        ? MyBandsEmpty.id
-                        : UserBandsPubs.id,
+                    value: userBandsCount == 0 ? MyBandsEmpty.id : MyBands.id,
                   ),
                   PopupMenuItem(
                     child: Text("Cadastrar Banda/Pub"),
@@ -306,7 +294,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                   Container(
                     padding: EdgeInsets.only(top: 100),
-                    // TODO: COLOCAR AGENDA AQUI, ou MINHAS BANDAS / MEUS PUBS
                     child:
                         // // EXCEPTION: Vertical viewport was given unbounded height.
                         // AnythingListView(
@@ -315,7 +302,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         //     print('Algum Card foi pressionado!');
                         //   },
                         // ),
-                        Text('Banda: ${bandName_1} \nPub: ${pubName_1}'),
+                        Text('COLOCAR EVENTOS AQUI'),
                   ),
                 ],
               ),

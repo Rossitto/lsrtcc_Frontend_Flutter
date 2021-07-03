@@ -60,7 +60,7 @@ class _WelcomeScreenDebugState extends State<WelcomeScreenDebug>
         child: Scaffold(
           backgroundColor: animation.value,
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.067),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -89,7 +89,7 @@ class _WelcomeScreenDebugState extends State<WelcomeScreenDebug>
                   ),
                 ),
                 SizedBox(
-                  height: 38.0,
+                  height: screenHeight * 0.05,
                 ),
                 RoundedButton(
                     color: Colors.lightBlueAccent,

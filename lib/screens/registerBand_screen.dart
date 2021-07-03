@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/model/user.dart';
+import 'package:lsrtcc_flutter/screens/my_bands.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 
@@ -228,7 +229,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                   String jsonBand = jsonEncode(currentBand);
 
                   // ? TESTANDO...
-                  print(jsonBand);
+                  print('jsonBand: $jsonBand');
 
                   var response = await Backend.postBand(jsonBand);
                   String responseBody = response.body;
@@ -239,7 +240,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
 
                     userdata.writeInMemory('msg_register_band',
                         'Banda Cadastrada com Sucesso! $happyEmoji');
-                    Navigator.pushNamed(context, ProfileScreen.id);
+                    Navigator.pushNamed(context, MyBands.id);
                   } else {
                     print('ERRO! ' + 'Status Code: ${response.statusCode}');
                     // print(response.body);

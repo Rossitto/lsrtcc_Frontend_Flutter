@@ -8,7 +8,7 @@ import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
-import 'package:lsrtcc_flutter/screens/user_bands_pubs.dart';
+import 'package:lsrtcc_flutter/screens/my_bands.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/screens/login_screen.dart';
 import 'package:lsrtcc_flutter/screens/registration_screen.dart';
@@ -67,7 +67,7 @@ Future<void> main() async {
           ProfileScreen.id: (context) => ProfileScreen(),
           DateTimePicker.id: (context) => DateTimePicker(),
           AllRegistrationsScreen.id: (context) => AllRegistrationsScreen(),
-          UserBandsPubs.id: (context) => UserBandsPubs(),
+          MyBands.id: (context) => MyBands(),
           MyBandsEmpty.id: (context) => MyBandsEmpty(),
         },
       ),

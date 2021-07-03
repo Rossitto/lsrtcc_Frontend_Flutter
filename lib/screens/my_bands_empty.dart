@@ -71,7 +71,7 @@ class _MyBandsEmptyState extends State<MyBandsEmpty>
           ),
           backgroundColor: animation.value,
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.067),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -99,7 +99,7 @@ class _MyBandsEmptyState extends State<MyBandsEmpty>
                   ),
                 ),
                 SizedBox(
-                  height: 38.0,
+                  height: screenHeight * 0.05,
                 ),
                 Text(
                   'Você não pertence a nenhuma banda ainda... $sadEmoji',

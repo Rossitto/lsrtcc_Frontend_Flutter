@@ -63,7 +63,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         child: Scaffold(
           backgroundColor: animation.value,
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.067),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.stretch,

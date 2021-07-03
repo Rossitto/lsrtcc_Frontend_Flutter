@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: ListView(
               shrinkWrap: true,
               reverse: true,
-              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.067),
               children: <Widget>[
                 Hero(
                   tag: 'logo',
