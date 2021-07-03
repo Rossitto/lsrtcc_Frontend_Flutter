@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 fontSize: 25.0,
               ),
             ),
-            elevation: 0,
+            elevation: 5.0,
             backgroundColor: Colors.blueAccent[700],
             // leading: IconButton(
             //   icon: Icon(Icons.arrow_back_ios, color: Colors.white),

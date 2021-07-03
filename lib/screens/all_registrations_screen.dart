@@ -58,7 +58,7 @@ class _AllRegistrationsScreenState extends State<AllRegistrationsScreen>
               'Cadastro',
               style: TextStyle(color: Colors.white70),
             ),
-            elevation: 0,
+            elevation: 5.0,
             backgroundColor: Colors.blueAccent[700],
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.white),
