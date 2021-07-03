@@ -70,7 +70,10 @@ class _UserBandsPubsState extends State<UserBandsPubs>
     });
     var userBandsResponseBody = userdata.read('userBandsResponseBody');
     var userBandsCount = userdata.read('userBandsCount');
-    var userBands = bandFromJson(userBandsResponseBody); // List<Band>
+    // print('userBandsCount: $userBandsCount');
+    var userBands = userBandsCount == 0
+        ? null
+        : bandFromJson(userBandsResponseBody); // List<Band>
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -101,42 +104,56 @@ class _UserBandsPubsState extends State<UserBandsPubs>
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             // TODO: reaproveitar todo esse container para Pubs
-            child: Container(
-              padding: EdgeInsets.only(top: 20),
-              child: ListView.builder(
-                itemCount: userBands.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      isThreeLine: true,
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            behavior: SnackBarBehavior.floating,
-                            content: Text(userBands[index].name +
-                                ' pressed!'), // começa no 1 e não no 0
-                            duration: Duration(seconds: 1),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 20),
+                  child: userBandsCount == 0
+                      ? Center(
+                          child: Text(
+                            'Você não pertence a nenhuma banda ainda... $sadEmoji',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 25.0,
+                            ),
                           ),
-                        );
-                      },
-                      title: Text(userBands[index].name),
-                      subtitle: Text(
-                        '${userBands[index].style}\n${userBands[index].membersNum} $personEmoji',
-                        style: TextStyle(
-                          height: 1.25,
-                          wordSpacing: 1.0,
-                          letterSpacing: 1.0,
+                        )
+                      : ListView.builder(
+                          itemCount: userBands.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: ListTile(
+                                isThreeLine: true,
+                                onTap: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      behavior: SnackBarBehavior.floating,
+                                      content: Text(userBands[index].name +
+                                          ' pressed!'), // começa no 1 e não no 0
+                                      duration: Duration(seconds: 1),
+                                    ),
+                                  );
+                                },
+                                title: Text(userBands[index].name),
+                                subtitle: Text(
+                                  '${userBands[index].style}\n${userBands[index].membersNum} $personEmoji',
+                                  style: TextStyle(
+                                    height: 1.25,
+                                    wordSpacing: 1.0,
+                                    letterSpacing: 1.0,
+                                  ),
+                                ),
+                                leading: CircleAvatar(
+                                  child: Image.asset('images/logo.png'),
+                                ),
+                                trailing: Icon(Icons
+                                    .star_outline_sharp), // * em PUB usar = Icons.nightlife
+                              ),
+                            );
+                          },
                         ),
-                      ),
-                      leading: CircleAvatar(
-                        child: Image.asset('images/logo.png'),
-                      ),
-                      trailing: Icon(Icons
-                          .star_outline_sharp), // * em PUB usar = Icons.nightlife
-                    ),
-                  );
-                },
-              ),
+                ),
+              ],
             ),
           ),
         ),

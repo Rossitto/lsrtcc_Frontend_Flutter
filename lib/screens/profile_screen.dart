@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/screens/all_registrations_screen.dart';
+import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/screens/user_bands_pubs.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
@@ -83,6 +84,9 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
+    var userBandsCount = userdata.read('userBandsCount');
+    print('userBandsCount: $userBandsCount');
+
     userId = userdata.read('userId');
     userName = userdata.read('userName') ?? '';
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -153,8 +157,10 @@ class _ProfileScreenState extends State<ProfileScreen>
               PopupMenuButton(
                 itemBuilder: (BuildContext bc) => [
                   PopupMenuItem(
-                    child: Text("Minha Banda/Pub"),
-                    value: UserBandsPubs.id,
+                    child: Text("Minhas Bandas"),
+                    value: userBandsCount == 0
+                        ? MyBandsEmpty.id
+                        : UserBandsPubs.id,
                   ),
                   PopupMenuItem(
                     child: Text("Cadastrar Banda/Pub"),

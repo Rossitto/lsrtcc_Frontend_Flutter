@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
+import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
@@ -67,6 +68,7 @@ Future<void> main() async {
           DateTimePicker.id: (context) => DateTimePicker(),
           AllRegistrationsScreen.id: (context) => AllRegistrationsScreen(),
           UserBandsPubs.id: (context) => UserBandsPubs(),
+          MyBandsEmpty.id: (context) => MyBandsEmpty(),
         },
       ),
     ),

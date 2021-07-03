@@ -3,14 +3,16 @@ import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
 import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 
-class AllRegistrationsScreen extends StatefulWidget {
-  static const String id = 'all_registrations_screen';
+import '../constants.dart';
+
+class MyBandsEmpty extends StatefulWidget {
+  static const String id = 'my_bands_empty';
 
   @override
-  _AllRegistrationsScreenState createState() => _AllRegistrationsScreenState();
+  _MyBandsEmptyState createState() => _MyBandsEmptyState();
 }
 
-class _AllRegistrationsScreenState extends State<AllRegistrationsScreen>
+class _MyBandsEmptyState extends State<MyBandsEmpty>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
@@ -55,7 +57,7 @@ class _AllRegistrationsScreenState extends State<AllRegistrationsScreen>
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Cadastro',
+              'Minhas Bandas',
               style: TextStyle(color: Colors.white70),
             ),
             elevation: 0,
@@ -66,24 +68,6 @@ class _AllRegistrationsScreenState extends State<AllRegistrationsScreen>
                 Navigator.pop(context);
               },
             ),
-            // actions: <Widget>[
-            //   PopupMenuButton(
-            //     itemBuilder: (BuildContext bc) => [
-            //       PopupMenuItem(child: Text("Sair"), value: WelcomeScreen.id),
-            //       PopupMenuItem(
-            //           child: Text("Cadastrar Pub/Banda"),
-            //           value: AllRegistrationsScreen.id),
-            //     ],
-            //     onSelected: (route) {
-            //       print(route);
-            //       Navigator.pushNamed(context, route);
-            //     },
-            //     child: Icon(
-            //       Icons.more_vert,
-            //       color: Colors.white,
-            //     ),
-            //   ),
-            // ],
           ),
           backgroundColor: animation.value,
           body: Padding(
@@ -117,18 +101,28 @@ class _AllRegistrationsScreenState extends State<AllRegistrationsScreen>
                 SizedBox(
                   height: 38.0,
                 ),
+                Text(
+                  'Você não pertence a nenhuma banda ainda... $sadEmoji',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
                 RoundedButton(
                     color: Colors.blueAccent,
                     text: 'Cadastrar Banda',
                     onPressed: () {
                       Navigator.pushNamed(context, RegisterBandScreen.id);
                     }),
-                RoundedButton(
-                    color: Colors.blueAccent,
-                    text: 'Cadastrar Pub',
-                    onPressed: () {
-                      Navigator.pushNamed(context, RegisterPubScreen.id);
-                    }),
+                // RoundedButton(
+                //     color: Colors.blueAccent,
+                //     text: 'Cadastrar Pub',
+                //     onPressed: () {
+                //       Navigator.pushNamed(context, RegisterPubScreen.id);
+                //     }),
                 SizedBox(
                   height: 48.0,
                 ),
