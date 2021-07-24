@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/components/DateTimePicker.dart';
-import 'package:lsrtcc_flutter/model/showSchedule.dart';
+import 'package:lsrtcc_flutter/model/event.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:provider/provider.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
@@ -83,7 +83,7 @@ class _MyEventsState extends State<MyEvents>
 
     var userEvents = userEventsCount == 0
         ? null
-        : ShowScheduleFromJson(userEventsResponseBody); // List<Event>
+        : eventFromJson(userEventsResponseBody); // List<Event>
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -137,15 +137,18 @@ class _MyEventsState extends State<MyEvents>
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     behavior: SnackBarBehavior.floating,
-                                    content: Text(userEvents[index].name +
+                                    content: Text(userEvents[index]
+                                            .showDatetime
+                                            .toString() +
                                         ' pressed!'), // começa no 1 e não no 0
                                     duration: Duration(seconds: 1),
                                   ),
                                 );
                               },
-                              title: Text(userEvents[index].name),
+                              title: Text(
+                                  userEvents[index].showDatetime.toString()),
                               subtitle: Text(
-                                '${userEvents[index].city}\n${userEvents[index].address} $addressEmoji',
+                                '${userEvents[index].band.name}\n${userEvents[index].pub.name} $addressEmoji',
                                 style: TextStyle(
                                   height: 1.25,
                                   wordSpacing: 1.0,

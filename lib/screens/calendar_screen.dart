@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
-import 'package:lsrtcc_flutter/model/showSchedule.dart';
+import 'package:lsrtcc_flutter/model/event.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:date_time_format/date_time_format.dart';
@@ -133,9 +133,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 // prefs.setString("events", json.encode(encodeMap(_events)));
 
                 print('timeFormated = $timeFormated');
-                // ShowSchedule showSchedule = ShowSchedule(
+                // Event event = Event(
                 //     pubId: 3, bandId: 3, date: selectedDate, time: timeFormated);
-                // await postShowToAPI(showSchedule);
+                // await postShowToAPI(event);
 
                 // showDialog(
                 //   context: context,
@@ -198,10 +198,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
     }
   }
 
-  // postShowToAPI(ShowSchedule showSchedule) async {
-  //   print(showSchedule);
-  // var jsonShow = showSchedule.toJson();
-  // String jsonShow = jsonEncode(showSchedule);
+  // postShowToAPI(Event event) async {
+  //   print(event);
+  // var jsonShow = event.toJson();
+  // String jsonShow = jsonEncode(event);
   // var response = await Backend.postShow(jsonShow);
   //   String responseBody = response.body;
   //   var responseTitle = jsonDecode(responseBody)['title'] ?? "";

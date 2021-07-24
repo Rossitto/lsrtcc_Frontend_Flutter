@@ -94,4 +94,16 @@ class Backend {
     // print('getBandsByUser response: $response');
     return response;
   }
+
+  static Future<http.Response> getEventsByUser(int userId) {
+    var response = http.get(
+      'http://${khost}/shows/user/$userId',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Accept': 'application/json; charset=UTF-8'
+      },
+    );
+    // print('getBandsByUser response: $response');
+    return response;
+  }
 }

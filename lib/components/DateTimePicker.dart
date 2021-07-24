@@ -5,7 +5,7 @@ import 'package:get/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/constants.dart';
-import 'package:lsrtcc_flutter/model/showSchedule.dart';
+import 'package:lsrtcc_flutter/model/event.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:intl/intl.dart';
@@ -247,9 +247,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
                 var showTimestampFormatted = formatTimestamp(showTimestamp);
                 print('showTimestampFormatted = $showTimestampFormatted');
 
-                // TODO : pegar o Pub ID certo ao postar ShowSchedule
-                // TODO : pegar o Band ID certo ao postar ShowSchedule
-                ShowSchedule currentShow = ShowSchedule(
+                // TODO : pegar o Pub ID certo ao postar Event
+                // TODO : pegar o Band ID certo ao postar Event
+                Event currentShow = Event(
                   id: null,
                   pub_id: 2,
                   band_id: 2,

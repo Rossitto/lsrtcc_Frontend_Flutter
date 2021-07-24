@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
+import 'package:lsrtcc_flutter/model/event.dart';
 import 'package:lsrtcc_flutter/model/pub.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 
@@ -61,6 +62,29 @@ class ApiData extends ChangeNotifier {
       notifyListeners();
     } else {
       _userdata.write('userPubsCount', 0);
+    }
+
+    notifyListeners();
+  }
+
+  void apiGetUserEvents(int userId) async {
+    var response = await Backend.getEventsByUser(userId);
+
+    String userEventsResponseBody = response.body;
+    // print('apiGetEventsByUser responseBody: $userEventsResponseBody');
+
+    if (response.statusCode == 200 && userEventsResponseBody != '[]') {
+      _userdata.write('userEventsResponseBody', userEventsResponseBody);
+
+      var userEvents = eventFromJson(userEventsResponseBody);
+      var userEventsCount = userEvents.length;
+      // print('apiGetEventsByUser userEventsCount: $userEventsCount');
+
+      _userdata.write('userEventsCount', userEventsCount);
+
+      notifyListeners();
+    } else {
+      _userdata.write('userEventsCount', 0);
     }
 
     notifyListeners();
