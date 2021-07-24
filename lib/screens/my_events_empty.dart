@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
+import 'package:lsrtcc_flutter/components/DateTimePicker.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 
 import '../constants.dart';
 
-class MyPubsEmpty extends StatefulWidget {
-  static const String id = 'my_pubs_empty';
+class MyEventsEmpty extends StatefulWidget {
+  static const String id = 'my_events_empty';
 
   @override
-  _MyPubsEmptyState createState() => _MyPubsEmptyState();
+  _MyEventsEmptyState createState() => _MyEventsEmptyState();
 }
 
-class _MyPubsEmptyState extends State<MyPubsEmpty>
+class _MyEventsEmptyState extends State<MyEventsEmpty>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
@@ -56,7 +56,7 @@ class _MyPubsEmptyState extends State<MyPubsEmpty>
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Meus Pubs',
+              'Meus Eventos',
               style: TextStyle(color: Colors.white70),
             ),
             elevation: 5.0,
@@ -101,7 +101,7 @@ class _MyPubsEmptyState extends State<MyPubsEmpty>
                   height: screenHeight * 0.05,
                 ),
                 Text(
-                  'Você não tem nenhum pub ainda... $sadEmoji',
+                  'Você não tem nenhum Evento ainda... $sadEmoji',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14.0,
@@ -118,9 +118,9 @@ class _MyPubsEmptyState extends State<MyPubsEmpty>
                 //     }),
                 RoundedButton(
                     color: Colors.blueAccent,
-                    text: 'Cadastrar Pub',
+                    text: 'Cadastrar Evento',
                     onPressed: () {
-                      Navigator.pushNamed(context, RegisterPubScreen.id);
+                      Navigator.pushNamed(context, DateTimePicker.id);
                     }),
                 SizedBox(
                   height: 48.0,

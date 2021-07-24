@@ -8,6 +8,8 @@ import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/screens/all_registrations_screen.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/screens/my_bands.dart';
+import 'package:lsrtcc_flutter/screens/my_events.dart';
+import 'package:lsrtcc_flutter/screens/my_events_empty.dart';
 import 'package:lsrtcc_flutter/screens/my_pubs.dart';
 import 'package:lsrtcc_flutter/screens/my_pubs_empty.dart';
 import 'package:lsrtcc_flutter/screens/search.dart';
@@ -86,6 +88,9 @@ class _ProfileScreenState extends State<ProfileScreen>
     var userPubsCount = userdata.read('userPubsCount');
     print('Profile userPubsCount: $userPubsCount');
 
+    var userEventsCount = userdata.read('userEventsCount');
+    print('Profile userEventsCount: $userEventsCount');
+
     userId = userdata.read('userId');
     userName = userdata.read('userName') ?? '';
 
@@ -159,6 +164,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                   PopupMenuItem(
                     child: Text("Meus Pubs"),
                     value: userPubsCount == 0 ? MyPubsEmpty.id : MyPubs.id,
+                  ),
+                  PopupMenuItem(
+                    child: Text("Meus Eventos"),
+                    value:
+                        userEventsCount == 0 ? MyEventsEmpty.id : MyEvents.id,
                   ),
                   // PopupMenuItem(
                   //   child: Text("Cadastrar Banda/Pub"),

@@ -5,6 +5,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
+import 'package:lsrtcc_flutter/screens/my_events.dart';
+import 'package:lsrtcc_flutter/screens/my_events_empty.dart';
 import 'package:lsrtcc_flutter/screens/my_pubs.dart';
 import 'package:lsrtcc_flutter/screens/my_pubs_empty.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
@@ -74,6 +76,8 @@ Future<void> main() async {
           MyBandsEmpty.id: (context) => MyBandsEmpty(),
           MyPubs.id: (context) => MyPubs(),
           MyPubsEmpty.id: (context) => MyPubsEmpty(),
+          MyEvents.id: (context) => MyEvents(),
+          MyEventsEmpty.id: (context) => MyEventsEmpty(),
           SearchScreen.id: (context) => SearchScreen(),
         },
       ),
