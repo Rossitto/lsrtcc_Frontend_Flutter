@@ -50,8 +50,16 @@ const happyEmoji = Emojis.grinningFaceWithBigEyes;
 
 const personEmoji = Emojis.bustInSilhouette;
 
-const addressEmoji =
-    Emojis.roundPushpin; // Globe showing Americas // round pushpin
+// Globe showing Americas // round pushpin
+const addressEmoji = Emojis.roundPushpin;
+
+const guitarEmoji = Emojis.guitar;
+
+const microphoneEmoji = Emojis.studioMicrophone;
+
+const musicalNotesEmoji = Emojis.musicalNote;
+
+const cityEmoji = Emojis.cityscape;
 
 // addStringToSP(String varName, String varValue) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();

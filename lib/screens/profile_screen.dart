@@ -322,7 +322,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         // AnythingListView(
                         //   titles: ["List 1", "List 2", "List 3"],
                         //   onTapTile: () {
-                        //     print('Algum Card foi pressionado!');
+                        //     print('Algum Card foi  pressionado!');
                         //   },
                         // ),
                         Text('COLOCAR EVENTOS AQUI'),

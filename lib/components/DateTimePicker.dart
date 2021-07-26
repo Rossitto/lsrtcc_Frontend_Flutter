@@ -8,6 +8,7 @@ import 'package:lsrtcc_flutter/constants.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/model/event.dart';
 import 'package:lsrtcc_flutter/model/pub.dart';
+import 'package:lsrtcc_flutter/screens/my_events.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:intl/intl.dart';
@@ -265,7 +266,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                 );
                 // print('DateTime.now() = ${DateTime.now()}');
                 print('currentShow = $currentShow');
-                String jsonShow = jsonEncode(currentShow);
+                String jsonShow = eventToJson([currentShow]);
                 print('jsonShow = $jsonShow');
 
                 // TODO: se show já existir = PUT em vez de POST e enviar o ID do show na URL.
@@ -278,8 +279,6 @@ class _DateTimePickerState extends State<DateTimePicker> {
                       'Status Code: ${response.statusCode}');
                   // String showId = jsonDecode(responseBody)['id'] ?? "";
 
-                  // TODO: levar para a tela de perfil
-                  // Navigator.pushNamed(context, ProfileScreen.id);
                   setState(
                     () {
                       showDialog(
@@ -293,6 +292,9 @@ class _DateTimePickerState extends State<DateTimePicker> {
                       );
                     },
                   );
+
+                  // TODO: testar se está funcionando ir para essa tela.
+                  Navigator.pushNamed(context, MyEvents.id);
                 } else {
                   var responseTitle =
                       jsonDecode(responseBody)['title'] ?? "Erro";

@@ -138,14 +138,14 @@ class _MyPubsState extends State<MyPubs> with SingleTickerProviderStateMixin {
                                   SnackBar(
                                     behavior: SnackBarBehavior.floating,
                                     content: Text(userPubs[index].name +
-                                        ' pressed!'), // começa no 1 e não no 0
+                                        ' pressionado!'), // começa no 1 e não no 0
                                     duration: Duration(seconds: 1),
                                   ),
                                 );
                               },
                               title: Text(userPubs[index].name),
                               subtitle: Text(
-                                '${userPubs[index].city}\n${userPubs[index].address} $addressEmoji',
+                                '$cityEmoji ${userPubs[index].city}\n$addressEmoji ${userPubs[index].address}',
                                 style: TextStyle(
                                   height: 1.25,
                                   wordSpacing: 1.0,

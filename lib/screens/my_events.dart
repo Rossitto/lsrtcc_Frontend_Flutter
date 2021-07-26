@@ -139,16 +139,19 @@ class _MyEventsState extends State<MyEvents>
                                     behavior: SnackBarBehavior.floating,
                                     content: Text(userEvents[index]
                                             .showDatetime
-                                            .toString() +
-                                        ' pressed!'), // começa no 1 e não no 0
+                                            .toString()
+                                            .substring(0, 16) +
+                                        ' pressionado!'), // começa no 1 e não no 0
                                     duration: Duration(seconds: 1),
                                   ),
                                 );
                               },
-                              title: Text(
-                                  userEvents[index].showDatetime.toString()),
+                              title: Text(userEvents[index]
+                                  .showDatetime
+                                  .toString()
+                                  .substring(0, 16)),
                               subtitle: Text(
-                                '${userEvents[index].band.name}\n${userEvents[index].pub.name} $addressEmoji',
+                                '$guitarEmoji ${userEvents[index].band.name}\n$addressEmoji ${userEvents[index].pub.name}',
                                 style: TextStyle(
                                   height: 1.25,
                                   wordSpacing: 1.0,

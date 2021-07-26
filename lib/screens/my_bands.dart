@@ -146,14 +146,14 @@ class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
                                   SnackBar(
                                     behavior: SnackBarBehavior.floating,
                                     content: Text(userBands[index].name +
-                                        ' pressed!'), // começa no 1 e não no 0
+                                        ' pressionado!'), // começa no 1 e não no 0
                                     duration: Duration(seconds: 1),
                                   ),
                                 );
                               },
                               title: Text(userBands[index].name),
                               subtitle: Text(
-                                '${userBands[index].style}\n${userBands[index].membersNum} $personEmoji',
+                                '$musicalNotesEmoji ${userBands[index].style}\n$personEmoji ${userBands[index].membersNum}',
                                 style: TextStyle(
                                   height: 1.25,
                                   wordSpacing: 1.0,
