@@ -12,7 +12,7 @@ import 'package:lsrtcc_flutter/screens/my_events.dart';
 import 'package:lsrtcc_flutter/screens/my_events_empty.dart';
 import 'package:lsrtcc_flutter/screens/my_pubs.dart';
 import 'package:lsrtcc_flutter/screens/my_pubs_empty.dart';
-import 'package:lsrtcc_flutter/screens/search.dart';
+import 'package:lsrtcc_flutter/screens/find_pub.dart';
 import 'package:lsrtcc_flutter/screens/welcome_screen.dart';
 import 'package:lsrtcc_flutter/services/backend_api.dart';
 import 'package:provider/provider.dart';
@@ -175,8 +175,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   //   value: AllRegistrationsScreen.id,
                   // ),
                   PopupMenuItem(
-                    child: Text("Buscar Bandas/Pubs"),
-                    value: SearchScreen.id,
+                    child: Text("Encontrar Pub"),
+                    value: FindPub.id,
                   ),
                   PopupMenuItem(child: Text("Sair"), value: 'EXIT'),
                 ],

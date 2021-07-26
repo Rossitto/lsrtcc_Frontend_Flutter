@@ -90,6 +90,27 @@ class ApiData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void apiGetAllPubs() async {
+    var response = await Backend.getAllPubs();
+
+    String allPubsResponseBody = response.body;
+
+    if (response.statusCode == 200 && allPubsResponseBody != '[]') {
+      _userdata.write('allPubsResponseBody', allPubsResponseBody);
+
+      var allPubs = pubFromJson(allPubsResponseBody);
+      var allPubsCount = allPubs.length;
+
+      _userdata.write('allPubsCount', allPubsCount);
+
+      notifyListeners();
+    } else {
+      _userdata.write('allPubsCount', 0);
+    }
+
+    notifyListeners();
+  }
+
   // void apiGetUserPubs(int userId) async {
   //   var response = await Backend.getPubsByUser(userId);
   //   String responseBody = response.body;
