@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
+import 'package:lsrtcc_flutter/screens/find_band.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/screens/my_events.dart';
 import 'package:lsrtcc_flutter/screens/my_events_empty.dart';
@@ -20,7 +21,7 @@ import 'package:lsrtcc_flutter/screens/registration_screen.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:lsrtcc_flutter/services/user_preferences.dart';
 import 'package:provider/provider.dart';
-import 'components/DateTimePicker.dart';
+import 'screens/date_time_picker.dart';
 import 'screens/all_registrations_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
@@ -79,6 +80,7 @@ Future<void> main() async {
           MyEvents.id: (context) => MyEvents(),
           MyEventsEmpty.id: (context) => MyEventsEmpty(),
           FindPub.id: (context) => FindPub(),
+          FindBand.id: (context) => FindBand(),
         },
       ),
     ),

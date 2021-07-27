@@ -132,13 +132,17 @@ class _MyPubsState extends State<MyPubs> with SingleTickerProviderStateMixin {
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
+                              selected: true,
                               isThreeLine: true,
                               onTap: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     behavior: SnackBarBehavior.floating,
-                                    content: Text(userPubs[index].name +
-                                        ' pressionado!'), // começa no 1 e não no 0
+                                    content: Text(
+                                        userPubs[index].name +
+                                            ' é um pub seu! $victoryHandEmoji$badassEmoji',
+                                        textAlign: TextAlign
+                                            .center), // começa no 1 e não no 0
                                     duration: Duration(seconds: 1),
                                   ),
                                 );

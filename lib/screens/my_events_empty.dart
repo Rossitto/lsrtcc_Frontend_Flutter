@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lsrtcc_flutter/components/DateTimePicker.dart';
+import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 
 import '../constants.dart';

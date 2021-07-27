@@ -61,6 +61,14 @@ const musicalNotesEmoji = Emojis.musicalNote;
 
 const cityEmoji = Emojis.cityscape;
 
+const badassEmoji = Emojis.smilingFaceWithSunglasses;
+
+const victoryHandEmoji = Emojis.victoryHand;
+
+const rockAndRollHandEmoji = Emojis.signOfTheHorns;
+
+const fireEmoji = Emojis.fire;
+
 // addStringToSP(String varName, String varValue) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
 //   prefs.setString('$varName', "$varValue");

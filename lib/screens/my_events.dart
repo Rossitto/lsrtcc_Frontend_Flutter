@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:lsrtcc_flutter/components/DateTimePicker.dart';
+import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
 import 'package:lsrtcc_flutter/model/event.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:provider/provider.dart';
@@ -132,16 +132,16 @@ class _MyEventsState extends State<MyEvents>
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
+                              selected: true,
                               isThreeLine: true,
                               onTap: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     behavior: SnackBarBehavior.floating,
-                                    content: Text(userEvents[index]
-                                            .showDatetime
-                                            .toString()
-                                            .substring(0, 16) +
-                                        ' pressionado!'), // começa no 1 e não no 0
+                                    // Text(userEvents[index].showDatetime.toString().substring(0, 16) + 'pressionado') // começa no 1 e não no 0
+                                    content: Text(
+                                        '${userEvents[index].band.name} no ${userEvents[index].pub.name}??\nEsse show vai ser TOP!!! $fireEmoji',
+                                        textAlign: TextAlign.center),
                                     duration: Duration(seconds: 1),
                                   ),
                                 );

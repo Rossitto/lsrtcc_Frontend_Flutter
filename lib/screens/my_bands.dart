@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:lsrtcc_flutter/components/DateTimePicker.dart';
+import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
 import 'package:lsrtcc_flutter/screens/profile_screen.dart';
@@ -140,13 +140,17 @@ class _MyBandsState extends State<MyBands> with SingleTickerProviderStateMixin {
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
+                              selected: true,
                               isThreeLine: true,
                               onTap: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     behavior: SnackBarBehavior.floating,
-                                    content: Text(userBands[index].name +
-                                        ' pressionado!'), // começa no 1 e não no 0
+                                    content: Text(
+                                        userBands[index].name +
+                                            ' é uma banda sua! $rockAndRollHandEmoji$badassEmoji',
+                                        textAlign: TextAlign
+                                            .center), // começa no 1 e não no 0
                                     duration: Duration(seconds: 1),
                                   ),
                                 );

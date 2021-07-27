@@ -81,18 +81,23 @@ class _ProfileScreenState extends State<ProfileScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
       Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
+      Provider.of<ApiData>(context, listen: false).apiGetUserEvents(userId);
+      Provider.of<ApiData>(context, listen: false).apiGetAllPubs();
     });
-    var userBandsCount = userdata.read('userBandsCount');
+    var userBandsCount = userdata.read('userBandsCount') ?? 0;
     print('Profile userBandsCount: $userBandsCount');
 
-    var userPubsCount = userdata.read('userPubsCount');
+    var userPubsCount = userdata.read('userPubsCount') ?? 0;
     print('Profile userPubsCount: $userPubsCount');
 
-    var userEventsCount = userdata.read('userEventsCount');
+    var userEventsCount = userdata.read('userEventsCount') ?? 0;
     print('Profile userEventsCount: $userEventsCount');
 
     userId = userdata.read('userId');
     userName = userdata.read('userName') ?? '';
+
+    userdata.remove('selectedPubJson');
+    userdata.remove('selectedBandJson');
 
     AlertDialog exitDialog = AlertDialog(
       title: Text('Deseja realmente sair?'),
@@ -318,13 +323,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   Container(
                     padding: EdgeInsets.only(top: 100),
                     child:
-                        // // EXCEPTION: Vertical viewport was given unbounded height.
-                        // AnythingListView(
-                        //   titles: ["List 1", "List 2", "List 3"],
-                        //   onTapTile: () {
-                        //     print('Algum Card foi  pressionado!');
-                        //   },
-                        // ),
+                        // TODO: COLOCAR EVENTOS AQUI
                         Text('COLOCAR EVENTOS AQUI'),
                   ),
                 ],

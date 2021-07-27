@@ -1,31 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
-import 'package:lsrtcc_flutter/components/rounded_button.dart';
-import 'package:lsrtcc_flutter/constants.dart';
-import 'package:lsrtcc_flutter/model/pub.dart';
-import 'package:lsrtcc_flutter/screens/find_band.dart';
-import 'package:lsrtcc_flutter/screens/my_bands.dart';
-import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
+import 'package:lsrtcc_flutter/model/band.dart';
+import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
+import 'package:lsrtcc_flutter/screens/profile_screen.dart';
+import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
+import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:provider/provider.dart';
+import 'login_screen.dart';
+import 'registration_screen.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:lsrtcc_flutter/components/rounded_button.dart';
+import 'package:lsrtcc_flutter/constants.dart';
 
-class FindPub extends StatefulWidget {
-  static const String id = 'find_pub';
+class FindBand extends StatefulWidget {
+  static const String id = 'find_band';
 
   @override
-  _FindPubState createState() => _FindPubState();
+  _FindBandState createState() => _FindBandState();
 }
 
-class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
+class _FindBandState extends State<FindBand>
+    with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
   final userdata = GetStorage();
-  var selectedPubId;
   var _selectedIndex;
+  var selectedBandJson;
 
   @override
   void initState() {
+    var msgRegisterBand = userdata.read('msg_register_band');
+    if (msgRegisterBand != null) {
+      Future(
+        () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(msgRegisterBand),
+              duration: Duration(seconds: 5),
+            ),
+          );
+        },
+      );
+    }
+    userdata.remove('msg_register_band');
+
     controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: 1),
@@ -54,18 +75,16 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
     var userId = userdata.read('userId');
     var userName = userdata.read('userName') ?? '';
 
-    var userBandsCount = userdata.read('userBandsCount') ?? 0;
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ApiData>(context, listen: false).apiGetAllPubs();
+      Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
     });
-    var allPubsResponseBody = userdata.read('allPubsResponseBody');
-    var allPubsCount = userdata.read('allPubsCount');
-    print('MyPubs allPubsCount: $allPubsCount');
+    var userBandsResponseBody = userdata.read('userBandsResponseBody');
+    var userBandsCount = userdata.read('userBandsCount');
+    print('MyBands userBandsCount: $userBandsCount');
 
-    var allPubs = allPubsCount == 0
+    var userBands = userBandsCount == 0
         ? null
-        : pubFromJson(allPubsResponseBody); // List<Pub>
+        : bandFromJson(userBandsResponseBody); // List<Band>
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -75,7 +94,7 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Encontrar Pub',
+          'Escolha uma banda',
           style: TextStyle(color: Colors.white70),
         ),
         elevation: 5.0,
@@ -97,10 +116,10 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(top: 20),
-                child: allPubsCount == 0
+                child: userBandsCount == 0
                     ? Center(
                         child: Text(
-                          'Nenhum Pub foi cadastrado ainda em nossa base... $sadEmoji',
+                          'Você não pertence a nenhuma banda ainda... $sadEmoji',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 25.0,
@@ -110,50 +129,29 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
                     : ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: allPubs.length,
+                        itemCount: userBands.length,
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
                               selected: index == _selectedIndex,
                               selectedTileColor: Colors.lightBlue[50],
                               isThreeLine: true,
-                              onLongPress: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    behavior: SnackBarBehavior.floating,
-                                    content: Text(allPubs[index].name +
-                                        ' LongPressed !'), // começa no 1 e não no 0
-                                    duration: Duration(seconds: 1),
-                                  ),
-                                );
-                              },
                               onTap: () {
                                 setState(() {
                                   _selectedIndex = index;
                                 });
-                                var selectedPubJson = allPubs[index].toJson();
-                                userdata.remove('selectedPubJson');
+                                selectedBandJson = userBands[index].toJson();
+                                userdata.remove('selectedBandJson');
                                 userdata.write(
-                                    'selectedPubJson', selectedPubJson);
-                                var selectedPubName = allPubs[index].name;
+                                    'selectedBandJson', selectedBandJson);
+
+                                var selectedBandName = userBands[index].name;
                                 userdata.write(
-                                    'selectedPubName', selectedPubName);
-
-                                // print('selectedPubJson: $selectedPubJson');
-
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   SnackBar(
-                                //     behavior: SnackBarBehavior.floating,
-                                //     content: Text(allPubs[index].name +
-                                //         ' ($selectedPubId) pressionado!'), // começa no 1 e não no 0
-                                //     duration: Duration(seconds: 1),
-                                //   ),
-                                // );
+                                    'selectedBandName', selectedBandName);
                               },
-
-                              title: Text(allPubs[index].name),
+                              title: Text(userBands[index].name),
                               subtitle: Text(
-                                '$cityEmoji ${allPubs[index].city}\n$addressEmoji ${allPubs[index].address}',
+                                '$musicalNotesEmoji ${userBands[index].style}\n$personEmoji ${userBands[index].membersNum}',
                                 style: TextStyle(
                                   height: 1.25,
                                   wordSpacing: 1.0,
@@ -163,24 +161,18 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
                               leading: CircleAvatar(
                                 child: Image.asset('images/logo_not_alpha.png'),
                               ),
-                              trailing: Icon(Icons
-                                  .nightlife), // * em PUB usar = Icons.nightlife
+                              trailing: Icon(Icons.star_outline_sharp),
                             ),
                           );
                         },
                       ),
               ),
             ),
-            // Divider(
-            //   height: screenHeight * 0.01,
-            //   thickness: 1,
-            // ),
             RoundedButton(
               color: Colors.blueAccent,
-              text: 'Escolher Banda para Agendar Evento',
+              text: 'Escolher Data e Hora do Evento',
               onPressed: () {
-                Navigator.pushNamed(context,
-                    userBandsCount == 0 ? MyBandsEmpty.id : FindBand.id);
+                Navigator.pushNamed(context, DateTimePicker.id);
               },
             ),
             SizedBox(
