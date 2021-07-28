@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:lsrtcc_flutter/model/pub.dart';
+import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
 import 'package:lsrtcc_flutter/screens/find_band.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
@@ -27,7 +28,7 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     selectedBandJson = userdata.read('selectedBandJson');
-    isFinding = selectedBandJson == null ? false : true;
+    isFinding = selectedBandJson == null ? true : false;
 
     controller = AnimationController(
       vsync: this,
@@ -59,17 +60,21 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
 
     var userBandsCount = userdata.read('userBandsCount') ?? 0;
 
-    // TODO: usar isFinding == true para retornar todo esse bloco abaixo. Se False: alterar o bloco.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ApiData>(context, listen: false).apiGetAllPubs();
+      isFinding == true
+          ? Provider.of<ApiData>(context, listen: false).apiGetAllPubs()
+          : Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
     });
-    var allPubsResponseBody = userdata.read('allPubsResponseBody');
-    var allPubsCount = userdata.read('allPubsCount');
-    print('MyPubs allPubsCount: $allPubsCount');
 
-    var allPubs = allPubsCount == 0
-        ? null
-        : pubFromJson(allPubsResponseBody); // List<Pub>
+    var pubsResponseBody = isFinding == true
+        ? userdata.read('allPubsResponseBody')
+        : userdata.read('userPubsResponseBody');
+    var pubsCount = isFinding == true
+        ? userdata.read('allPubsCount')
+        : userdata.read('userPubsCount');
+    print('MyPubs pubsCount: $pubsCount');
+
+    var allPubs = pubsCount == 0 ? null : pubFromJson(pubsResponseBody);
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -79,7 +84,7 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Encontrar Pub',
+          isFinding == true ? 'Encontrar Pub' : 'Escolher Pub',
           style: TextStyle(color: Colors.white70),
         ),
         elevation: 5.0,
@@ -101,10 +106,12 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(top: 20),
-                child: allPubsCount == 0
+                child: pubsCount == 0
                     ? Center(
                         child: Text(
-                          'Nenhum Pub foi cadastrado ainda em nossa base... $sadEmoji',
+                          isFinding == true
+                              ? 'Nenhum Pub foi cadastrado ainda em nossa base... $sadEmoji'
+                              : 'Você ainda não tem nenhum pub... $sadEmoji',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 25.0,
@@ -143,7 +150,6 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
                                 userdata.write(
                                     'selectedPubName', selectedPubName);
                               },
-
                               title: Text(allPubs[index].name),
                               subtitle: Text(
                                 '$cityEmoji ${allPubs[index].city}\n$addressEmoji ${allPubs[index].address}',
@@ -156,8 +162,7 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
                               leading: CircleAvatar(
                                 child: Image.asset('images/logo_not_alpha.png'),
                               ),
-                              trailing: Icon(Icons
-                                  .nightlife), // * em PUB usar = Icons.nightlife
+                              trailing: Icon(Icons.nightlife),
                             ),
                           );
                         },
@@ -170,7 +175,9 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
             // ),
             RoundedButton(
               color: Colors.blueAccent,
-              text: 'Escolher Banda para Agendar Evento',
+              text: isFinding == true
+                  ? 'Escolher Banda para Agendar Evento'
+                  : 'Escolher Data e Hora do Evento',
               onPressed: selectedPubJson == null
                   ? () {
                       setState(
@@ -193,8 +200,13 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
                       );
                     }
                   : () {
-                      Navigator.pushNamed(context,
-                          userBandsCount > 0 ? FindBand.id : MyBandsEmpty.id);
+                      Navigator.pushNamed(
+                          context,
+                          isFinding == true
+                              ? userBandsCount > 0
+                                  ? FindBand.id
+                                  : MyBandsEmpty.id
+                              : DateTimePicker.id);
                     },
             ),
             SizedBox(

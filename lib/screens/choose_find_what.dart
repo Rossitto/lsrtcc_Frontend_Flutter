@@ -108,10 +108,10 @@ class _ChooseFindWhatState extends State<ChooseFindWhat>
                   height: screenHeight * 0.15,
                 ),
                 Text(
-                  'Escolha por qual parceiro prefere começar o "match"',
+                  'Que parceiro você precisa encontrar ?',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: screenHeight * 0.015,
+                    fontSize: screenHeight * 0.017,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

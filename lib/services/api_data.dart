@@ -110,17 +110,4 @@ class ApiData extends ChangeNotifier {
 
     notifyListeners();
   }
-
-  // void apiGetUserPubs(int userId) async {
-  //   var response = await Backend.getPubsByUser(userId);
-  //   String responseBody = response.body;
-  //   print('apiGetPubsByUser responseBody: $responseBody');
-
-  //   // && responseBody != '[]'
-  //   if (response.statusCode == 200 && responseBody != '[]') {
-  //     notifyListeners();
-  //   }
-
-  //   notifyListeners();
-  // }
 }
