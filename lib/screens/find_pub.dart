@@ -1,12 +1,9 @@
-import 'package:emojis/emojis.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:lsrtcc_flutter/model/pub.dart';
 import 'package:lsrtcc_flutter/screens/find_band.dart';
-import 'package:lsrtcc_flutter/screens/my_bands.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +21,14 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
   final userdata = GetStorage();
   var _selectedIndex;
   var selectedPubJson;
+  var selectedBandJson;
+  bool isFinding;
 
   @override
   void initState() {
+    selectedBandJson = userdata.read('selectedBandJson');
+    isFinding = selectedBandJson == null ? false : true;
+
     controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: 1),
@@ -57,6 +59,7 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
 
     var userBandsCount = userdata.read('userBandsCount') ?? 0;
 
+    // TODO: usar isFinding == true para retornar todo esse bloco abaixo. Se False: alterar o bloco.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ApiData>(context, listen: false).apiGetAllPubs();
     });

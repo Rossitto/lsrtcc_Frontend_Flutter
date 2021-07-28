@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
-import 'package:lsrtcc_flutter/model/band.dart';
-import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
-import 'package:lsrtcc_flutter/screens/profile_screen.dart';
-import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
-import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
-import 'package:lsrtcc_flutter/services/api_data.dart';
-import 'package:provider/provider.dart';
-import 'login_screen.dart';
-import 'registration_screen.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/constants.dart';
+import 'package:lsrtcc_flutter/model/band.dart';
+import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
+import 'package:lsrtcc_flutter/services/api_data.dart';
+import 'package:provider/provider.dart';
 
 class FindBand extends StatefulWidget {
   static const String id = 'find_band';
@@ -31,22 +24,6 @@ class _FindBandState extends State<FindBand>
 
   @override
   void initState() {
-    var msgRegisterBand = userdata.read('msg_register_band');
-    if (msgRegisterBand != null) {
-      Future(
-        () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              behavior: SnackBarBehavior.floating,
-              content: Text(msgRegisterBand),
-              duration: Duration(seconds: 5),
-            ),
-          );
-        },
-      );
-    }
-    userdata.remove('msg_register_band');
-
     controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: 1),
@@ -74,6 +51,8 @@ class _FindBandState extends State<FindBand>
   Widget build(BuildContext context) {
     var userId = userdata.read('userId');
     var userName = userdata.read('userName') ?? '';
+
+    var userPubsCount = userdata.read('userPubsCount') ?? 0;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);

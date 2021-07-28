@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:lsrtcc_flutter/screens/find_band.dart';
 import 'package:lsrtcc_flutter/screens/find_pub.dart';
-import 'package:lsrtcc_flutter/screens/registerBand_screen.dart';
-import 'package:lsrtcc_flutter/screens/registerPub_screen.dart';
-import 'package:lsrtcc_flutter/components/rounded_button.dart';
 
 class ChooseFindWhat extends StatefulWidget {
   static const String id = 'choose_find_what';
@@ -17,10 +16,16 @@ class _ChooseFindWhatState extends State<ChooseFindWhat>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
+  final userdata = GetStorage();
 
   @override
   void initState() {
     super.initState();
+
+    userdata.remove('selectedPubJson');
+    userdata.remove('selectedBandJson');
+    userdata.remove('selectedPubName');
+    userdata.remove('selectedBandName');
 
     controller = AnimationController(
       vsync: this,
