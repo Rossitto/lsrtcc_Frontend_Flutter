@@ -63,6 +63,8 @@ const singerEmoji = Emojis.singer;
 const beerMugEmoji = Emojis.beerMug;
 const calendarEmoji = Emojis.tearOffCalendar;
 const clockEmoji = Emojis.alarmClock;
+const personGesturingNoEmoji = Emojis.personGesturingNO;
+const whiskyEmoji = Emojis.tumblerGlass;
 
 // addStringToSP(String varName, String varValue) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();

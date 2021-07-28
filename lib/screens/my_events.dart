@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
 import 'package:lsrtcc_flutter/model/event.dart';
+import 'package:lsrtcc_flutter/screens/profile_screen.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:provider/provider.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
@@ -19,14 +20,6 @@ class _MyEventsState extends State<MyEvents>
   AnimationController controller;
   Animation animation;
   final userdata = GetStorage();
-
-  final titles = ["List 1", "List 2", "List 3"];
-  final subtitles = [
-    "Here is list 1 subtitle",
-    "Here is list 2 subtitle",
-    "Here is list 3 subtitle"
-  ];
-  final icons = [Icons.ac_unit, Icons.access_alarm, Icons.access_time];
 
   @override
   void initState() {
@@ -101,7 +94,7 @@ class _MyEventsState extends State<MyEvents>
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, ProfileScreen.id);
           },
         ),
       ),
@@ -171,9 +164,10 @@ class _MyEventsState extends State<MyEvents>
             ),
             RoundedButton(
               color: Colors.blueAccent,
-              text: 'Cadastrar Evento',
+              text: 'Alterar Evento',
               onPressed: () {
-                Navigator.pushNamed(context, DateTimePicker.id);
+                // TODO: ir para uma tela de ALTERAR o EVENTo (pode ser uma sobreposição de tela)
+                Navigator.pushNamed(context, null);
               },
             ),
             SizedBox(

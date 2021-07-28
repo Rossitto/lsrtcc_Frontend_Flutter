@@ -1,3 +1,4 @@
+import 'package:emojis/emojis.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
@@ -21,8 +22,8 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
   final userdata = GetStorage();
-  var selectedPubId;
   var _selectedIndex;
+  var selectedPubJson;
 
   @override
   void initState() {
@@ -131,24 +132,13 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
                                 setState(() {
                                   _selectedIndex = index;
                                 });
-                                var selectedPubJson = allPubs[index].toJson();
+                                selectedPubJson = allPubs[index].toJson();
                                 userdata.remove('selectedPubJson');
                                 userdata.write(
                                     'selectedPubJson', selectedPubJson);
                                 var selectedPubName = allPubs[index].name;
                                 userdata.write(
                                     'selectedPubName', selectedPubName);
-
-                                // print('selectedPubJson: $selectedPubJson');
-
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   SnackBar(
-                                //     behavior: SnackBarBehavior.floating,
-                                //     content: Text(allPubs[index].name +
-                                //         ' ($selectedPubId) pressionado!'), // começa no 1 e não no 0
-                                //     duration: Duration(seconds: 1),
-                                //   ),
-                                // );
                               },
 
                               title: Text(allPubs[index].name),
@@ -178,10 +168,31 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
             RoundedButton(
               color: Colors.blueAccent,
               text: 'Escolher Banda para Agendar Evento',
-              onPressed: () {
-                Navigator.pushNamed(context,
-                    userBandsCount == 0 ? MyBandsEmpty.id : FindBand.id);
-              },
+              onPressed: selectedPubJson == null
+                  ? () {
+                      setState(
+                        () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text(
+                                '$personGesturingNoEmoji OPA!\nNenhum pub selecionado!',
+                                textAlign: TextAlign.center,
+                              ),
+                              content: Text(
+                                  'Todo show precisa de uma casa... selecione um Pub! $badassEmoji$whiskyEmoji',
+                                  textAlign: TextAlign.center),
+                              elevation: 24.0,
+                            ),
+                            barrierDismissible: true,
+                          );
+                        },
+                      );
+                    }
+                  : () {
+                      Navigator.pushNamed(context,
+                          userBandsCount > 0 ? FindBand.id : MyBandsEmpty.id);
+                    },
             ),
             SizedBox(
               height: screenHeight * 0.05,

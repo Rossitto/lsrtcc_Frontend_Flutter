@@ -228,7 +228,6 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
                   print(currentBand);
                   String jsonBand = jsonEncode(currentBand);
 
-                  // ? TESTANDO...
                   print('jsonBand: $jsonBand');
 
                   var response = await Backend.postBand(jsonBand);

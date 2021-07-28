@@ -305,10 +305,11 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
                 print('selectedPubJson: $selectedPubJson');
                 print('selectedBandJson: $selectedBandJson');
-                Pub currentPub = pubFromJson(selectedPubJson)[0];
+
+                Pub currentPub = Pub.fromJson(selectedPubJson);
                 print('currentPub: $currentPub');
 
-                Band currentBand = bandFromJson(selectedBandJson)[0];
+                Band currentBand = Band.fromJson(selectedBandJson);
                 print('currentBand: $currentBand');
 
                 Event currentShow = Event(
@@ -322,7 +323,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                 );
 
                 print('currentShow = $currentShow');
-                String jsonShow = eventToJson([currentShow]);
+                String jsonShow = jsonEncode(currentShow);
                 print('jsonShow = $jsonShow');
 
                 // TODO: se show já existir = PUT em vez de POST e enviar o ID do show na URL.
@@ -330,6 +331,8 @@ class _DateTimePickerState extends State<DateTimePicker> {
                 var response = await Backend.postShow(jsonShow);
                 String responseBody = response.body;
                 print('responseBody = $responseBody');
+                print('responseStatusCode = ${response.statusCode}');
+
                 if (response.statusCode == 201) {
                   print('Evento pré-agendado com sucesso! ' +
                       'Status Code: ${response.statusCode}');
@@ -349,11 +352,13 @@ class _DateTimePickerState extends State<DateTimePicker> {
                     },
                   );
 
-                  // TODO: testar se está funcionando ir para essa tela.
+                  userdata.writeInMemory('msg_register_event',
+                      'Evento Pré-Agendado com Sucesso! $happyEmoji');
                   Navigator.pushNamed(context, MyEvents.id);
                 } else {
-                  var responseTitle =
-                      jsonDecode(responseBody)['title'] ?? "Erro";
+                  var responseTitle = responseBody.isEmpty
+                      ? 'Erro'
+                      : jsonDecode(responseBody)['title'];
                   print('ERRO! ' + 'Status Code: ${response.statusCode}');
                   setState(
                     () {
