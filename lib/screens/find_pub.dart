@@ -84,7 +84,7 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          isFinding == true ? 'Encontrar Pub' : 'Escolher Pub',
+          isFinding == true ? 'Encontrar Pub' : 'Escolher meu Pub',
           style: TextStyle(color: Colors.white70),
         ),
         elevation: 5.0,
@@ -176,7 +176,7 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
             RoundedButton(
               color: Colors.blueAccent,
               text: isFinding == true
-                  ? 'Escolher Banda para Agendar Evento'
+                  ? 'Escolher minha Banda para Agendar Evento'
                   : 'Escolher Data e Hora do Evento',
               onPressed: selectedPubJson == null
                   ? () {

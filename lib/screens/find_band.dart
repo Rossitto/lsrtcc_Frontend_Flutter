@@ -4,6 +4,8 @@ import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/constants.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
+import 'package:lsrtcc_flutter/screens/find_pub.dart';
+import 'package:lsrtcc_flutter/screens/my_pubs_empty.dart';
 import 'package:lsrtcc_flutter/services/api_data.dart';
 import 'package:provider/provider.dart';
 
@@ -20,10 +22,15 @@ class _FindBandState extends State<FindBand>
   Animation animation;
   final userdata = GetStorage();
   var _selectedIndex;
+  var selectedPubJson;
   var selectedBandJson;
+  bool isFinding;
 
   @override
   void initState() {
+    selectedPubJson = userdata.read('selectedPubJson');
+    isFinding = selectedPubJson == null ? true : false;
+
     controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: 1),
@@ -55,15 +62,21 @@ class _FindBandState extends State<FindBand>
     var userPubsCount = userdata.read('userPubsCount') ?? 0;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ApiData>(context, listen: false).apiGetUserBands(userId);
+      isFinding == true
+          ? Provider.of<ApiData>(context, listen: false).apiGetAllBands()
+          : Provider.of<ApiData>(context, listen: false)
+              .apiGetUserBands(userId);
     });
-    var userBandsResponseBody = userdata.read('userBandsResponseBody');
-    var userBandsCount = userdata.read('userBandsCount');
-    print('MyBands userBandsCount: $userBandsCount');
 
-    var userBands = userBandsCount == 0
-        ? null
-        : bandFromJson(userBandsResponseBody); // List<Band>
+    var bandsResponseBody = isFinding == true
+        ? userdata.read('allBandsResponseBody')
+        : userdata.read('userBandsResponseBody');
+    var bandsCount = isFinding == true
+        ? userdata.read('allBandsCount')
+        : userdata.read('BandsCount');
+    print('MyBands bandsCount: $bandsCount');
+
+    var allBands = bandsCount == 0 ? null : bandFromJson(bandsResponseBody);
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -73,7 +86,7 @@ class _FindBandState extends State<FindBand>
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Escolha uma banda',
+          isFinding == true ? 'Encontrar Banda' : 'Escolher minha Banda',
           style: TextStyle(color: Colors.white70),
         ),
         elevation: 5.0,
@@ -95,10 +108,12 @@ class _FindBandState extends State<FindBand>
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(top: 20),
-                child: userBandsCount == 0
+                child: bandsCount == 0
                     ? Center(
                         child: Text(
-                          'Você não pertence a nenhuma banda ainda... $sadEmoji',
+                          isFinding == true
+                              ? 'Nenhuma Banda foi cadastrada ainda em nossa base... $sadEmoji'
+                              : 'Você não pertence a nenhuma banda ainda... $sadEmoji',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 25.0,
@@ -108,7 +123,7 @@ class _FindBandState extends State<FindBand>
                     : ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: userBands.length,
+                        itemCount: allBands.length,
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
@@ -119,18 +134,18 @@ class _FindBandState extends State<FindBand>
                                 setState(() {
                                   _selectedIndex = index;
                                 });
-                                selectedBandJson = userBands[index].toJson();
+                                selectedBandJson = allBands[index].toJson();
                                 userdata.remove('selectedBandJson');
                                 userdata.write(
                                     'selectedBandJson', selectedBandJson);
 
-                                var selectedBandName = userBands[index].name;
+                                var selectedBandName = allBands[index].name;
                                 userdata.write(
                                     'selectedBandName', selectedBandName);
                               },
-                              title: Text(userBands[index].name),
+                              title: Text(allBands[index].name),
                               subtitle: Text(
-                                '$musicalNotesEmoji ${userBands[index].style}\n$personEmoji ${userBands[index].membersNum}',
+                                '$musicalNotesEmoji ${allBands[index].style}\n$personEmoji ${allBands[index].membersNum}',
                                 style: TextStyle(
                                   height: 1.25,
                                   wordSpacing: 1.0,
@@ -149,7 +164,9 @@ class _FindBandState extends State<FindBand>
             ),
             RoundedButton(
               color: Colors.blueAccent,
-              text: 'Escolher Data e Hora do Evento',
+              text: isFinding == true
+                  ? 'Escolher meu Pub para Agendar Evento'
+                  : 'Escolher Data e Hora do Evento',
               onPressed: selectedBandJson == null
                   ? () {
                       setState(
@@ -172,7 +189,13 @@ class _FindBandState extends State<FindBand>
                       );
                     }
                   : () {
-                      Navigator.pushNamed(context, DateTimePicker.id);
+                      Navigator.pushNamed(
+                          context,
+                          isFinding == true
+                              ? userPubsCount > 0
+                                  ? FindPub.id
+                                  : MyPubsEmpty.id
+                              : DateTimePicker.id);
                     },
 
               //   () {

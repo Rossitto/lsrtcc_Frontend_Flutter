@@ -84,6 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       Provider.of<ApiData>(context, listen: false).apiGetUserPubs(userId);
       Provider.of<ApiData>(context, listen: false).apiGetUserEvents(userId);
       Provider.of<ApiData>(context, listen: false).apiGetAllPubs();
+      Provider.of<ApiData>(context, listen: false).apiGetAllBands();
     });
     var userBandsCount = userdata.read('userBandsCount') ?? 0;
     print('Profile userBandsCount: $userBandsCount');

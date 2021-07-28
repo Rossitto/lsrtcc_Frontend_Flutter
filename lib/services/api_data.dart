@@ -110,4 +110,25 @@ class ApiData extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void apiGetAllBands() async {
+    var response = await Backend.getAllBands();
+
+    String allBandsResponseBody = response.body;
+
+    if (response.statusCode == 200 && allBandsResponseBody != '[]') {
+      _userdata.write('allBandsResponseBody', allBandsResponseBody);
+
+      var allBands = bandFromJson(allBandsResponseBody);
+      var allBandsCount = allBands.length;
+
+      _userdata.write('allBandsCount', allBandsCount);
+
+      notifyListeners();
+    } else {
+      _userdata.write('allBandsCount', 0);
+    }
+
+    notifyListeners();
+  }
 }
