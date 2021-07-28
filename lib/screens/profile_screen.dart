@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
 import 'package:lsrtcc_flutter/screens/all_registrations_screen.dart';
+import 'package:lsrtcc_flutter/screens/choose_find_what.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/screens/my_bands.dart';
 import 'package:lsrtcc_flutter/screens/my_events.dart';
@@ -180,8 +181,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   //   value: AllRegistrationsScreen.id,
                   // ),
                   PopupMenuItem(
-                    child: Text("Encontrar Pub"),
-                    value: FindPub.id,
+                    child: Text("Agendar Evento"),
+                    value: ChooseFindWhat.id,
                   ),
                   PopupMenuItem(child: Text("Sair"), value: 'EXIT'),
                 ],

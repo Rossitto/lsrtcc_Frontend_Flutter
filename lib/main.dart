@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:lsrtcc_flutter/screens/calendar_screen.dart';
+import 'package:lsrtcc_flutter/screens/choose_find_what.dart';
 import 'package:lsrtcc_flutter/screens/find_band.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
 import 'package:lsrtcc_flutter/screens/my_events.dart';
@@ -81,6 +82,7 @@ Future<void> main() async {
           MyEventsEmpty.id: (context) => MyEventsEmpty(),
           FindPub.id: (context) => FindPub(),
           FindBand.id: (context) => FindBand(),
+          ChooseFindWhat.id: (context) => ChooseFindWhat(),
         },
       ),
     ),

@@ -171,9 +171,34 @@ class _FindBandState extends State<FindBand>
             RoundedButton(
               color: Colors.blueAccent,
               text: 'Escolher Data e Hora do Evento',
-              onPressed: () {
-                Navigator.pushNamed(context, DateTimePicker.id);
-              },
+              onPressed: selectedBandJson == null
+                  ? () {
+                      setState(
+                        () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text(
+                                '$personGesturingNoEmoji OPA!\nNenhuma banda selecionada!',
+                                textAlign: TextAlign.center,
+                              ),
+                              content: Text(
+                                  'Show sem banda é playback... selecione uma! $drumEmoji$badassEmoji',
+                                  textAlign: TextAlign.center),
+                              elevation: 24.0,
+                            ),
+                            barrierDismissible: true,
+                          );
+                        },
+                      );
+                    }
+                  : () {
+                      Navigator.pushNamed(context, DateTimePicker.id);
+                    },
+
+              //   () {
+              //     Navigator.pushNamed(context, DateTimePicker.id);
+              //   },
             ),
             SizedBox(
               height: screenHeight * 0.05,

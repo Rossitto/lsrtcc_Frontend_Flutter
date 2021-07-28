@@ -65,6 +65,7 @@ const calendarEmoji = Emojis.tearOffCalendar;
 const clockEmoji = Emojis.alarmClock;
 const personGesturingNoEmoji = Emojis.personGesturingNO;
 const whiskyEmoji = Emojis.tumblerGlass;
+const drumEmoji = Emojis.drum;
 
 // addStringToSP(String varName, String varValue) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
