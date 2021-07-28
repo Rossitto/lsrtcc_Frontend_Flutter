@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/constants.dart';
@@ -24,15 +25,16 @@ class DateTimePicker extends StatefulWidget {
 class _DateTimePickerState extends State<DateTimePicker> {
   double _height;
   double _width;
+  final userdata = GetStorage();
+  var selectedBandName;
+  var selectedPubName;
+  var selectedBandJson;
+  var selectedPubJson;
 
   String _setTime, _setDate;
-
   String _hour, _minute, _time;
-
   String dateTime;
-
   DateTime selectedDate = DateTime.now();
-
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
 
   TextEditingController _dateController = TextEditingController();
@@ -110,6 +112,11 @@ class _DateTimePickerState extends State<DateTimePicker> {
         [HH, ':', nn]).toString();
     _timeController.text = horaFormatada;
     super.initState();
+
+    selectedBandName = userdata.read('selectedBandName') ?? '';
+    selectedPubName = userdata.read('selectedPubName') ?? '';
+    selectedBandJson = userdata.read('selectedBandJson') ?? '';
+    selectedPubJson = userdata.read('selectedPubJson') ?? '';
   }
 
   @override
@@ -122,7 +129,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
         centerTitle: true,
         // title: Text('Agendar Evento', ),
         title: Text(
-          'Agendar Evento',
+          'Agendar Evento $fireEmoji',
           style: GoogleFonts.lato(
             textStyle: TextStyle(
               color: Colors.white,
@@ -143,8 +150,53 @@ class _DateTimePickerState extends State<DateTimePicker> {
           children: <Widget>[
             Column(
               children: <Widget>[
+                SizedBox(
+                  height: _height * 0.1,
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            '$singerEmoji $selectedBandName',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(
+                                color: Colors.grey[850],
+                                letterSpacing: .5,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            '$beerMugEmoji $selectedPubName',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(
+                                color: Colors.grey[850],
+                                letterSpacing: .5,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
+                SizedBox(
+                  height: _height * 0.1,
+                ),
                 Text(
-                  'Data do Evento',
+                  'Data do Evento $calendarEmoji',
                   style: GoogleFonts.lato(
                     textStyle: TextStyle(
                       color: Colors.blue,
@@ -165,7 +217,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                     _selectDate(context);
                   },
                   child: Container(
-                    width: _width / 1.7,
+                    width: _width / 1.5,
                     height: _height / 9,
                     margin: EdgeInsets.only(top: 30),
                     alignment: Alignment.center,
@@ -192,7 +244,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             Column(
               children: <Widget>[
                 Text(
-                  'Hora do Evento',
+                  'Hora do Evento $glowingStarEmoji',
                   style: GoogleFonts.lato(
                     textStyle: TextStyle(
                       color: Colors.blue,
@@ -246,14 +298,18 @@ class _DateTimePickerState extends State<DateTimePicker> {
                 var showTimestamp = DateTime.parse(
                     "${_dateISOController.text} ${_timeController.text}");
                 print('showTimestamp = $showTimestamp');
+                print('DateTime.now() = ${DateTime.now()}');
 
                 var showTimestampFormatted = formatTimestamp(showTimestamp);
                 print('showTimestampFormatted = $showTimestampFormatted');
 
-                // TODO : pegar o Pub ID certo ao postar Event
-                Pub currentPub = Pub(id: 1);
-                Band currentBand = Band(id: 1);
-                // TODO : pegar o Band ID certo ao postar Event
+                print('selectedPubJson: $selectedPubJson');
+                print('selectedBandJson: $selectedBandJson');
+                Pub currentPub = pubFromJson(selectedPubJson)[0];
+                print('currentPub: $currentPub');
+
+                Band currentBand = bandFromJson(selectedBandJson)[0];
+                print('currentBand: $currentBand');
 
                 Event currentShow = Event(
                   id: null,
@@ -264,7 +320,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                   confirmedAt: null,
                   requestedAt: DateTime.now(), // nowFormatted,
                 );
-                // print('DateTime.now() = ${DateTime.now()}');
+
                 print('currentShow = $currentShow');
                 String jsonShow = eventToJson([currentShow]);
                 print('jsonShow = $jsonShow');
@@ -275,7 +331,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                 String responseBody = response.body;
                 print('responseBody = $responseBody');
                 if (response.statusCode == 201) {
-                  print('Evento agendado com sucesso! ' +
+                  print('Evento pré-agendado com sucesso! ' +
                       'Status Code: ${response.statusCode}');
                   // String showId = jsonDecode(responseBody)['id'] ?? "";
 

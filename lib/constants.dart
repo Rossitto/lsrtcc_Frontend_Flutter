@@ -45,29 +45,24 @@ bool isNumeric(String str) {
 }
 
 const sadEmoji = Emojis.cryingFace;
-
 const happyEmoji = Emojis.grinningFaceWithBigEyes;
-
 const personEmoji = Emojis.bustInSilhouette;
-
-// Globe showing Americas // round pushpin
 const addressEmoji = Emojis.roundPushpin;
-
 const guitarEmoji = Emojis.guitar;
-
 const microphoneEmoji = Emojis.studioMicrophone;
-
 const musicalNotesEmoji = Emojis.musicalNote;
-
 const cityEmoji = Emojis.cityscape;
-
 const badassEmoji = Emojis.smilingFaceWithSunglasses;
-
 const victoryHandEmoji = Emojis.victoryHand;
-
 const rockAndRollHandEmoji = Emojis.signOfTheHorns;
-
 const fireEmoji = Emojis.fire;
+const starEmoji = Emojis.star;
+const glowingStarEmoji = Emojis.glowingStar;
+const collisionEmoji = Emojis.collision;
+const singerEmoji = Emojis.singer;
+const beerMugEmoji = Emojis.beerMug;
+const calendarEmoji = Emojis.tearOffCalendar;
+const clockEmoji = Emojis.alarmClock;
 
 // addStringToSP(String varName, String varValue) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
