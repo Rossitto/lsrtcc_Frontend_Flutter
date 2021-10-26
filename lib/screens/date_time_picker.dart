@@ -119,6 +119,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
     selectedBandJson = userdata.read('selectedBandJson') ?? '';
     selectedPubJson = userdata.read('selectedPubJson') ?? '';
     requestedByBand = userdata.read('requestedByBand');
+    print("requestedByBand: $requestedByBand");
   }
 
   @override

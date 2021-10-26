@@ -20,6 +20,8 @@ class _MyEventsState extends State<MyEvents>
   AnimationController controller;
   Animation animation;
   final userdata = GetStorage();
+  var _selectedIndex;
+  var selectedEventJson;
 
   @override
   void initState() {
@@ -125,19 +127,33 @@ class _MyEventsState extends State<MyEvents>
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
-                              selected: true,
+                              selected: index == _selectedIndex,
+                              selectedTileColor: Colors.lightBlue[50],
                               isThreeLine: true,
                               onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    behavior: SnackBarBehavior.floating,
-                                    // Text(userEvents[index].showDatetime.toString().substring(0, 16) + 'pressionado') // começa no 1 e não no 0
-                                    content: Text(
-                                        '${userEvents[index].band.name} no ${userEvents[index].pub.name}??\nEsse show vai ser TOP!!! $fireEmoji',
-                                        textAlign: TextAlign.center),
-                                    duration: Duration(seconds: 1),
-                                  ),
-                                );
+                                setState(() {
+                                  _selectedIndex = index;
+                                });
+
+                                selectedEventJson = userEvents[index].toJson();
+                                userdata.remove('selectedEventJson');
+                                userdata.write(
+                                    'selectedEventJson', selectedEventJson);
+
+                                // var selectedEventName = userEvents[index].name;
+                                // userdata.write(
+                                //     'selectedBandName', selectedBandName);
+
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   SnackBar(
+                                //     behavior: SnackBarBehavior.floating,
+                                //     // Text(userEvents[index].showDatetime.toString().substring(0, 16) + 'pressionado') // começa no 1 e não no 0
+                                //     content: Text(
+                                //         '${userEvents[index].band.name} no ${userEvents[index].pub.name}??\nEsse show vai ser TOP!!! $fireEmoji',
+                                //         textAlign: TextAlign.center),
+                                //     duration: Duration(seconds: 1),
+                                //   ),
+                                // );
                               },
                               title: Text(userEvents[index]
                                   .showDatetime
