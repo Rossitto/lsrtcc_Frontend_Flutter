@@ -21,6 +21,7 @@ class Event {
     this.confirmed,
     this.confirmedAt,
     this.requestedAt,
+    this.requestedByBand,
   });
 
   int id;
@@ -30,6 +31,7 @@ class Event {
   bool confirmed;
   DateTime confirmedAt;
   DateTime requestedAt;
+  bool requestedByBand;
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
         id: json["id"],
@@ -45,6 +47,7 @@ class Event {
         requestedAt: json["requested_at"] == null
             ? null
             : DateTime.parse(json["requested_at"]),
+        requestedByBand: json["requested_by_band"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,6 +61,7 @@ class Event {
             confirmedAt == null ? null : confirmedAt.toIso8601String(),
         "requested_at":
             requestedAt == null ? null : requestedAt.toIso8601String(),
+        "requested_by_band": requestedByBand,
       };
 }
 

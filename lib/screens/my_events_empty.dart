@@ -118,7 +118,7 @@ class _MyEventsEmptyState extends State<MyEventsEmpty>
                 //     }),
                 RoundedButton(
                     color: Colors.blueAccent,
-                    text: 'Cadastrar Evento',
+                    text: 'Cadastrar Evento (TEST)',
                     onPressed: () {
                       Navigator.pushNamed(context, DateTimePicker.id);
                     }),

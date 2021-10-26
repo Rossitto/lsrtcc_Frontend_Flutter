@@ -26,6 +26,7 @@ class _ChooseFindWhatState extends State<ChooseFindWhat>
     userdata.remove('selectedBandJson');
     userdata.remove('selectedPubName');
     userdata.remove('selectedBandName');
+    userdata.remove('requestedByBand');
 
     controller = AnimationController(
       vsync: this,

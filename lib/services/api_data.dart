@@ -68,6 +68,7 @@ class ApiData extends ChangeNotifier {
   }
 
   void apiGetUserEvents(int userId) async {
+    print("userId: $userId");
     var response = await Backend.getEventsByUser(userId);
 
     String userEventsResponseBody = response.body;

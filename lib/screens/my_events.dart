@@ -111,7 +111,7 @@ class _MyEventsState extends State<MyEvents>
                 child: userEventsCount == 0
                     ? Center(
                         child: Text(
-                          'Você não pertence a nenhuma band ainda... $sadEmoji',
+                          'Você não tem nenhum Evento ainda... $sadEmoji',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 25.0,
@@ -166,7 +166,7 @@ class _MyEventsState extends State<MyEvents>
               color: Colors.blueAccent,
               text: 'Alterar Evento',
               onPressed: () {
-                // TODO: ir para uma tela de ALTERAR o EVENTo (pode ser uma sobreposição de tela)
+                // TODO: ir para uma tela de ALTERAR o EVENTO (pode ser uma sobreposição de tela)
                 Navigator.pushNamed(context, null);
               },
             ),

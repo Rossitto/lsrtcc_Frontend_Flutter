@@ -24,11 +24,16 @@ class _FindPubState extends State<FindPub> with SingleTickerProviderStateMixin {
   var selectedPubJson;
   var selectedBandJson;
   bool isFinding;
+  bool requestedByBand;
 
   @override
   void initState() {
     selectedBandJson = userdata.read('selectedBandJson');
     isFinding = selectedBandJson == null ? true : false;
+    requestedByBand = isFinding;
+
+    userdata.remove('requestedByBand');
+    userdata.write('requestedByBand', requestedByBand);
 
     controller = AnimationController(
       vsync: this,

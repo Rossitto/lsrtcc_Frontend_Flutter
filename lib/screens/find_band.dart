@@ -25,11 +25,16 @@ class _FindBandState extends State<FindBand>
   var selectedPubJson;
   var selectedBandJson;
   bool isFinding;
+  bool requestedByBand;
 
   @override
   void initState() {
     selectedPubJson = userdata.read('selectedPubJson');
     isFinding = selectedPubJson == null ? true : false;
+    requestedByBand = !isFinding;
+
+    userdata.remove('requestedByBand');
+    userdata.write('requestedByBand', requestedByBand);
 
     controller = AnimationController(
       vsync: this,

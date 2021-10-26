@@ -30,6 +30,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
   var selectedPubName;
   var selectedBandJson;
   var selectedPubJson;
+  bool requestedByBand;
 
   String _setTime, _setDate;
   String _hour, _minute, _time;
@@ -117,6 +118,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
     selectedPubName = userdata.read('selectedPubName') ?? '';
     selectedBandJson = userdata.read('selectedBandJson') ?? '';
     selectedPubJson = userdata.read('selectedPubJson') ?? '';
+    requestedByBand = userdata.read('requestedByBand');
   }
 
   @override
@@ -321,6 +323,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
                     confirmed: false,
                     confirmedAt: null,
                     requestedAt: DateTime.now(), // nowFormatted,
+                    requestedByBand: requestedByBand,
                   );
 
                   print('currentShow = $currentShow');
