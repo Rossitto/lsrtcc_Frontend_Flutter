@@ -20,7 +20,8 @@ class _MyEventsState extends State<MyEvents>
   AnimationController controller;
   Animation animation;
   final userdata = GetStorage();
-  var _selectedIndex;
+  var _selectedIndexConfirmed;
+  var _selectedIndexPending;
   var selectedEventJson;
 
   @override
@@ -80,6 +81,12 @@ class _MyEventsState extends State<MyEvents>
         ? null
         : eventFromJson(userEventsResponseBody); // List<Event>
 
+    var userConfirmedEvents =
+        userEvents.where((i) => i.confirmed == true).toList();
+
+    var userPendingEvents =
+        userEvents.where((i) => i.confirmed == false).toList();
+
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return
@@ -120,61 +127,145 @@ class _MyEventsState extends State<MyEvents>
                           ),
                         ),
                       )
-                    : ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: userEvents.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: ListTile(
-                              selected: index == _selectedIndex,
-                              selectedTileColor: Colors.lightBlue[50],
-                              isThreeLine: true,
-                              onTap: () {
-                                setState(() {
-                                  _selectedIndex = index;
-                                });
+                    : Column(
+                        children: [
+                          Text("Confirmados"),
+                          SizedBox(
+                            height: screenHeight * 0.01,
+                          ),
+                          userConfirmedEvents.length == 0
+                              ? Center(
+                                  child: Text(
+                                    '\n',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                )
+                              : ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: userConfirmedEvents.length,
+                                  itemBuilder: (context, index) {
+                                    return Card(
+                                      child: ListTile(
+                                        selected:
+                                            index == _selectedIndexConfirmed,
+                                        selectedTileColor: Colors.lightBlue[50],
+                                        isThreeLine: true,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedIndexPending = null;
+                                            _selectedIndexConfirmed = index;
+                                          });
 
-                                selectedEventJson = userEvents[index].toJson();
-                                userdata.remove('selectedEventJson');
-                                userdata.write(
-                                    'selectedEventJson', selectedEventJson);
+                                          selectedEventJson =
+                                              userConfirmedEvents[index]
+                                                  .toJson();
+                                          userdata.remove('selectedEventJson');
+                                          userdata.write('selectedEventJson',
+                                              selectedEventJson);
 
-                                // var selectedEventName = userEvents[index].name;
-                                // userdata.write(
-                                //     'selectedBandName', selectedBandName);
+                                          // var selectedEventName = userEvents[index].name;
+                                          // userdata.write(
+                                          //     'selectedBandName', selectedBandName);
 
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   SnackBar(
-                                //     behavior: SnackBarBehavior.floating,
-                                //     // Text(userEvents[index].showDatetime.toString().substring(0, 16) + 'pressionado') // começa no 1 e não no 0
-                                //     content: Text(
-                                //         '${userEvents[index].band.name} no ${userEvents[index].pub.name}??\nEsse show vai ser TOP!!! $fireEmoji',
-                                //         textAlign: TextAlign.center),
-                                //     duration: Duration(seconds: 1),
-                                //   ),
-                                // );
-                              },
-                              title: Text(userEvents[index]
-                                  .showDatetime
-                                  .toString()
-                                  .substring(0, 16)),
-                              subtitle: Text(
-                                '$guitarEmoji ${userEvents[index].band.name}\n$addressEmoji ${userEvents[index].pub.name}',
-                                style: TextStyle(
-                                  height: 1.25,
-                                  wordSpacing: 1.0,
-                                  letterSpacing: 1.0,
+                                          // ScaffoldMessenger.of(context).showSnackBar(
+                                          //   SnackBar(
+                                          //     behavior: SnackBarBehavior.floating,
+                                          //     // Text(userEvents[index].showDatetime.toString().substring(0, 16) + 'pressionado') // começa no 1 e não no 0
+                                          //     content: Text(
+                                          //         '${userEvents[index].band.name} no ${userEvents[index].pub.name}??\nEsse show vai ser TOP!!! $fireEmoji',
+                                          //         textAlign: TextAlign.center),
+                                          //     duration: Duration(seconds: 1),
+                                          //   ),
+                                          // );
+                                        },
+                                        title: Text(userConfirmedEvents[index]
+                                            .showDatetime
+                                            .toString()
+                                            .substring(0, 16)),
+                                        subtitle: Text(
+                                          '$guitarEmoji ${userConfirmedEvents[index].band.name}\n$addressEmoji ${userConfirmedEvents[index].pub.name}',
+                                          style: TextStyle(
+                                            height: 1.25,
+                                            wordSpacing: 1.0,
+                                            letterSpacing: 1.0,
+                                          ),
+                                        ),
+                                        leading: CircleAvatar(
+                                          backgroundColor: Colors.green,
+                                          child: Icon(Icons.event,
+                                              color: Colors.white),
+                                        ),
+                                        trailing: Icon(Icons
+                                            .nightlife), // * em EVENT usar = Icons.nightlife
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ),
-                              leading: CircleAvatar(
-                                child: Image.asset('images/logo_not_alpha.png'),
-                              ),
-                              trailing: Icon(Icons
-                                  .nightlife), // * em EVENT usar = Icons.nightlife
-                            ),
-                          );
-                        },
+                          Text("Pendentes"),
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: userPendingEvents.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                  selected: index == _selectedIndexPending,
+                                  selectedTileColor: Colors.lightBlue[50],
+                                  isThreeLine: true,
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedIndexConfirmed = null;
+                                      _selectedIndexPending = index;
+                                    });
+
+                                    selectedEventJson =
+                                        userPendingEvents[index].toJson();
+                                    userdata.remove('selectedEventJson');
+                                    userdata.write(
+                                        'selectedEventJson', selectedEventJson);
+
+                                    // var selectedEventName = userEvents[index].name;
+                                    // userdata.write(
+                                    //     'selectedBandName', selectedBandName);
+
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   SnackBar(
+                                    //     behavior: SnackBarBehavior.floating,
+                                    //     // Text(userEvents[index].showDatetime.toString().substring(0, 16) + 'pressionado') // começa no 1 e não no 0
+                                    //     content: Text(
+                                    //         '${userEvents[index].band.name} no ${userEvents[index].pub.name}??\nEsse show vai ser TOP!!! $fireEmoji',
+                                    //         textAlign: TextAlign.center),
+                                    //     duration: Duration(seconds: 1),
+                                    //   ),
+                                    // );
+                                  },
+                                  title: Text(userPendingEvents[index]
+                                      .showDatetime
+                                      .toString()
+                                      .substring(0, 16)),
+                                  subtitle: Text(
+                                    '$guitarEmoji ${userPendingEvents[index].band.name}\n$addressEmoji ${userPendingEvents[index].pub.name}',
+                                    style: TextStyle(
+                                      height: 1.25,
+                                      wordSpacing: 1.0,
+                                      letterSpacing: 1.0,
+                                    ),
+                                  ),
+                                  leading: CircleAvatar(
+                                    // backgroundColor: Colors.blue,
+                                    child: Icon(Icons.event),
+                                  ),
+                                  trailing: Icon(Icons
+                                      .nightlife), // * em EVENT usar = Icons.nightlife
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
               ),
             ),
