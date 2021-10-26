@@ -132,4 +132,18 @@ class ApiData extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void apiDeleteUserEvent(int showId) async {
+    print("showId: $showId");
+
+    var response = await Backend.deleteShow(showId);
+
+    String responseBody = response.body;
+    int responseCode = response.statusCode;
+
+    print("responseBody: $responseBody");
+    print("responseCode: $responseCode");
+
+    notifyListeners();
+  }
 }

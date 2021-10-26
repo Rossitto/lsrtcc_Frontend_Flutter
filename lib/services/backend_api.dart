@@ -71,6 +71,14 @@ class Backend {
     );
   }
 
+  static Future<http.Response> deleteShow(int showId) {
+    return http
+        .delete('http://${khost}/shows/$showId', headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      // 'Accept': 'application/json; charset=UTF-8'
+    });
+  }
+
   static Future<http.Response> getBandsByUser(int userId) {
     var response = http.get(
       'http://${khost}/bands/user/$userId',

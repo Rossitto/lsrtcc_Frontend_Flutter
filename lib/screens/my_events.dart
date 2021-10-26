@@ -23,6 +23,15 @@ class _MyEventsState extends State<MyEvents>
   var _selectedIndexConfirmed;
   var _selectedIndexPending;
   var selectedEventJson;
+  int selectedShowId;
+
+  var userId;
+  var userName;
+  var userEventsResponseBody;
+  var userEventsCount;
+  var userEvents;
+  var userConfirmedEvents;
+  var userPendingEvents;
 
   @override
   void initState() {
@@ -39,6 +48,7 @@ class _MyEventsState extends State<MyEvents>
           );
         },
       );
+      _getData();
     }
     userdata.remove('msg_register_event');
 
@@ -65,27 +75,48 @@ class _MyEventsState extends State<MyEvents>
     controller.dispose();
   }
 
+  void fetchUserEvents() async {
+    userId = userdata.read('userId');
+    userName = userdata.read('userName') ?? '';
+
+    setState(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Provider.of<ApiData>(context, listen: false).apiGetUserEvents(userId);
+      });
+      userEventsResponseBody = userdata.read('userEventsResponseBody');
+      userEventsCount = userdata.read('userEventsCount');
+      print('MyEvents userEventsCount: $userEventsCount');
+
+      userEvents = userEventsCount == 0
+          ? null
+          : eventFromJson(userEventsResponseBody); // List<Event>
+
+      userConfirmedEvents = userEventsCount == 0
+          ? null
+          : userEvents.where((i) => i.confirmed == true).toList();
+
+      userPendingEvents = userEventsCount == 0
+          ? null
+          : userEvents.where((i) => i.confirmed == false).toList();
+    });
+  }
+
+  Future<void> _getData() async {
+    setState(() {
+      fetchUserEvents();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var userId = userdata.read('userId');
-    var userName = userdata.read('userName') ?? '';
+    fetchUserEvents();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ApiData>(context, listen: false).apiGetUserEvents(userId);
-    });
-    var userEventsResponseBody = userdata.read('userEventsResponseBody');
-    var userEventsCount = userdata.read('userEventsCount');
-    print('MyEvents userEventsCount: $userEventsCount');
-
-    var userEvents = userEventsCount == 0
-        ? null
-        : eventFromJson(userEventsResponseBody); // List<Event>
-
-    var userConfirmedEvents =
-        userEvents.where((i) => i.confirmed == true).toList();
-
-    var userPendingEvents =
-        userEvents.where((i) => i.confirmed == false).toList();
+    void refreshVariables() {
+      _selectedIndexConfirmed = null;
+      _selectedIndexPending = null;
+      selectedShowId = null;
+      selectedEventJson = null;
+    }
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -158,6 +189,8 @@ class _MyEventsState extends State<MyEvents>
                                           setState(() {
                                             _selectedIndexPending = null;
                                             _selectedIndexConfirmed = index;
+                                            selectedShowId =
+                                                userConfirmedEvents[index].id;
                                           });
 
                                           selectedEventJson =
@@ -220,6 +253,8 @@ class _MyEventsState extends State<MyEvents>
                                     setState(() {
                                       _selectedIndexConfirmed = null;
                                       _selectedIndexPending = index;
+                                      selectedShowId =
+                                          userPendingEvents[index].id;
                                     });
 
                                     selectedEventJson =
@@ -275,6 +310,28 @@ class _MyEventsState extends State<MyEvents>
               onPressed: () {
                 // TODO: ir para uma tela de ALTERAR o EVENTO (pode ser uma sobreposição de tela)
                 Navigator.pushNamed(context, null);
+              },
+            ),
+            RoundedButton(
+              color: Colors.redAccent,
+              text: 'Deletar',
+              onPressed: () {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Provider.of<ApiData>(context, listen: false)
+                      .apiDeleteUserEvent(selectedShowId);
+                  // refreshVariables();
+                  // _getData();
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Text("Evento deletado com sucesso"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+
+                  Navigator.pushNamed(context, MyEvents.id);
+                });
               },
             ),
             SizedBox(

@@ -3,6 +3,7 @@ import 'package:lsrtcc_flutter/screens/date_time_picker.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 
 import '../constants.dart';
+import 'choose_find_what.dart';
 
 class MyEventsEmpty extends StatefulWidget {
   static const String id = 'my_events_empty';
@@ -118,9 +119,9 @@ class _MyEventsEmptyState extends State<MyEventsEmpty>
                 //     }),
                 RoundedButton(
                     color: Colors.blueAccent,
-                    text: 'Cadastrar Evento (TEST)',
+                    text: 'Encontrar banda/pub',
                     onPressed: () {
-                      Navigator.pushNamed(context, DateTimePicker.id);
+                      Navigator.pushNamed(context, ChooseFindWhat.id);
                     }),
                 SizedBox(
                   height: 48.0,
