@@ -107,7 +107,6 @@ class _MyPubsState extends State<MyPubs> with SingleTickerProviderStateMixin {
       backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.067),
-        // TODO: reaproveitar todo esse container para Pubs
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,7 +117,7 @@ class _MyPubsState extends State<MyPubs> with SingleTickerProviderStateMixin {
                 child: userPubsCount == 0
                     ? Center(
                         child: Text(
-                          'Você não pertence a nenhuma band ainda... $sadEmoji',
+                          'Você não tem nenhum pub ainda... $sadEmoji',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 25.0,

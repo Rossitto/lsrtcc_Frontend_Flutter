@@ -261,7 +261,7 @@ class _RegisterBandScreenState extends State<RegisterBandScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, ProfileScreen.id);
                 },
                 child: Text(
                   "voltar",

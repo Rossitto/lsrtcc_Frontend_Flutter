@@ -5,6 +5,7 @@ import 'package:lsrtcc_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:lsrtcc_flutter/components/rounded_button.dart';
 import 'package:lsrtcc_flutter/model/band.dart';
+import 'package:lsrtcc_flutter/model/event.dart';
 import 'package:lsrtcc_flutter/screens/all_registrations_screen.dart';
 import 'package:lsrtcc_flutter/screens/choose_find_what.dart';
 import 'package:lsrtcc_flutter/screens/my_bands_empty.dart';
@@ -32,6 +33,12 @@ class _ProfileScreenState extends State<ProfileScreen>
   final userdata = GetStorage();
   int userId;
   String userName;
+
+  var userEventsResponseBody;
+  var userEventsCount;
+  var userEvents;
+  var userConfirmedEvents;
+  var userPendingEvents;
 
   @override
   void initState() {
@@ -69,12 +76,45 @@ class _ProfileScreenState extends State<ProfileScreen>
 
     tabController = TabController(length: 4, vsync: this);
 
+    _getData();
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+  }
+
+  void fetchUserEvents() async {
+    userId = userdata.read('userId');
+    userName = userdata.read('userName') ?? '';
+
+    setState(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Provider.of<ApiData>(context, listen: false).apiGetUserEvents(userId);
+      });
+      userEventsResponseBody = userdata.read('userEventsResponseBody');
+      userEventsCount = userdata.read('userEventsCount');
+      print('MyEvents userEventsCount: $userEventsCount');
+
+      userEvents = userEventsCount == 0
+          ? null
+          : eventFromJson(userEventsResponseBody); // List<Event>
+
+      userConfirmedEvents = userEventsCount == 0
+          ? null
+          : userEvents.where((i) => i.confirmed == true).toList();
+
+      userPendingEvents = userEventsCount == 0
+          ? null
+          : userEvents.where((i) => i.confirmed == false).toList();
+    });
+  }
+
+  Future<void> _getData() async {
+    setState(() {
+      fetchUserEvents();
+    });
   }
 
   @override
@@ -229,9 +269,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                     child: Column(
                       children: <Widget>[
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: <Widget>[
                         Container(
                           height: 200,
                           width: 200,
@@ -255,16 +292,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                               backgroundColor: Colors.white,
                             ),
                           ),
-                          // child: Hero(
-                          //   tag: 'logo',
-                          //   child: Container(
-                          //     height: 200.0,
-                          //     child: Image.asset('images/logo.png'),
-                          //   ),
-                          // ),
                         ),
-                        //   ],
-                        // ),
                         SizedBox(
                           height: 25,
                         ),
@@ -276,57 +304,82 @@ class _ProfileScreenState extends State<ProfileScreen>
                             fontSize: 15.0,
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(left: 20, right: 20),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.center,
-                        //     children: [
-                        //       // TODO: aqui são os ícones abaixo da foto de perfil. Não precisará.
-                        //       Container(
-                        //         height: 60,
-                        //         width: 60,
-                        //         decoration: BoxDecoration(
-                        //           color: Colors.blueAccent[700],
-                        //           borderRadius: BorderRadius.circular(30),
-                        //           boxShadow: [
-                        //             BoxShadow(
-                        //               color: Colors.blueAccent[700],
-                        //               spreadRadius: 1,
-                        //             ),
-                        //           ],
-                        //         ),
-                        //         child: Padding(
-                        //           padding: const EdgeInsets.all(4.0),
-                        //           child: Column(
-                        //             children: [
-                        //               Icon(
-                        //                 Icons.photo_camera,
-                        //                 color: Colors.white,
-                        //               ),
-                        //               SizedBox(
-                        //                 height: 3,
-                        //               ),
-                        //               Text(
-                        //                 'Camera',
-                        //                 style: TextStyle(
-                        //                   color: Colors.white,
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // )
                       ],
                     ),
                   ),
                   Container(
                     padding: EdgeInsets.only(top: 100),
-                    child:
-                        // TODO: COLOCAR EVENTOS AQUI
-                        Text('COLOCAR EVENTOS AQUI'),
+                    child: userEventsCount == 0
+                        ? Center(
+                            child: Text(
+                              'Você não tem nenhum Evento ainda... $sadEmoji',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
+                            ),
+                          )
+                        : Column(
+                            children: [
+                              Text("Confirmados"),
+                              SizedBox(
+                                height: screenHeight * 0.01,
+                              ),
+                              userConfirmedEvents.length == 0
+                                  ? Center(
+                                      child: Text(
+                                        '\n',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 12.0,
+                                        ),
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount: userConfirmedEvents.length,
+                                      itemBuilder: (context, index) {
+                                        return Card(
+                                          child: ListTile(
+                                            selected: false,
+                                            selectedTileColor:
+                                                Colors.lightBlue[50],
+                                            isThreeLine: true,
+                                            onTap: () {
+                                              setState(() {
+                                                // _selectedIndexPending = null;
+                                                // _selectedIndexConfirmed = index;
+                                                // selectedShowId =
+                                                //     userConfirmedEvents[index].id;
+                                              });
+                                            },
+                                            title: Text(
+                                                userConfirmedEvents[index]
+                                                    .showDatetime
+                                                    .toString()
+                                                    .substring(0, 16)),
+                                            subtitle: Text(
+                                              '$guitarEmoji ${userConfirmedEvents[index].band.name}\n$addressEmoji ${userConfirmedEvents[index].pub.name}',
+                                              style: TextStyle(
+                                                height: 1.25,
+                                                wordSpacing: 1.0,
+                                                letterSpacing: 1.0,
+                                              ),
+                                            ),
+                                            leading: CircleAvatar(
+                                              backgroundColor: Colors.green,
+                                              child: Icon(Icons.event,
+                                                  color: Colors.white),
+                                            ),
+                                            trailing: Icon(Icons
+                                                .nightlife), // * em EVENT usar = Icons.nightlife
+                                          ),
+                                        );
+                                      },
+                                    ),
+                            ],
+                          ),
                   ),
                 ],
               ),

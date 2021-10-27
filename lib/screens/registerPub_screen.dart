@@ -292,7 +292,7 @@ class _RegisterPubScreenState extends State<RegisterPubScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, ProfileScreen.id);
                     },
                     child: Text(
                       "voltar",
